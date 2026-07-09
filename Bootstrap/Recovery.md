@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define how AIOS recovers from boot failures and unexpected execution states.
+Define how AOA recovers from boot failures and unexpected execution states.
 Recovery is triggered when any step in Startup_Order or Initialize fails.
 
 ---
@@ -30,7 +30,7 @@ Do not attempt to continue the failed step.
 Identify and report to the user:
 
 ```
-⚠️ AIOS Recovery Mode
+⚠️ AOA Recovery Mode
 
 Failed Step : <step name or phase>
 Error       : <what went wrong>
@@ -74,7 +74,7 @@ Recovery Options:
       Use if memory corruption is suspected.
 
   [D] Manual intervention
-      Halt AIOS completely.
+      Halt AOA completely.
       User inspects files directly.
 ```
 
@@ -87,7 +87,7 @@ Wait for user selection. Do not auto-select.
 After successful recovery:
 - Log the recovery event to `Observability/` with: timestamp, failure type, recovery path taken.
 - Update `Memory/Session.md` to reflect the recovery.
-- Notify user that AIOS is fully operational.
+- Notify user that AOA is fully operational.
 
 ---
 

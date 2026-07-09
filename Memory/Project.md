@@ -2,7 +2,7 @@
 
 ## Purpose
 
-AIOS에 등록된 모든 프로젝트의 요약 인덱스.
+AOA에 등록된 모든 프로젝트의 요약 인덱스.
 Root Orchestrator가 어떤 프로젝트가 존재하고 어느 단계인지 파악하기 위해 읽는다.
 상세 프로젝트 메모리는 각 프로젝트 디렉터리에 있다.
 
@@ -36,7 +36,7 @@ projects:
   - id: daily-stock-pick
     name: 해외 뉴스 기반 오늘의 추천 주
     status: active
-    current_phase: 초기 설정 완료, 첫 실행 대기
+    current_phase: 첫 워크플로우 실행 완료
     last_updated: 2026-07-09
     path: Projects/daily-stock-pick/Memory/project.md
 ```

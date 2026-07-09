@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Store registration entries for all shared tools in AIOS.
+Store registration entries for all shared tools in AOA.
 Each file in this directory is a registration record, not an implementation.
 Implementations live in `Tools/`.
 

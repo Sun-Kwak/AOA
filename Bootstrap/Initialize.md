@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define how AIOS restores full framework context at the start of every new session.
+Define how AOA restores full framework context at the start of every new session.
 Every AI session begins cold — no memory, no context.
 This document defines the mandatory restoration protocol that bridges sessions.
 
@@ -23,7 +23,7 @@ This document covers:
 
 LLM sessions are stateless.
 Every new session starts with zero context.
-AIOS solves this by defining an explicit restoration sequence that the AI must execute
+AOA solves this by defining an explicit restoration sequence that the AI must execute
 at the beginning of every session before processing any user request.
 
 ---
@@ -131,7 +131,7 @@ When the Root Orchestrator initializes a sub-agent in a new session,
 it must provide the following minimum context:
 
 ```
-AIOS Framework Version: <version>
+AOA Framework Version: <version>
 Active Project: <project-name>
 Project Manifest: <path>
 Assigned Role: <agent-role>

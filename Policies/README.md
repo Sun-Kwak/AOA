@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the execution governance rules for AIOS.
+Define the execution governance rules for AOA.
 Policies control what agents can do, when they must pause, and what is absolutely forbidden.
 Policies are enforced at all times across all agents and projects.
 

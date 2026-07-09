@@ -2,7 +2,7 @@
 
 ## Purpose
 
-AIOS의 모든 버전 관리 규칙을 정의한다.
+AOA의 모든 버전 관리 규칙을 정의한다.
 에이전트, 툴, 워크플로우 등 공용 자산이 업데이트될 때
 기존 프로젝트에 미치는 영향을 예측 가능하게 만든다.
 
@@ -11,7 +11,7 @@ AIOS의 모든 버전 관리 규칙을 정의한다.
 ## Scope
 
 공용 자산 (Agents, Tools, Workflows, Capabilities, Templates) 및
-프로젝트 manifest, AIOS Framework 자체의 버전 관리에 적용된다.
+프로젝트 manifest, AOA Framework 자체의 버전 관리에 적용된다.
 
 ---
 
@@ -77,7 +77,7 @@ dependencies:
 
 ---
 
-## AIOS Framework 버전
+## AOA Framework 버전
 
 `aios.manifest.yaml`의 `version` 필드가 Framework 버전이다.
 

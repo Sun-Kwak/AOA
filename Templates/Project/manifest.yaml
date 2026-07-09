@@ -1,0 +1,48 @@
+# AOA 프로젝트 Manifest 템플릿
+
+id: <project-id>
+name: <Project Name>
+version: 1.0.0
+schema_version: 1.0
+created_at: <YYYY-MM-DD>
+
+description: >
+  프로젝트 설명을 작성하세요.
+
+# 프로젝트가 의존하는 AOA 에이전트
+dependencies:
+  agents:
+    - id: <agent-id>
+      path: Agents/<agent-id>/
+      type: shared
+      
+  project_agents:
+    - id: <project-specific-agent-id>
+      path: Projects/<project-id>/Agents/<agent-id>/
+      type: sub_agent
+
+# 실행할 워크플로우
+workflows:
+  - id: <workflow-id>
+    path: Workflows/<workflow-id>.yaml
+    description: >
+      워크플로우 설명
+
+# 프로젝트 출력물 저장 경로
+outputs:
+  directory: Projects/<project-id>/Outputs/
+  format: yaml
+
+# 프로젝트 메모리 저장 경로
+memory:
+  directory: Projects/<project-id>/Memory/
+
+# 프로젝트 템플릿
+templates:
+  - id: <template-id>
+    path: Templates/<template-id>/
+
+# 프로젝트 태그
+tags:
+  - automation
+  - <domain>

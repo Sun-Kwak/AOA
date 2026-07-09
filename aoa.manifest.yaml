@@ -1,11 +1,11 @@
-name: AI Automation OS
-id: AIOS
+name: Agent Operating Architecture
+id: AOA
 version: 1.0.0
 schema_version: "1.0"
 
 description: >
   Reusable operating system for AI automation projects.
-  AIOS provides a standardized framework for orchestrating
+  AOA provides a standardized framework for orchestrating
   capabilities, agents, workflows, tools, memory and projects.
 
 bootstrap:

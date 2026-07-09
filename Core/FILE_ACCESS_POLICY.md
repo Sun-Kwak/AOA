@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define which agents can read, write, and create files within the AIOS repository.
+Define which agents can read, write, and create files within the AOA repository.
 This policy protects the integrity of the framework and enforces project isolation.
 All agents must comply with this policy at all times.
 
@@ -10,7 +10,7 @@ All agents must comply with this policy at all times.
 
 ## Scope
 
-Covers access rules for every directory in the AIOS repository.
+Covers access rules for every directory in the AOA repository.
 Applies to: Root Orchestrator, Project Agents, Shared Agents, Project Sub-Agents.
 
 ---

@@ -12,5 +12,5 @@
 
 ---
 
-**번역 엔진:** AIOS translation-agent  
+**번역 엔진:** AOA translation-agent  
 **프로젝트:** content-translator

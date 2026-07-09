@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define standard communication and interaction protocols between AIOS agents.
+Define standard communication and interaction protocols between AOA agents.
 Protocols ensure that agents can interoperate without custom integration code.
 
 ---

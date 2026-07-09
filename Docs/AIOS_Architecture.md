@@ -1,4 +1,4 @@
-# AIOS Architecture
+# AOA Architecture
 
 ## Purpose
 

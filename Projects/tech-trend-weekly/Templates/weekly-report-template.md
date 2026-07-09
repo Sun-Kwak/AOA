@@ -63,4 +63,4 @@
 
 ---
 
-**리포트 생성:** AIOS tech-trend-weekly 프로젝트
+**리포트 생성:** AOA tech-trend-weekly 프로젝트

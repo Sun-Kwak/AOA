@@ -2,8 +2,8 @@
 
 ## Purpose
 
-Define how AIOS Root Orchestrator delegates tasks to sub-agents and project agents.
-The Root Orchestrator is the single entry point for all execution within AIOS.
+Define how AOA Root Orchestrator delegates tasks to sub-agents and project agents.
+The Root Orchestrator is the single entry point for all execution within AOA.
 All sub-agents and project agents operate under the authority of the Root Orchestrator.
 
 ---
@@ -25,7 +25,7 @@ This document covers:
 
 ```
 User
-  └── AIOS Root Orchestrator
+  └── AOA Root Orchestrator
         ├── Shared Agents (Registry — reusable across all projects)
         └── Project Agent (project-specific root)
               ├── Shared Agents (delegated from Registry)
@@ -33,7 +33,7 @@ User
 ```
 
 ### Root Orchestrator
-- Owns the full AIOS framework context.
+- Owns the full AOA framework context.
 - Is the only agent that reads Core, Policies, Standards, and Registry at startup.
 - Delegates tasks downward. Never executes project-specific logic directly.
 - Is the arbiter for missing agents and escalation.
@@ -144,25 +144,42 @@ Define timeout and retry behavior for delegated tasks.
 
 Agent sessions in the Copilot session panel are created on demand, not at boot.
 
-### Rules
+### 세션 생성 계층 규칙
 
-1. When a task requires delegation, Root checks whether the target agent has an active session.
-2. If no session exists → Root creates the session immediately before delegation.
-3. The session is injected with the appropriate Task Context slice.
-4. The session appears in the panel so the user can observe and interact if needed.
-5. Sessions persist until the user closes them.
+**Root가 생성하는 세션:**
+- Project Agent 세션 1개 (프로젝트 워크플로우 전체를 위임)
+- Root는 공용 에이전트, 프로젝트 서브에이전트 세션을 직접 생성하지 않는다.
+- Project Agent 및 하위 에이전트는 필요 시 하위 세션을 직접 생성할 수 있다.
 
-### Why On-Demand
+**Project Agent가 생성하는 세션:**
+- 워크플로우에 필요한 공용 에이전트 세션 (manifest dependencies 기준)
+- 프로젝트 서브에이전트 세션 (프로젝트 전용 작업)
+- Project Agent가 모든 단계를 조율하고 Root에 최종 보고한다.
 
-- Avoids cluttering the session panel with unused agent sessions.
-- Ensures every visible session is actively working on something.
-- Allows the user to see exactly which agents are currently in use.
+### 세션 패널 계층 구조
+
+```
+Root Session
+  └── [AOA] <Project> — Project Agent       ← Root가 생성
+        ├── [AOA] Shared — <공용 에이전트>   ← Project Agent가 생성
+        ├── [AOA] Shared — <공용 에이전트>   ← Project Agent가 생성
+        └── [AOA] <Project> — <서브에이전트> ← Project Agent가 생성
+```
+
+### 위반 시나리오 (하면 안 되는 것)
+
+```
+❌ Root가 공용 에이전트 세션을 직접 생성
+❌ Root가 프로젝트 서브에이전트 세션을 직접 생성
+❌ 프로젝트 서브에이전트가 다른 프로젝트 에이전트에 직접 연결
+```
 
 ### Session Naming Convention
 
 ```
-[AIOS] <Project Name> — <Agent Role>
-Examples:
-  [AIOS] kids-video-gen — Video Script Agent
-  [AIOS] Shared — YouTube Upload Agent
+[AOA] <Project Name> — <Agent Role>
+예시:
+  [AOA] daily-stock-pick — Project Agent       ← Root가 생성
+  [AOA] Shared — News Fetcher Agent            ← Project Agent가 생성
+  [AOA] daily-stock-pick — Stock Recommender   ← Project Agent가 생성
 ```

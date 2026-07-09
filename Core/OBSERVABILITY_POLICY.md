@@ -2,7 +2,7 @@
 
 ## Purpose
 
-AIOS 내에서 발생하는 모든 유의미한 이벤트의 기록 기준을 정의한다.
+AOA 내에서 발생하는 모든 유의미한 이벤트의 기록 기준을 정의한다.
 무엇을, 어디에, 어떤 형식으로 기록할지를 규정한다.
 이 정책이 있어야 추적, 디버깅, 재현, 감사가 가능하다.
 
@@ -124,14 +124,14 @@ Projects/<name>/Memory/execution_state.md  ← 현재 실행 상태
 Projects/<name>/Memory/decision_log.md     ← 프로젝트 범위 결정 이력
 ```
 
-AIOS 레벨 `Observability/`는 전체 이력,
+AOA 레벨 `Observability/`는 전체 이력,
 프로젝트 레벨 Memory는 현재 상태에 집중한다.
 
 ---
 
 ## Observability 로그 초기화
 
-`Observability/` 하위 3개 파일이 없으면 AIOS 부팅 시 자동 생성한다.
+`Observability/` 하위 3개 파일이 없으면 AOA 부팅 시 자동 생성한다.
 로그 파일이 없는 상태에서 이벤트가 발생하면 생성 후 기록한다.
 
 ---

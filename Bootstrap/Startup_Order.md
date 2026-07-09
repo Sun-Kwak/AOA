@@ -2,9 +2,9 @@
 
 ## Purpose
 
-Define the exact sequence in which AIOS loads its framework components.
-This document is the bootloader of AIOS.
-AI must follow this order every time it initializes a session within an AIOS repository.
+Define the exact sequence in which AOA loads its framework components.
+This document is the bootloader of AOA.
+AI must follow this order every time it initializes a session within an AOA repository.
 
 ---
 
@@ -19,7 +19,7 @@ It does not define rules or policies — only the load order.
 
 ### Step 1 — Read Framework Manifest
 - Read `aios.manifest.yaml` from the repository root.
-- Confirm `id: AIOS` is present.
+- Confirm `id: AOA` is present.
 - Record the framework version and all root paths.
 
 ### Step 2 — Verify Repository Structure

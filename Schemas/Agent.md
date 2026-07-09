@@ -2,7 +2,7 @@
 
 ## Purpose
 
-모든 AIOS 에이전트 정의 파일이 따라야 하는 표준 구조를 정의한다.
+모든 AOA 에이전트 정의 파일이 따라야 하는 표준 구조를 정의한다.
 이 스키마를 따라야 Registry에 등록할 수 있다.
 
 ---
@@ -54,7 +54,7 @@ dependencies:
 # 프롬프트 파일 경로 (Standards/Prompt.md 형식 준수)
 prompt_path: Agents/<name>/prompt.md
 
-# 이 에이전트에만 적용되는 제약 (AIOS Core 규칙은 포함하지 않음)
+# 이 에이전트에만 적용되는 제약 (AOA Core 규칙은 포함하지 않음)
 constraints: []
 
 # Registry 검색용 태그

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-모든 AIOS Capability 정의 파일이 따라야 하는 표준 구조를 정의한다.
+모든 AOA Capability 정의 파일이 따라야 하는 표준 구조를 정의한다.
 Capability는 에이전트를 구성하는 가장 작은 재사용 단위다.
 하나의 Capability는 하나의 원자적 행동만 수행한다.
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define how AIOS dynamically routes tasks between agents based on task state and capability,
+Define how AOA dynamically routes tasks between agents based on task state and capability,
 rather than following a fixed hierarchical execution order.
 
 ---

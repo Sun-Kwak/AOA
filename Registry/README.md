@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The Registry is the searchable catalog of all reusable AIOS assets.
+The Registry is the searchable catalog of all reusable AOA assets.
 It is the first place to look before creating any agent, capability, workflow, tool, or template.
 The Registry stores only indexes and metadata — never implementations.
 

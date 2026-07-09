@@ -39,7 +39,7 @@ outcome   : <결과 — 완료 후 업데이트>
 timestamp : 2026-07-09
 agent     : root
 level     : 2
-context   : AIOS 초기 구조 설계
+context   : AOA 초기 구조 설계
 decision  : 프레임워크 메모리와 프로젝트 메모리를 분리하는 하이브리드 구조 채택
 reasoning : FILE_ACCESS_POLICY에 따라 Project Agent는 자신의 프로젝트 메모리만
             접근 가능해야 하며, Root는 전체 인덱스만 필요하기 때문.

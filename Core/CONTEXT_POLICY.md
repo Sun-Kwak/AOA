@@ -3,7 +3,7 @@
 ## Purpose
 
 Define what context is passed between agents, how it is scoped, and what is excluded.
-This policy is the primary mechanism for token efficiency in AIOS.
+This policy is the primary mechanism for token efficiency in AOA.
 Without this policy, agents re-read the entire framework on every operation.
 
 ---
@@ -20,7 +20,7 @@ Covers:
 
 ## Context Layers
 
-AIOS context is organized into three layers.
+AOA context is organized into three layers.
 Each layer is owned by a specific agent tier.
 
 ### Layer 1 — Framework Context
@@ -132,7 +132,7 @@ project_path    : Projects/<name>/
 agent_role      : <assigned role>
 task_scope      : <description of delegated work>
 memory_slice    : <relevant memory excerpt>
-framework_rules : "Apply AIOS Core rules. Full framework loaded by Root."
+framework_rules : "Apply AOA Core rules. Full framework loaded by Root."
 ```
 
 The sub-agent acknowledges this package before proceeding.

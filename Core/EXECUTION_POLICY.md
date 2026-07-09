@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define how tasks are structured, scoped, and executed within AIOS.
+Define how tasks are structured, scoped, and executed within AOA.
 This policy ensures that every task has clear boundaries, a defined completion state,
 and does not silently expand beyond its original scope.
 
@@ -112,16 +112,47 @@ If a task fails mid-execution:
 
 ## Agent Session On-Demand Rule
 
-When a task requires delegation to an agent that does not have an active Copilot session:
+세션은 부팅 시가 아니라 실제로 필요할 때 생성된다.
+**세션 생성 주체는 계층에 따라 다르다.**
 
-1. Root Orchestrator checks whether a session for that agent exists in the session panel.
-2. If no session exists → Root creates the session at delegation time.
-3. The new session is injected with the Task Context slice (CONTEXT_POLICY).
-4. The session becomes visible in the panel for the duration of the task.
-5. Session remains open for follow-up unless the user closes it.
+### 계층별 세션 생성 책임
+
+| 생성 주체 | 생성 대상 세션 | 규칙 |
+|-----------|---------------|------|
+| Root | Project Agent 세션 | 프로젝트 워크플로우 실행 요청 시 1개만 생성 |
+| Project Agent | 공용 에이전트 세션 | 워크플로우 내 필요한 공용 에이전트 세션 생성 ✅ |
+| Project Agent | 프로젝트 서브에이전트 세션 | 프로젝트 전용 서브 작업 시 생성 ✅ |
+| Sub-Agent | 추가 서브 세션 | 필요 시 추가 하위 세션 생성 가능 ✅ |
+
+### Root의 역할 범위
+
+Root는 다음만 수행한다:
+
+1. Project Agent 세션이 있는지 확인한다.
+2. 없으면 Project Agent 세션을 생성하고 전체 워크플로우를 위임한다.
+3. Project Agent가 완료 보고를 보낼 때까지 기다린다.
+4. **Root는 공용 에이전트나 프로젝트 서브에이전트를 직접 생성하지 않는다.**
+
+### Project Agent의 역할 범위
+
+Project Agent는 다음을 수행한다:
+
+1. manifest.yaml의 dependencies를 확인한다.
+2. 필요한 공용 에이전트 세션을 직접 생성하고 위임한다.
+3. 프로젝트 서브에이전트 세션을 직접 생성하고 위임한다.
+4. 모든 단계 완료 후 Root에 최종 결과를 보고한다.
+
+### 세션 패널 계층 구조
+
+```
+Root Session
+  └── [AOA] <Project> — Project Agent       ← Root가 생성
+        ├── [AOA] Shared — <Agent>           ← Project Agent가 생성
+        ├── [AOA] Shared — <Agent>           ← Project Agent가 생성
+        └── [AOA] <Project> — <Sub-Agent>    ← Project Agent가 생성
+```
 
 **Sessions are created on demand, not at boot.**
-Only sessions for agents actively being used are created.
 
 ---
 

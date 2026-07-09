@@ -1,7 +1,7 @@
-# AIOS — AI Automation OS
+# AOA — Agent Operating Architecture
 
-이 저장소는 AIOS(AI Automation OS) v1.0.0입니다.
-이 저장소의 모든 Copilot 세션은 AIOS 프레임워크를 따릅니다.
+이 저장소는 AOA(Agent Operating Architecture) v1.0.0입니다.
+이 저장소의 모든 Copilot 세션은 AOA 프레임워크를 따릅니다.
 매 세션마다 규칙을 다시 설명할 필요가 없습니다.
 
 ---
@@ -20,7 +20,7 @@
 
 세션 시작 방식으로 역할을 판단한다:
 
-- **Root Orchestrator**: 사용자가 직접 시작한 세션 (Chat). AIOS 전체 설계, 공용 에이전트 생성/등록, 프로젝트 생성 담당.
+- **Root Orchestrator**: 사용자가 직접 시작한 세션 (Chat). AOA 전체 설계, 공용 에이전트 생성/등록, 프로젝트 생성 담당.
 - **Project Agent**: Session Bridge Package와 함께 시작된 세션. 해당 프로젝트 워크플로우 전체 조율 담당.
 - **Sub-Agent**: Project Agent가 생성한 세션. 특정 태스크 하나만 담당.
 
@@ -31,7 +31,7 @@
 Root Agent (Chat)로 시작된 경우:
 
 **역할:**
-- AIOS 프레임워크 설계 및 수정
+- AOA 프레임워크 설계 및 수정
 - 공용 에이전트 생성 및 수정 (`Agents/`)
 - 새 프로젝트 생성
 - Registry 관리
@@ -62,8 +62,8 @@ Root Agent (Chat)로 시작된 경우:
 3. **프로젝트 세션 생성**
    ```javascript
    create_session({
-     name: "[AIOS] <project-id> — Project Agent",
-     project_id: "<AIOS-project-id>",
+     name: "[AOA] <project-id> — Project Agent",
+     project_id: "<AOA-project-id>",
      kickoff: { mode: "interactive", prompt: "..." },
      notify_on_idle: "once"
    })
@@ -128,7 +128,7 @@ Projects/<project-id>/Workflows/ 디렉토리 확인
 
 ```javascript
 create_session({
-  name: "[AIOS] Shared — <에이전트 역할>",
+  name: "[AOA] Shared — <에이전트 역할>",
   project_id: "<현재 프로젝트 ID>",
   kickoff: {
     prompt: `당신은 <agent-id> 에이전트입니다.
@@ -152,7 +152,7 @@ create_session({
 
 동일하게 `create_session` 사용, 세션 이름만 변경:
 ```
-[AIOS] <project-id> — <에이전트 역할>
+[AOA] <project-id> — <에이전트 역할>
 ```
 
 **로컬 실행 (execution: local):**
@@ -168,9 +168,9 @@ create_session({
 
 ### 세션 이름 규칙
 ```
-공용 에이전트  : [AIOS] Shared — <에이전트 역할>
-프로젝트 에이전트 : [AIOS] <project-id> — Project Agent
-프로젝트 서브  : [AIOS] <project-id> — <에이전트 역할>
+공용 에이전트  : [AOA] Shared — <에이전트 역할>
+프로젝트 에이전트 : [AOA] <project-id> — Project Agent
+프로젝트 서브  : [AOA] <project-id> — <에이전트 역할>
 ```
 
 ### 핵심 원칙

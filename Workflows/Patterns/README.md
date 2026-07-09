@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the canonical execution patterns available in AIOS.
+Define the canonical execution patterns available in AOA.
 These patterns are the building blocks for composing workflows from agents.
 
 ---

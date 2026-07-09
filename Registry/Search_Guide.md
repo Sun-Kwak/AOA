@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define how to efficiently find assets in the AIOS Registry.
+Define how to efficiently find assets in the AOA Registry.
 Following this guide avoids unnecessary file reads and reduces token cost.
 
 ---

@@ -8,7 +8,7 @@ description: >
   사용자가 제공한 영문 콘텐츠(문서, 이메일, 기사 등)를
   한국어로 자동 번역하는 단순 번역 프로젝트입니다.
 
-# 프로젝트가 의존하는 AIOS 에이전트
+# 프로젝트가 의존하는 AOA 에이전트
 dependencies:
   agents:
     - id: translation-agent

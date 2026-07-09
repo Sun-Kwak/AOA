@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the kernel initialization rules of AIOS.
+Define the kernel initialization rules of AOA.
 BOOT establishes the fundamental operating conditions that must be satisfied
 before any agent, workflow, or project can execute.
 
@@ -27,7 +27,7 @@ BOOT does not define agent behavior, policies, or project logic.
 Before executing any user request, the following must be confirmed:
 
 1. `aios.manifest.yaml` has been read and validated.
-2. `id: AIOS` is confirmed in the manifest.
+2. `id: AOA` is confirmed in the manifest.
 3. Framework version is recorded.
 4. `Bootstrap/Startup_Order.md` has been followed.
 5. All Core documents have been loaded.

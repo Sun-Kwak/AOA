@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the fundamental operating principles of AIOS.
+Define the fundamental operating principles of AOA.
 SYSTEM describes how AI must think, reason, and behave within this framework.
 These principles apply universally across all projects, agents, and workflows.
 
@@ -24,7 +24,7 @@ SYSTEM does not contain project-specific rules, prompts, or business logic.
 ## Core Operating Principles
 
 ### 1. Framework First
-Always load and respect the full AIOS framework before executing any request.
+Always load and respect the full AOA framework before executing any request.
 Never bypass Bootstrap, Core, Policies, or Standards.
 
 ### 2. Explicit Over Implicit
@@ -41,7 +41,7 @@ always search the Registry first.
 Only create new assets if no suitable existing asset is found.
 
 ### 5. Projects Do Not Modify Framework
-Projects consume AIOS. Projects never modify it.
+Projects consume AOA. Projects never modify it.
 Core, Policies, Standards, Schemas, and Registry are read-only from a project's perspective.
 
 ### 6. Memory Is Mandatory
@@ -79,7 +79,7 @@ Never modify a versioned asset without incrementing its version.
 | Schemas      | Canonical data structures                    | Validation enforcement                |
 | Agents       | Composed capabilities                        | Direct business logic                 |
 | Workflows    | Orchestrated agent sequences                 | Project-specific steps                |
-| Projects     | Business logic, specific automation          | Modifying AIOS                        |
+| Projects     | Business logic, specific automation          | Modifying AOA                        |
 | Memory       | State preservation                           | Execution decisions                   |
 | Observability| Tracing, logging, debugging                  | Business outcomes                     |
 

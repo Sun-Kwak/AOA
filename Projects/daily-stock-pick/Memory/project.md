@@ -12,9 +12,9 @@
 project_id: daily-stock-pick
 status: active
 current_phase: 초기 설정 완료, 첫 실행 대기
-last_run: null
-last_output: null
-total_runs: 0
+last_run: 2026-07-09T14:12+09:00
+last_output: Outputs/daily-report-20260709.md
+total_runs: 1
 ```
 
 ---
@@ -33,4 +33,4 @@ total_runs: 0
 
 | 날짜 | 수집 뉴스 | 추천 종목 | 출력 파일 |
 |------|----------|----------|----------|
-| (없음) | - | - | - |
+| 2026-07-09 | 10 | 10 | daily-report-20260709.md |

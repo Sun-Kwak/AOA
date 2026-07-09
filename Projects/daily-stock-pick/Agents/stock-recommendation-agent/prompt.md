@@ -14,7 +14,7 @@
 
 이전 단계(translation-agent)에서 번역된 해외 뉴스 10개를 입력으로 받습니다.
 각 뉴스 항목에는 제목, 요약, 영향 섹터, 관련성 이유가 포함되어 있습니다.
-AIOS Core 규칙 및 Policies가 적용됩니다.
+AOA Core 규칙 및 Policies가 적용됩니다.
 
 ---
 

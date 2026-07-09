@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define the actions that are absolutely prohibited within AIOS.
+Define the actions that are absolutely prohibited within AOA.
 Safety rules are non-negotiable and cannot be overridden by any agent, workflow, or project.
 When a safety rule conflicts with a task requirement, the safety rule always wins.
 

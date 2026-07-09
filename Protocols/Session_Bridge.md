@@ -28,12 +28,12 @@ created_by: root
 target_session: <세션 패널 표기명>
 timestamp: <ISO 8601>
 
-# ── AIOS 프레임워크 식별 ──
+# ── AOA 프레임워크 식별 ──
 framework:
   aios_version: 1.0.0
   manifest_path: aios.manifest.yaml
   note: >
-    AIOS Framework가 적용됩니다.
+    AOA Framework가 적용됩니다.
     Core, Policies, Standards는 Root Orchestrator가 보유합니다.
     이 에이전트는 Framework 파일을 재로드하지 않습니다.
 
@@ -99,15 +99,15 @@ available_agents:
 Session Bridge로 생성된 세션의 이름:
 
 ```
-[AIOS] <project-id> — <agent-role>
+[AOA] <project-id> — <agent-role>
 예시:
-  [AIOS] kids-video-gen — Script Writer Agent
-  [AIOS] Shared — Image Generation Agent
+  [AOA] kids-video-gen — Script Writer Agent
+  [AOA] Shared — Image Generation Agent
 ```
 
 Root 세션:
 ```
-[AIOS] Root Orchestrator
+[AOA] Root Orchestrator
 ```
 
 ---

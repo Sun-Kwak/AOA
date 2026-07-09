@@ -8,7 +8,7 @@ description: >
   AI, Cloud, DevOps, Web3 등 기술 트렌드 뉴스를 수집하고
   번역 및 분석하여 주간 트렌드 리포트를 자동 생성합니다.
 
-# 프로젝트가 의존하는 AIOS 에이전트
+# 프로젝트가 의존하는 AOA 에이전트
 dependencies:
   agents:
     - id: news-fetcher-agent

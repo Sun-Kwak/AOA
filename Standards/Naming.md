@@ -2,7 +2,7 @@
 
 ## Purpose
 
-AIOS 전체에서 일관된 이름 규칙을 정의한다.
+AOA 전체에서 일관된 이름 규칙을 정의한다.
 일관된 이름이 있어야 Registry 검색이 정확하고
 파일 참조가 깨지지 않는다.
 
@@ -64,8 +64,8 @@ Display Name (README, 문서에서):
   Image Generation Agent
 
 세션 패널 표기:
-  [AIOS] <Project Name> — <Display Name>
-  예) [AIOS] kids-video-gen — Image Generation Agent
+  [AOA] <Project Name> — <Display Name>
+  예) [AOA] kids-video-gen — Image Generation Agent
 ```
 
 에이전트 ID는 역할을 명확히 나타내야 한다.

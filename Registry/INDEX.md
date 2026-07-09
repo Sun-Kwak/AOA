@@ -1,4 +1,4 @@
-# AIOS Registry Index
+# AOA Registry Index
 
 > **Cold Start Instruction**: Read this file first.
 > Do NOT read individual registry directories until a specific asset is needed.
@@ -11,7 +11,7 @@
 
 | Key | Value |
 |-----|-------|
-| AIOS Version | 1.0.0 |
+| AOA Version | 1.0.0 |
 | Schema Version | 1.0 |
 | Index Last Updated | 2026-07-09 |
 
