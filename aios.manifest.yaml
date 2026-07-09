@@ -1,0 +1,74 @@
+name: AI Automation OS
+id: AIOS
+version: 1.0.0
+schema_version: "1.0"
+
+description: >
+  Reusable operating system for AI automation projects.
+  AIOS provides a standardized framework for orchestrating
+  capabilities, agents, workflows, tools, memory and projects.
+
+bootstrap:
+  startup_order: Bootstrap/Startup_Order.md
+  initialize: Bootstrap/Initialize.md
+  recovery: Bootstrap/Recovery.md
+
+core:
+  boot: Core/BOOT.md
+  system: Core/SYSTEM.md
+  orchestrator: Core/ORCHESTRATOR.md
+
+registry:
+  root: Registry/
+  index: Registry/INDEX.md
+
+memory:
+  root: Memory/
+
+knowledge:
+  root: Knowledge/
+
+projects:
+  root: Projects/
+
+templates:
+  root: Templates/
+
+capabilities:
+  root: Capabilities/
+
+agents:
+  root: Agents/
+
+workflows:
+  root: Workflows/
+
+tools:
+  root: Tools/
+
+schemas:
+  root: Schemas/
+
+policies:
+  root: Policies/
+
+standards:
+  root: Standards/
+
+observability:
+  root: Observability/
+
+protocols:
+  root: Protocols/
+
+docs:
+  root: Docs/
+
+features:
+  registry: true
+  reusable_agents: true
+  reusable_workflows: true
+  reusable_capabilities: true
+  project_memory: true
+  framework_memory: true
+  observability: true

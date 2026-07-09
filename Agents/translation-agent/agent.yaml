@@ -1,0 +1,57 @@
+# Schemas/Agent.md 스키마를 따름
+
+id: translation-agent
+name: Translation Agent
+version: 1.0.0
+status: active
+
+role: >
+  영문 텍스트를 보고서용 한국어로 번역한다.
+  구어체, 존댓말, 감탄사를 사용하지 않으며
+  간결하고 명확한 보고서 문체를 유지한다.
+
+capabilities: []
+
+inputs:
+  - name: text
+    type: text
+    required: true
+    description: 번역할 영문 원문 텍스트.
+  - name: context
+    type: text
+    required: false
+    description: 번역 맥락 힌트 (예 - 주식 리서치 보고서, 기술 문서 등). 없으면 일반 보고서 스타일 적용.
+
+outputs:
+  - name: translated_text
+    type: text
+    path: null
+    description: 보고서용 한국어 번역 결과.
+  - name: glossary
+    type: yaml
+    path: null
+    description: 번역 중 판단한 주요 용어 원문/번역어 쌍 목록 (선택적).
+
+dependencies:
+  agents: []
+  tools: []
+
+prompt_path: Agents/translation-agent/prompt.md
+
+constraints:
+  - 존댓말(-습니다, -입니다 체) 사용 금지.
+  - 구어체 및 감탄사 사용 금지.
+  - 원문의 의미를 축소하거나 과장하지 않는다.
+  - 고유명사(기업명, 인명, 지명)는 원문 병기를 기본으로 한다.
+  - 금융·경제 용어는 한국 금융업계 표준 용어를 우선 사용한다.
+
+tags:
+  - translation
+  - korean
+  - report-style
+  - finance
+
+changelog:
+  - version: 1.0.0
+    date: 2026-07-09
+    note: 최초 등록 (테스트용)
