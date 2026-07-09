@@ -1,0 +1,56 @@
+id: tech-trend-weekly
+name: 주간 기술 트렌드 리포트
+version: 1.0.0
+schema_version: 1.0
+created_at: 2026-07-09
+
+description: >
+  AI, Cloud, DevOps, Web3 등 기술 트렌드 뉴스를 수집하고
+  번역 및 분석하여 주간 트렌드 리포트를 자동 생성합니다.
+
+# 프로젝트가 의존하는 AIOS 에이전트
+dependencies:
+  agents:
+    - id: news-fetcher-agent
+      path: Agents/news-fetcher-agent/
+      type: shared
+      description: 글로벌 기술 뉴스 수집
+      
+    - id: translation-agent
+      path: Agents/translation-agent/
+      type: shared
+      description: 한국어 번역
+      
+  project_agents:
+    - id: trend-analyzer-agent
+      path: Projects/tech-trend-weekly/Agents/trend-analyzer-agent/
+      type: sub_agent
+      description: 기술 트렌드 분석 및 인사이트 도출
+
+# 실행할 워크플로우
+workflows:
+  - id: weekly-tech-report-workflow
+    path: Workflows/weekly-tech-report-workflow.yaml
+    description: >
+      기술 뉴스 수집 → 번역 → 트렌드 분석 → 주간 리포트 생성
+
+# 프로젝트 출력물 저장 경로
+outputs:
+  directory: Projects/tech-trend-weekly/Outputs/
+  format: markdown
+
+# 프로젝트 메모리 저장 경로
+memory:
+  directory: Projects/tech-trend-weekly/Memory/
+
+# 프로젝트 템플릿
+templates:
+  - id: weekly-report-template
+    path: Projects/tech-trend-weekly/Templates/weekly-report-template.md
+
+# 프로젝트 태그
+tags:
+  - automation
+  - tech-trends
+  - weekly-report
+  - analysis

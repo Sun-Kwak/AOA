@@ -1,0 +1,106 @@
+id: weekly-tech-report-workflow
+name: 주간 기술 트렌드 리포트 워크플로우
+version: 1.0.0
+status: active
+
+description: >
+  글로벌 기술 뉴스 수집 → 번역 → 트렌드 분석 → 주간 리포트 생성
+  3단계 파이프라인 워크플로우
+
+pattern: pipeline
+
+agents_required:
+  - id: news-fetcher-agent
+    role: 기술 뉴스 수집
+    type: shared
+  - id: translation-agent
+    role: 번역
+    type: shared
+  - id: trend-analyzer-agent
+    role: 트렌드 분석 및 인사이트
+    type: sub_agent
+  - id: tech-trend-weekly-project-agent
+    role: 최종 리포트 생성
+    type: project_agent
+
+inputs:
+  - name: week_start_date
+    type: date
+    description: 수집 시작 날짜 (YYYY-MM-DD)
+    required: true
+  - name: week_end_date
+    type: date
+    description: 수집 종료 날짜 (YYYY-MM-DD)
+    required: true
+  - name: tech_categories
+    type: list
+    description: 수집할 기술 카테고리 (AI, Cloud, DevOps, Web3 등)
+    default: ["AI", "Cloud", "DevOps", "Web3"]
+
+outputs:
+  - name: weekly_report
+    path: Outputs/tech-trend-report-{week_start_date}.md
+    format: markdown
+
+steps:
+  - step_id: step-001
+    name: 기술 뉴스 수집
+    agent: news-fetcher-agent
+    execution: create_shared_agent
+    inputs_from:
+      - source: workflow_input
+        field: week_start_date
+      - source: workflow_input
+        field: week_end_date
+      - source: workflow_input
+        field: tech_categories
+    outputs_to:
+      - target: Memory/step-001-tech-news.yaml
+        format: yaml
+    on_failure: escalate
+
+  - step_id: step-002
+    name: 한국어 번역
+    agent: translation-agent
+    execution: create_shared_agent
+    inputs_from:
+      - source: step-001
+        field: Memory/step-001-tech-news.yaml
+    outputs_to:
+      - target: Memory/step-002-translated-news.yaml
+        format: yaml
+    on_failure: escalate
+
+  - step_id: step-003
+    name: 트렌드 분석
+    agent: trend-analyzer-agent
+    execution: create_sub_agent
+    inputs_from:
+      - source: step-002
+        field: Memory/step-002-translated-news.yaml
+    outputs_to:
+      - target: Memory/step-003-trend-analysis.yaml
+        format: yaml
+    on_failure: escalate
+
+  - step_id: step-004
+    name: 최종 리포트 생성
+    agent: tech-trend-weekly-project-agent
+    execution: local
+    inputs_from:
+      - source: step-003
+        field: Memory/step-003-trend-analysis.yaml
+    outputs_to:
+      - target: Outputs/tech-trend-report-{week_start_date}.md
+        format: markdown
+    on_failure: escalate
+
+post_execution:
+  - action: notify
+    target: user
+    message: "주간 기술 트렌드 리포트 생성 완료"
+
+changelog:
+  - version: 1.0.0
+    date: 2026-07-09
+    note: 최초 등록
