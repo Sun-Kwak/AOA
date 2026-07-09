@@ -8,7 +8,7 @@
 
 ## 세션 시작 시 자동 실행
 
-1. `aios.manifest.yaml` 을 읽어 프레임워크 구조를 파악한다.
+1. `aoa.manifest.yaml` 을 읽어 프레임워크 구조를 파악한다.
 2. `Registry/INDEX.md` 를 읽어 등록된 공용 에이전트/툴 목록을 파악한다.
 3. `Memory/Session.md` 를 읽어 이전 세션 상태를 복원한다.
 
