@@ -16,16 +16,54 @@ Wiki 조회와 업데이트는 선택이 아닌 **의무**다.
 
 ---
 
+## 3-Tier Wiki 구조
+
+AOA는 역할별로 분리된 3계층 Wiki 구조를 사용한다:
+
+### Tier 1: Root Wiki
+- **위치**: `Memory/Wiki/`
+- **담당**: Root Agent (AOA 프레임워크 관리자)
+- **내용**: 프로젝트 생성, 에이전트 생성, Registry 관리, 세션 관리
+
+### Tier 2: 프로젝트 Wiki
+- **위치**: `Projects/<id>/Memory/wiki/`
+- **담당**: Project Agent (프로젝트 오케스트레이터)
+- **내용**: 워크플로우 실행, 에이전트 조율, 출력 처리
+
+### Tier 3: 에이전트 Wiki
+- **위치**: `Agents/<id>/memory/wiki/`
+- **담당**: 공용 에이전트 (재사용 가능 에이전트)
+- **내용**: 실행 패턴, API 에러, 출력 형식, 입력 검증
+
+**원칙**: 각 계층은 자신의 Wiki만 읽고 쓴다. 상위 계층 Wiki는 참조 가능.
+
+---
+
 ## 작업 시작 전: Wiki 조회 (필수)
 
-작업 요청이 들어오면 즉시 해당 Wiki 문서를 읽는다:
+작업 요청이 들어오면 즉시 **자신의 계층** Wiki 문서를 읽는다:
 
+### Root Agent Wiki
 | 작업 유형 | 조회할 Wiki 문서 |
 |-----------|-----------------|
 | 프로젝트 생성 | `Memory/Wiki/project_creation.md` |
 | 에이전트 생성 | `Memory/Wiki/agent_creation.md` |
 | 세션 생성 | `Memory/Wiki/session_management.md` |
 | Registry 수정 | `Memory/Wiki/registry_management.md` |
+
+### Project Agent Wiki
+| 작업 유형 | 조회할 Wiki 문서 |
+|-----------|-----------------|
+| 워크플로우 실행 | `Projects/<id>/Memory/wiki/workflow_execution.md` |
+| 에이전트 조율 | `Projects/<id>/Memory/wiki/agent_coordination.md` |
+| 출력 처리 | `Projects/<id>/Memory/wiki/output_handling.md` |
+
+### Agent Wiki
+| 작업 유형 | 조회할 Wiki 문서 |
+|-----------|-----------------|
+| 실행 패턴 | `Agents/<id>/memory/wiki/execution_patterns.md` |
+| API 에러 | `Agents/<id>/memory/wiki/api_errors.md` |
+| 출력 형식 | `Agents/<id>/memory/wiki/output_formats.md` |
 
 ### 조회 절차
 

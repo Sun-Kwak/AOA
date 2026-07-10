@@ -51,6 +51,11 @@ dependencies:
   agents: []                      # 협업 에이전트 ID 목록
   tools: []                       # 사용 툴 ID 목록
 
+# 메모리 (선택사항 - 공용 에이전트에 권장)
+memory:
+  wiki: Agents/<name>/memory/wiki/  # 에이전트별 학습 Wiki
+  executions: Agents/<name>/memory/executions/  # 실행 기록 (선택)
+
 # 프롬프트 파일 경로 (Standards/Prompt.md 형식 준수)
 prompt_path: Agents/<name>/prompt.md
 

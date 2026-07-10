@@ -79,6 +79,7 @@ memory:
   project_memory: Projects/<name>/Memory/project.md
   execution_state: Projects/<name>/Memory/execution_state.md
   decision_log: Projects/<name>/Memory/decision_log.md
+  wiki: Projects/<name>/Memory/wiki/  # 프로젝트별 학습 Wiki
 
 # ── 출력 설정 ─────────────────────────────────────────
 outputs:
