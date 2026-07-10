@@ -1,0 +1,62 @@
+# Agents/browser-controller/agent.yaml
+id: browser-controller
+name: Browser Controller
+version: 1.0.0
+status: active
+
+role: >
+  Canvas Browser를 통제하여 웹 자동화 수행. 자연어 명령을 Canvas action으로 변환하고,
+  Instagram/YouTube/TikTok 등 SNS 플랫폼 배포 플로우 실행.
+
+capabilities: []
+
+inputs:
+  - name: canvas_instance_id
+    type: text
+    required: true
+    description: 제어할 Canvas Browser 인스턴스 ID (예: "browser-insta-main")
+  
+  - name: command
+    type: text
+    required: true
+    description: 자연어 명령 (예: "Instagram에 이미지 업로드하고 캡션 달아줘")
+  
+  - name: context
+    type: yaml
+    required: false
+    description: 추가 컨텍스트 (파일 경로, 캡션, 태그 등)
+
+outputs:
+  - name: execution_result
+    type: yaml
+    path: null
+    description: 실행 결과 (성공/실패, 스크린샷, 에러 메시지)
+
+dependencies:
+  agents: []
+  tools: []
+
+memory:
+  wiki: Agents/browser-controller/memory/wiki/
+  executions: Agents/browser-controller/memory/executions/
+
+prompt_path: Agents/browser-controller/prompt.md
+
+constraints:
+  - Canvas Browser 외 다른 브라우저 사용 금지
+  - 로그인은 사용자가 수동으로 수행 (에이전트는 로그인 후 세션 사용만)
+  - 플랫폼별 배포 플로우는 memory/wiki에서 학습
+
+tags:
+  - browser-automation
+  - web-automation
+  - canvas
+  - sns-deployment
+  - instagram
+  - youtube
+  - tiktok
+
+changelog:
+  - version: 1.0.0
+    date: 2026-07-10
+    note: 최초 등록. Canvas Browser 기반 웹 자동화 + SNS 배포 지원.

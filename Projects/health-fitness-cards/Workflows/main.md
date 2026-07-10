@@ -18,18 +18,79 @@ Phase 3: 결과 검증 및 저장
 
 ---
 
-## Phase 1: 트렌드 수집
+## Phase 0: 계정 탐색 (Setup, 1회만)
 
 **Agent:** trend-research-agent (공용)
+
+**목적:** 일러스트 건강 정보 제공 계정 발견
 
 **Parameters:**
 
 ```yaml
-platforms: ["instagram"]  # YouTube 제외, Instagram만
+mode: "account_discovery"  # 새로운 모드
+platforms: ["instagram"]
 category: "health"
-keywords: ["건강 운동", "여성 운동", "홈트"]
-output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/"
+keywords: ["건강정보", "의학상식", "건강상식카드"]
+output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/setup/"
 max_results_per_platform: 50
+```
+
+**추가 Instruction:**
+
+```markdown
+**계정 탐색 모드 (Account Discovery):**
+
+1. **데이터 수집:**
+   - 해시태그로 50개 포스트 수집
+   - 각 포스트의 ownerUsername, likes, caption, thumbnailUrl 기록
+
+2. **계정 리스트 생성:**
+   - ownerUsername 별로 그룹화
+   - 각 계정의 총 likes, 포스트 수, 평균 engagement 계산
+   - engagement 높은 순으로 정렬
+
+3. **출력 파일:**
+   - `account_candidates.json`:
+     [
+       {
+         "username": "@health_happyvirus",
+         "total_likes": 15000,
+         "post_count": 8,
+         "avg_engagement": 1875,
+         "sample_posts": [
+           {
+             "url": "https://instagram.com/p/...",
+             "thumbnail": "https://...",
+             "caption": "몸의 신호 8가지...",
+             "likes": 2500
+           }
+         ]
+       }
+     ]
+
+4. **사용자 선별 대기:**
+   - 계정 리스트 출력
+   - 사용자가 일러스트 스타일 계정만 선별
+   - 선별된 계정을 Memory/verified_accounts.json에 저장
+```
+
+---
+
+## Phase 1: 타겟 계정 수집 (Regular)
+
+**Agent:** trend-research-agent (공용)
+
+**목적:** 검증된 계정들의 최근 콘텐츠 수집
+
+**Parameters:**
+
+```yaml
+mode: "account_based"  # 계정 기반 수집 모드
+platforms: ["instagram"]
+category: "health"
+target_accounts_file: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/verified_accounts.json"
+output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/"
+posts_per_account: 10
 date_range_days: 7
 ```
 
@@ -38,19 +99,33 @@ date_range_days: 7
 ```markdown
 **중요: Visual References 필터링 규칙**
 
-1. **정보성 카드뉴스만 수집:**
-   - ✅ 일러스트 스타일 (캐릭터, 다이어그램, 인포그래픽)
-   - ✅ 텍스트 중심 레이아웃 (리스트, 번호, 체크리스트)
-   - ✅ 교육/정보 전달 목적의 디자인
-   - ❌ 실사 운동 영상 썸네일 제외
-   - ❌ 인물 사진 위주 콘텐츠 제외
-   - ❌ 단순 동기부여 문구만 있는 이미지 제외
+1. **의학/건강 정보 일러스트 카드만 수집:**
+   - ✅ 일러스트 기반 (만화 스타일, 캐릭터, 장기 다이어그램)
+   - ✅ 의학/건강 지식 전달 (신체 신호, 증상, 생활습관, 식단, 운동 효과)
+   - ✅ 구조화된 정보 레이아웃 (번호 리스트, 그리드, 타임라인)
+   - ✅ 교육적 콘텐츠 (의사 조언, 건강상식, 증상 체크)
+   
+   **제외 항목 (엄격):**
+   - ❌ 실사 운동 영상 썸네일 (사람이 운동하는 사진/영상)
+   - ❌ 상품 광고 (운동기구, 건강식품, 앱 광고)
+   - ❌ 교육 현장/세미나 사진 (강의실, 단체 사진)
+   - ❌ 뉴스 기사 이미지 (골프, 대회, 시설 개장)
+   - ❌ 인물 사진 중심 콘텐츠
+   - ❌ 동기부여 문구만 있는 이미지
 
-2. **Style Notes 작성 시 구체적으로:**
-   - "Illustration style card with numbered list (1-8)"
-   - "Diagram with labeled body parts and text explanations"
-   - "Grid layout (3x4) with icons and Korean text"
-   - "Infographic with timeline/steps format"
+2. **콘텐츠 키워드 우선순위:**
+   - 1순위: "몸의 신호", "증상", "냄새", "통증", "장기", "혈관", "호르몬"
+   - 2순위: "체크리스트", "OO가지", "의사가 알려주는", "건강상식"
+   - 3순위: "아침 루틴", "식습관", "생활습관", "예방법"
+   - 제외: "운동 루틴", "홈트", "PT", "다이어트 챌린지"
+
+2. **Style Notes 작성 예시:**
+   - ✅ "Illustrated body diagram with 8 labeled symptoms"
+   - ✅ "Comic-style health card showing organ characters with warnings"
+   - ✅ "Grid layout (3x4) morning routine infographic with illustrations"
+   - ✅ "Timeline format pregnancy age chart with illustration"
+   - ❌ "Photo of workout session" → 제외
+   - ❌ "Product advertisement with model" → 제외
 
 3. **중복 제거:**
    - thumbnail_url이 동일한 이미지는 1개만 수집
