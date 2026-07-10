@@ -24,7 +24,7 @@
 | Agents | 2 | Registry/Agents/ |
 | Capabilities | 0 | Registry/Capabilities/ |
 | Workflows | 0 | Registry/Workflows/ |
-| Tools | 0 | Registry/Tools/ |
+| Tools | 1 | Registry/Tools/ |
 | Templates | 0 | Registry/Templates/ |
 
 > When assets are registered, they appear in the sections below.
@@ -36,8 +36,8 @@
 
 | ID | Name | Version | Tags | Description | Path |
 |----|------|---------|------|-------------|------|
-| news-fetcher-agent | News Fetcher Agent | 1.0.0 | news, research, stock-market, korean-market | 영어권 뉴스에서 한국 주식 시장 영향 핫 토픽 10개 수집 | Agents/news-fetcher-agent/ |
-| translation-agent | Translation Agent | 1.0.0 | translation, korean, report-style, finance | 영문을 보고서용 한국어로 번역 (구어체·존댓말 없음) | Agents/translation-agent/ |
+| trend-research-agent | Trend Research Agent | 1.0.0 | trends, social-media, content-research, youtube, instagram, visual-references | YouTube Shorts + Instagram Reels 트렌드 수집 + Visual Reference 다운로드 | Agents/trend-research-agent/ |
+| image-generator | Image Generator | 1.0.0 | image-generation, fal-ai, text2img, img2img, card-news, nanovana2 | 범용 이미지 생성 Agent (text2img, img2img). Reference 기반 트렌드 스타일 복제 지원. | Agents/image-generator/ |
 
 ---
 
@@ -65,12 +65,9 @@ Format:
 
 ## Tools
 
-<!-- Registered tools will be listed here.
-Format:
 | ID | Name | Version | Tags | Description | Path |
--->
-
-*No tools registered yet.*
+|----|------|---------|------|-------------|------|
+| apify | Apify Integration | 1.0.0 | data-collection, web-scraping, mcp, youtube, instagram | Apify MCP Server를 통한 소셜 미디어 데이터 수집 | Tools/apify/ |
 
 ---
 

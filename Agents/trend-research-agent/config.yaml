@@ -1,0 +1,31 @@
+name: trend-research-agent
+version: 1.0.0
+type: shared
+
+description: |
+  Collects and analyzes trending content from social media platforms.
+  Provides actionable content recommendations based on real-time data.
+
+capabilities:
+  - data-collection
+  - trend-analysis
+  - content-recommendation
+
+platforms:
+  - youtube
+  - instagram
+
+tools:
+  - apify  # Via MCP Server
+
+schemas:
+  output: Schemas/Trend_Report.md
+
+defaults:
+  max_results_per_platform: 100
+  date_range_days: 7
+  min_engagement_threshold: 1000
+
+performance:
+  execution_time_minutes: 5-8
+  cost_per_run_usd: 0.66

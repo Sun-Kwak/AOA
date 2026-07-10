@@ -1,0 +1,83 @@
+# Image Generator Agent Configuration
+# 범용 이미지 생성 Agent (text2img, img2img)
+
+id: image-generator
+name: "Image Generator"
+version: 1.0.0
+description: "범용 이미지 생성 Agent. 텍스트 프롬프트 또는 Reference 이미지 기반 생성 지원."
+
+# Provider 설정
+provider:
+  default: fal.ai
+  
+  fal.ai:
+    api_key_env: FAL_KEY
+    base_url: "https://fal.run"
+    
+    # 지원 모델
+    models:
+      nanovana2:
+        id: "fal-ai/flux-pro/v1.1-ultra"
+        description: "기본 모델. 품질/비용 대비 우수"
+        cost: 0.05  # per image (USD)
+        capabilities:
+          - text2img
+          - img2img
+        
+      flux-schnell:
+        id: "fal-ai/flux/schnell"
+        description: "빠른 생성 (저품질)"
+        cost: 0.003
+        capabilities:
+          - text2img
+          
+      flux-dev:
+        id: "fal-ai/flux/dev"
+        description: "고품질 생성"
+        cost: 0.025
+        capabilities:
+          - text2img
+          - img2img
+          
+      flux-pro:
+        id: "fal-ai/flux-pro"
+        description: "최고 품질 (느림)"
+        cost: 0.055
+        capabilities:
+          - text2img
+          - img2img
+
+# 기본 파라미터
+defaults:
+  model: nanovana2
+  
+  text2img:
+    aspect_ratio: "16:9"
+    num_images: 1
+    safety_tolerance: 2
+    enable_safety_checker: true
+    
+  img2img:
+    strength: 0.6  # 0.0 (원본 유지) ~ 1.0 (완전 재생성)
+    aspect_ratio: "16:9"
+    num_images: 1
+    safety_tolerance: 2
+    enable_safety_checker: true
+
+# 출력 설정
+output:
+  format: jpg
+  quality: 90
+  save_path: "Memory/generated_images/"
+  naming_pattern: "img_{timestamp}_{mode}.jpg"
+
+# 의존성
+dependencies:
+  tools:
+    - fal.ai
+
+# 사용 제한
+limits:
+  max_retries: 3
+  timeout: 120  # seconds
+  max_concurrent: 3

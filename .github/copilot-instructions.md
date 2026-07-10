@@ -37,45 +37,103 @@ Root Agent (Chat)로 시작된 경우:
 - Registry 관리
 - 프레임워크 정책 업데이트 (`Core/`, `Policies/`)
 
-**새 프로젝트 생성 절차 (필수):**
+**⚠️ 중요: Root Agent 책임 범위**
 
-1. **프로젝트 구조 생성**
-   - `Projects/<project-id>/manifest.yaml`
-   - `Projects/<project-id>/README.md`
-   - `Projects/<project-id>/Workflows/`
-   - `Projects/<project-id>/Agents/` (프로젝트 전용 에이전트)
-   - `Projects/<project-id>/Templates/`, `Outputs/`, `Memory/`
+Root Agent는 **프로젝트 생성까지만** 책임집니다:
+1. 프로젝트 구조 생성 (외부 폴더)
+2. manifest.yaml, README.md 등 초기 파일 생성
+3. 프로젝트 세션 생성
 
-2. **⚠️ 반드시 git commit (매우 중요!)**
+**프로젝트 생성 이후:**
+- Root Agent는 프로젝트 세션과 소통하지 않음
+- 사용자가 직접 프로젝트 세션과 대화
+- Root Agent는 보고 받지 않음
+
+**새 프로젝트 생성 절차:**
+
+1. **프로젝트 위치 확인**
+   - ✅ AOA 외부에 생성: `~/project/<project-id>/`
+   - ❌ AOA 내부 생성 금지: `~/project/AOA/Projects/`
+   
+   **이유:** 프로젝트가 많아지면 AOA 저장소가 너무 커짐
+
+2. **프로젝트 구조 생성**
    ```bash
-   git add Projects/<project-id>/
-   git commit -m "Add <project-id> project
-   
-   - Project description
-   - Workflow details
-   
-   Co-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>"
+   ~/project/<project-id>/
+     ├── manifest.yaml       # framework.aoa_path 필수!
+     ├── README.md
+     ├── workflow.md
+     ├── .gitignore
+     ├── Memory/
+     │   ├── trends/visuals/
+     │   └── generated_images/
+     └── Outputs/
    ```
-   **이유:** 프로젝트 세션은 새 worktree/branch에서 시작하므로,
-   미커밋 파일은 보이지 않음.
 
-3. **프로젝트 세션 생성**
+3. **manifest.yaml 필수 항목**
+   ```yaml
+   framework:
+     aoa_path: /Users/sun/project/AOA  # ← 필수!
+     aoa_version: 1.0.0
+   
+   agents:
+     - id: <agent-id>
+       source: Agents/<agent-id>  # AOA 상대 경로
+       config: { ... }
+   ```
+
+4. **프로젝트 세션 생성**
    ```javascript
    create_session({
-     name: "[AOA] <project-id> — Project Agent",
-     project_id: "<AOA-project-id>",
-     kickoff: { mode: "interactive", prompt: "..." },
-     notify_on_idle: "once"
+     name: "<project-name>",
+     project_id: "<copilot-project-id>",
+     coordinate_with_creator: false,  // ← 필수! Root는 보고 받지 않음
+     kickoff: {
+       mode: "interactive",
+       prompt: `당신은 <project-id> 프로젝트의 Project Agent입니다.
+
+**AOA 프레임워크 규칙:**
+
+1. manifest.yaml 읽기:
+   - framework.aoa_path에서 AOA 위치 확인
+   - agents에서 사용할 에이전트 확인
+
+2. 에이전트 실행:
+   - create_session으로 세션 생성
+   - 에이전트 규칙: {aoa_path}/Agents/<id>/prompt.md
+   - mode: "autopilot" 사용 (플랜 승인 불필요)
+
+3. 세션 생성 패턴:
+\`\`\`javascript
+create_session({
+  name: "[AOA] Shared — <역할>",
+  project_id: "<현재 프로젝트 ID>",
+  kickoff: {
+    mode: "autopilot",  // ← 필수!
+    prompt: \`당신은 <agent-id> 에이전트입니다.
+    
+{aoa_path}/Agents/<agent-id>/prompt.md 규칙을 따라 작업하세요:
+
+[구체적인 작업 내용]
+완료 후 저장하세요.\`
+  }
+})
+\`\`\`
+
+**작업:**
+[프로젝트별 워크플로우 설명]
+
+준비되면 시작하세요!`
+     }
    })
    ```
 
-4. **(선택) 프로젝트 세션에 merge 지시**
-   세션이 파일을 못 찾으면:
-   ```javascript
-   send_session_message({
-     session_id: "<project-session-id>",
-     message: "git fetch origin && git merge origin/master"
-   })
+5. **프로젝트 Git 초기화 (선택)**
+   ```bash
+   cd ~/project/<project-id>
+   git init
+   git add .
+   git commit -m "Initial commit"
    ```
 
 ---

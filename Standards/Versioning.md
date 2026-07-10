@@ -79,13 +79,59 @@ dependencies:
 
 ## AOA Framework 버전
 
-`aios.manifest.yaml`의 `version` 필드가 Framework 버전이다.
+`aoa.manifest.yaml`의 `version` 필드가 Framework 버전이다.
 
 | 변경 유형 | 조건 |
 |-----------|------|
 | MAJOR | Core 문서 구조 변경, Bootstrap 절차 변경 |
 | MINOR | 새 Policy 추가, 새 디렉터리 추가 |
 | PATCH | 문서 수정, 오타 수정 |
+
+---
+
+## 프로젝트 Git 관리 정책
+
+### Framework vs 프로젝트 분리
+
+AOA는 Multi-Repo 방식으로 관리된다:
+
+1. **AOA Framework 저장소**
+   - 위치: `~/project/AOA/`
+   - Git 추적: Core, Agents, Tools 등 재사용 가능한 컴포넌트만
+   - `.gitignore`: `Projects/*/` 전체 제외
+
+2. **프로젝트 저장소 (선택사항)**
+   - 위치: AOA 저장소 외부 (예: `~/project/health-shorts/`)
+   - Git 추적: 각 프로젝트가 독립적으로 결정
+   - 프로젝트별 `.gitignore`: 대용량 파일 제외 권장
+
+### 프로젝트 Git 초기화 기준
+
+| 케이스 | Git 관리 권장 |
+|--------|---------------|
+| 프로젝트 백업 필요 | ✅ Yes |
+| 프로젝트 공유 계획 | ✅ Yes |
+| CI/CD 연동 필요 | ✅ Yes |
+| 변경 이력 추적 필요 | ✅ Yes |
+| 일회성 실험 프로젝트 | ❌ No |
+| 대용량 파일만 생성 | ❌ No (Git LFS 고려) |
+
+### 프로젝트 .gitignore 권장 구조
+
+```gitignore
+# 대용량 산출물
+Outputs/*.mp4
+Outputs/*.png
+Memory/trends/*.json
+
+# 비밀 정보
+.env
+credentials.yaml
+
+# 임시 파일
+*.log
+*.tmp
+```
 
 ---
 

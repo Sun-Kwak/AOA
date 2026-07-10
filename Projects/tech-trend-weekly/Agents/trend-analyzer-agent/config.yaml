@@ -1,8 +1,0 @@
-id: trend-analyzer-agent
-version: 1.0.0
-type: sub_agent
-
-capabilities:
-  - trend-identification
-  - business-impact-analysis
-  - forecasting
