@@ -1,0 +1,39 @@
+# AOA Project Manifest
+
+project:
+  id: health-fitness-cards
+  name: "Health & Fitness Cards"
+  version: 1.0.0
+  description: "건강/여성운동 트렌드 기반 카드뉴스 자동 생성 테스트 프로젝트"
+  created: 2026-07-10
+  type: automation
+  category: content-creation
+  platforms: [instagram, youtube-shorts]
+
+# 사용 Agent
+agents:
+  - id: trend-research-agent
+    source: Agents/trend-research-agent
+    config:
+      platforms: [youtube, instagram]
+      search_keywords: ["건강 운동", "여성 운동", "홈트"]
+      max_results: 3
+      
+  - id: image-generator
+    source: Agents/image-generator
+    config:
+      default_model: nanovana2
+      default_aspect_ratio: "9:16"
+      default_strength: 0.6
+
+# 출력 설정
+output:
+  format: [jpg]
+  path: Outputs/
+  naming: "card_{index}.jpg"
+
+# 실행 모드
+execution:
+  mode: sequential
+  auto_cleanup: false
+  save_intermediates: true
