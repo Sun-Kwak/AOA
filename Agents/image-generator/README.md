@@ -78,6 +78,11 @@ edit_areas: ["text", "colors"]  # Optional
 mask: "auto"  # 자동 마스킹 또는 mask 이미지 경로
 ```
 
+**🚨 중요 규칙:**
+- **워터마크/출처는 자동으로 제거됨** (@username, 로고 등)
+- 프로젝트에서 명시하지 않아도 에이전트가 자동 처리
+- 예: `@health_happyvirus` 같은 출처 표시 제거
+
 **img2img vs image_edit 비교:**
 
 | 기준 | img2img (strength 0.6) | image_edit (strength 0.25) |
@@ -86,6 +91,7 @@ mask: "auto"  # 자동 마스킹 또는 mask 이미지 경로
 | 레이아웃 | 유사 | 완전 동일 ✅ |
 | 텍스트 | 변경 | 변경 ✅ |
 | 색감 | 변경 | 미세 조정 ✅ |
+| 워터마크 | 그대로 | 자동 제거 ✅ |
 | 용도 | 스타일 복제 | 현지화/편집 |
 
 ---
