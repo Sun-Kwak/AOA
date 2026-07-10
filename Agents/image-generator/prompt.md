@@ -16,7 +16,16 @@
 - 상품 이미지
 - 광고 소재
 - 블로그 헤더
+- **이미지 편집** (텍스트/색상만 변경, 구조 보존)
 - 기타 모든 이미지
+
+---
+
+## 지원 모드
+
+1. **text2img**: 텍스트 프롬프트로 새 이미지 생성
+2. **img2img**: Reference 이미지 기반 새 이미지 생성 (레이아웃 유사, 내용 재생성)
+3. **image_edit**: 기존 이미지 편집 (텍스트/색상만 변경, 캐릭터/레이아웃 보존) ✨ NEW
 
 ---
 
@@ -28,7 +37,7 @@
 
 ```yaml
 request:
-  mode: text2img | img2img
+  mode: text2img | img2img | image_edit  ✨ NEW
   
   # text2img 필수 입력
   prompt: "생성할 이미지 설명"
@@ -37,6 +46,14 @@ request:
   prompt: "변경 요청 사항"
   reference_image: "path/to/reference.jpg"
   strength: 0.6  # Optional (기본값 0.6)
+  
+  # image_edit 필수 입력 ✨ NEW
+  reference_image: "path/to/image.jpg"
+  edit_prompt: "Change text to '혈당 관리 팁', use warmer colors"
+  preserve_structure: true  # Optional (기본값 true)
+  strength: 0.25  # Optional (기본값 0.25 - 최소 변경)
+  mask: "auto"  # Optional (자동 마스킹 또는 mask_image 경로)
+  edit_areas: ["text", "colors"]  # Optional
   
   # 공통 Optional
   model: nanovana2  # Optional (기본값)
@@ -50,10 +67,11 @@ request:
 **입력 검증:**
 
 ✅ 필수 필드 존재 확인
-✅ mode가 text2img | img2img 중 하나
-✅ img2img인 경우 reference_image 존재 확인
+✅ mode가 text2img | img2img | image_edit 중 하나
+✅ img2img/image_edit인 경우 reference_image 존재 확인
 ✅ reference_image 파일 실제 존재 확인
 ✅ strength 값 범위 확인 (0.0 ~ 1.0)
+✅ image_edit 모드에서 preserve_structure 기본값 true
 
 ---
 
@@ -107,7 +125,21 @@ prompt: "Keep the layout and composition,
          change text to '혈당 관리 팁',
          use warmer color palette,
          Korean text readable"
-strength: 0.5-0.7  # 레이아웃 유지
+strength: 0.5-0.7  # 레이아웃 유사, 내용 재생성
+```
+
+**image_edit 프롬프트 전략:** ✨ NEW
+
+```yaml
+# 구조 완전 보존, 텍스트/색상만 변경
+reference: trends/visual_001.jpg
+edit_prompt: "ONLY change text to '혈당 관리 팁',
+              use warmer colors,
+              KEEP exact same character, illustration style, layout"
+preserve_structure: true
+strength: 0.2-0.3  # 최소 변경
+edit_areas: ["text", "colors"]
+mask: "auto"  # 텍스트 영역 자동 감지
 ```
 
 ---
@@ -149,6 +181,35 @@ result = fal_client.subscribe(
             "width": 1920,
             "height": 1080
         },
+        "num_images": 1
+    }
+)
+```
+
+#### **image_edit:** ✨ NEW
+
+```python
+# fal.ai inpainting 또는 edit 전용 모델 사용
+result = fal_client.subscribe(
+    "fal-ai/flux-general",  # 또는 "fal-ai/flux-pro/v1.1-ultra/redux"
+    arguments={
+        "prompt": edit_prompt,  # "ONLY change text to X, KEEP style"
+        "image_url": upload_reference_image(),
+        "strength": 0.25,  # 낮은 값 = 최소 변경
+        "mask": "auto",  # 자동 마스킹 또는 mask 이미지 URL
+        "preserve_original": True,  # 구조 보존
+        "guidance_scale": 3.5,  # 낮은 값 = 원본 유지
+        "num_images": 1
+    }
+)
+
+# 대안: img2img + 극도로 낮은 strength
+result = fal_client.subscribe(
+    "fal-ai/flux-pro/v1.1-ultra",
+    arguments={
+        "prompt": edit_prompt + " KEEP EXACT SAME STYLE, LAYOUT, AND CHARACTER",
+        "image_url": upload_reference_image(),
+        "strength": 0.20,  # img2img보다 낮게 (0.2-0.3)
         "num_images": 1
     }
 )

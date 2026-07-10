@@ -18,80 +18,73 @@ Phase 3: 결과 검증 및 저장
 
 ---
 
-## Phase 0: 계정 탐색 (Setup, 1회만)
+## Phase 0: 계정 검증 (Setup, 수동)
 
-**Agent:** trend-research-agent (공용)
+**수행자:** User (수동)
 
-**목적:** 일러스트 건강 정보 제공 계정 발견
+**목적:** 일러스트 건강 정보 제공 계정 리스트 작성
 
-**Parameters:**
+**방법:**
+1. Instagram에서 수동으로 일러스트 스타일 건강 계정 발견
+2. 예시 계정:
+   - @health__happyvirus
+   - @doctor_friends
+   - @body_signal
 
-```yaml
-mode: "account_discovery"  # 새로운 모드
-platforms: ["instagram"]
-category: "health"
-keywords: ["건강정보", "의학상식", "건강상식카드"]
-output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/setup/"
-max_results_per_platform: 50
-```
-
-**추가 Instruction:**
-
-```markdown
-**계정 탐색 모드 (Account Discovery):**
-
-1. **데이터 수집:**
-   - 해시태그로 50개 포스트 수집
-   - 각 포스트의 ownerUsername, likes, caption, thumbnailUrl 기록
-
-2. **계정 리스트 생성:**
-   - ownerUsername 별로 그룹화
-   - 각 계정의 총 likes, 포스트 수, 평균 engagement 계산
-   - engagement 높은 순으로 정렬
-
-3. **출력 파일:**
-   - `account_candidates.json`:
-     [
-       {
-         "username": "@health_happyvirus",
-         "total_likes": 15000,
-         "post_count": 8,
-         "avg_engagement": 1875,
-         "sample_posts": [
-           {
-             "url": "https://instagram.com/p/...",
-             "thumbnail": "https://...",
-             "caption": "몸의 신호 8가지...",
-             "likes": 2500
-           }
-         ]
-       }
-     ]
-
-4. **사용자 선별 대기:**
-   - 계정 리스트 출력
-   - 사용자가 일러스트 스타일 계정만 선별
-   - 선별된 계정을 Memory/verified_accounts.json에 저장
+3. `Memory/verified_accounts.json` 파일 생성:
+```json
+{
+  "accounts": [
+    {
+      "username": "@health__happyvirus",
+      "url": "https://www.instagram.com/health__happyvirus/",
+      "verified_date": "2026-07-10",
+      "content_style": "illustrated health cards"
+    }
+  ]
+}
 ```
 
 ---
 
-## Phase 1: 타겟 계정 수집 (Regular)
+## Phase 1: 계정 콘텐츠 수집 (Regular)
 
-**Agent:** trend-research-agent (공용)
+**Agent:** account-content-collector (프로젝트 전용)
 
-**목적:** 검증된 계정들의 최근 콘텐츠 수집
+**목적:** 검증된 계정들의 최신 포스트 직접 수집
 
 **Parameters:**
 
 ```yaml
-mode: "account_based"  # 계정 기반 수집 모드
-platforms: ["instagram"]
-category: "health"
-target_accounts_file: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/verified_accounts.json"
-output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/"
+target_accounts: ["@health__happyvirus", "@doctor_friends"]  # 또는 verified_accounts.json 사용
 posts_per_account: 10
 date_range_days: 7
+output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/"
+```
+
+**실행 방법:**
+```javascript
+create_session({
+  project_id: "52d540bd-4461-4c27-81ed-c460533357ac",
+  name: "[AOA] health-fitness-cards — content collection",
+  coordinate_with_creator: false,
+  kickoff: {
+    mode: "autopilot",
+    prompt: `당신은 account-content-collector 에이전트입니다.
+
+/Users/sun/project/AOA/Projects/health-fitness-cards/Agents/account-content-collector/prompt.md 규칙을 따라 작업하세요.
+
+입력:
+- target_accounts: ["@health__happyvirus"]
+- posts_per_account: 10
+- output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/"
+
+작업 완료 후:
+- Memory/trends/visuals/에 이미지 저장
+- Memory/trends/references.json 생성
+- Memory/trends/account-collection-YYYYMMDD.md 리포트 작성`
+  }
+})
 ```
 
 **추가 Instruction (프롬프트에 포함):**

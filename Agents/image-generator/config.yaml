@@ -1,10 +1,10 @@
 # Image Generator Agent Configuration
-# 범용 이미지 생성 Agent (text2img, img2img)
+# 범용 이미지 생성 Agent (text2img, img2img, image_edit)
 
 id: image-generator
 name: "Image Generator"
-version: 1.0.0
-description: "범용 이미지 생성 Agent. 텍스트 프롬프트 또는 Reference 이미지 기반 생성 지원."
+version: 1.1.0  ✨ NEW
+description: "범용 이미지 생성 Agent. 텍스트 프롬프트, Reference 이미지 기반 생성, 이미지 편집 지원."
 
 # Provider 설정
 provider:
@@ -23,6 +23,16 @@ provider:
         capabilities:
           - text2img
           - img2img
+          - image_edit  ✨ NEW
+        
+      flux-general:  ✨ NEW
+        id: "fal-ai/flux-general"
+        description: "범용 모델 (inpainting/edit 지원)"
+        cost: 0.04
+        capabilities:
+          - text2img
+          - img2img
+          - image_edit
         
       flux-schnell:
         id: "fal-ai/flux/schnell"
@@ -63,13 +73,21 @@ defaults:
     num_images: 1
     safety_tolerance: 2
     enable_safety_checker: true
+  
+  image_edit:  ✨ NEW
+    strength: 0.25  # 최소 변경 (0.2-0.3 권장)
+    preserve_structure: true
+    mask: "auto"  # 자동 마스킹
+    guidance_scale: 3.5  # 낮은 값 = 원본 유지
+    aspect_ratio: "16:9"
+    num_images: 1
 
 # 출력 설정
 output:
   format: jpg
   quality: 90
   save_path: "Memory/generated_images/"
-  naming_pattern: "img_{timestamp}_{mode}.jpg"
+  naming_pattern: "img_{timestamp}_{mode}.jpg"  # mode: text2img|img2img|image_edit
 
 # 의존성
 dependencies:

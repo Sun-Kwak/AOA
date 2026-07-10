@@ -6,7 +6,7 @@
 |-------|-------|
 | ID | image-generator |
 | Name | Image Generator |
-| Version | 1.0.0 |
+| Version | 1.1.0 ✨ |
 | Status | Active |
 | Created | 2026-07-10 |
 | Last Updated | 2026-07-10 |
@@ -15,17 +15,18 @@
 
 ## Tags
 
-`image-generation`, `fal-ai`, `text2img`, `img2img`, `card-news`, `nanovana2`, `flux`, `visual-content`
+`image-generation`, `fal-ai`, `text2img`, `img2img`, `image-edit` ✨, `card-news`, `nanovana2`, `flux`, `visual-content`
 
 ---
 
 ## Description
 
-범용 이미지 생성 Agent. 텍스트 프롬프트 또는 Reference 이미지 기반으로 다양한 용도의 이미지를 생성.
+범용 이미지 생성 Agent. 텍스트 프롬프트, Reference 이미지 기반 생성, 또는 기존 이미지 편집 지원.
 
 **핵심 기능:**
 - **text2img**: 프롬프트만으로 새 이미지 생성
 - **img2img**: Reference 이미지 기반 스타일 복제 (트렌드 적용)
+- **image_edit**: 기존 이미지 편집 (텍스트/색상만 변경, 구조 보존) ✨ NEW
 - 프롬프트 자동 최적화
 - 5가지 Aspect Ratio 지원 (16:9, 9:16, 1:1, 4:5, 21:9)
 - 에러 핸들링 및 자동 재시도
@@ -36,10 +37,12 @@
 - 배경 이미지
 - 광고 소재
 - 블로그 헤더
+- **카드뉴스 현지화** (image_edit 모드) ✨
 
 **Provider:**
 - fal.ai (기본 모델: nanovana2 / flux-pro/v1.1-ultra)
-- 4가지 모델 선택 가능 (schnell, dev, pro, ultra)
+- flux-general (inpainting/edit 전용) ✨ NEW
+- 5가지 모델 선택 가능
 
 ---
 
@@ -71,6 +74,17 @@ image_generator.generate(
   reference_image: "Memory/trends/visuals/ref_001.jpg"
   strength: 0.6
   aspect_ratio: "9:16"
+)
+
+# image_edit (기존 이미지 편집) ✨ NEW
+image_generator.generate(
+  mode: "image_edit"
+  edit_prompt: "ONLY change text to '혈당 관리 팁', use warmer colors"
+  reference_image: "Memory/trends/visuals/ref_001.jpg"
+  preserve_structure: true
+  strength: 0.25
+  mask: "auto"
+  edit_areas: ["text", "colors"]
 )
 ```
 

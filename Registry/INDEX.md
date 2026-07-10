@@ -37,7 +37,7 @@
 | ID | Name | Version | Tags | Description | Path |
 |----|------|---------|------|-------------|------|
 | trend-research-agent | Trend Research Agent | 1.0.0 | trends, social-media, content-research, youtube, instagram, visual-references | YouTube Shorts + Instagram Reels 트렌드 수집 + Visual Reference 다운로드 | Agents/trend-research-agent/ |
-| image-generator | Image Generator | 1.0.0 | image-generation, fal-ai, text2img, img2img, card-news, nanovana2 | 범용 이미지 생성 Agent (text2img, img2img). Reference 기반 트렌드 스타일 복제 지원. | Agents/image-generator/ |
+| image-generator | Image Generator | 1.1.0 | image-generation, fal-ai, text2img, img2img, image-edit, card-news, nanovana2 | 범용 이미지 생성 Agent (text2img, img2img, image_edit). Reference 기반 트렌드 스타일 복제 + 정밀 편집 지원. | Agents/image-generator/ |
 | browser-controller | Browser Controller | 1.0.0 | browser-automation, web-automation, canvas, sns-deployment, instagram, youtube, tiktok | Canvas Browser 통제. 자연어 명령을 Canvas action으로 변환. Instagram/YouTube/TikTok 배포 플로우 실행. | Agents/browser-controller/ |
 
 ---

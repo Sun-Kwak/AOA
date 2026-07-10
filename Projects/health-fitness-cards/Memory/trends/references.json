@@ -1,0 +1,56 @@
+{
+  "collection_date": "2026-07-10",
+  "total_accounts": 1,
+  "total_images": 3,
+  "accounts_collected": ["@health__happyvirus"],
+  "references": [
+    {
+      "ref_id": "ref_20260710_001",
+      "platform": "instagram",
+      "account": "@health__happyvirus",
+      "source_url": "https://www.instagram.com/p/Damhfq_v1SA/",
+      "image_path": "Memory/trends/visuals/ref_20260710_001.jpg",
+      "thumbnail_url": "https://scontent-iad6-1.cdninstagram.com/v/t51.71878-15/729633377_1056225450308814_6220617565239730628_n.jpg",
+      "caption": "[ 여름 빨래 냄새 방지 가이드 ☀️ ]\n\n✔️ 세탁 후 30분 이내에 꺼내기\n✔️ 수건·의류 분리 세탁\n✔️ 세탁기 정기 청소 필수\n✔️ 세제 적정량 사용\n✔️ 햇볕에 자연 건조\n\n자세한 내용은 위 이미지에서 확인하세요 👆\n\n#생활꿀팁 #빨래 #여름필수템 #청소 #세탁기",
+      "hashtags": ["생활꿀팁", "빨래", "여름필수템", "청소", "세탁기"],
+      "timestamp": "2026-07-10T06:16:03.000Z",
+      "engagement": {
+        "likes": 47,
+        "comments": 1
+      },
+      "style_notes": "Vertical video thumbnail with checklist format. Clean, minimal design with emoji accents. Korean text with checkmark bullets. Summer-themed lifestyle content. Bright, natural lighting aesthetic."
+    },
+    {
+      "ref_id": "ref_20260710_002",
+      "platform": "instagram",
+      "account": "@health__happyvirus",
+      "source_url": "https://www.instagram.com/p/Dal1592v3aV/",
+      "image_path": "Memory/trends/visuals/ref_20260710_002.jpg",
+      "thumbnail_url": "https://scontent-iad3-1.cdninstagram.com/v/t51.71878-15/743118161_1702172994433676_7483481875623784460_n.jpg",
+      "caption": "우리 몸의 장기들이 소리 없는 비명을 \n지르는 순간들! 😱\n알고 보면 내가 무심코 했던 습관들이 \n장기들을 아프게 하고 있었을지도 몰라요.\n몸이 보내는 신호에 조금만 더 귀 기울여 주세요. 🌿\n\n #건강관리 #몸건강 #장기건강",
+      "hashtags": ["건강관리", "몸건강", "장기건강"],
+      "timestamp": "2026-07-09T23:55:20.000Z",
+      "engagement": {
+        "likes": 52,
+        "comments": 1
+      },
+      "style_notes": "Health education content featuring body organs. Illustrative style with emoji emphasis. Korean text with emotional storytelling approach. Focus on preventive health awareness. Medical theme with accessible visual language."
+    },
+    {
+      "ref_id": "ref_20260710_003",
+      "platform": "instagram",
+      "account": "@health__happyvirus",
+      "source_url": "https://www.instagram.com/p/DakmJg9PHQD/",
+      "image_path": "Memory/trends/visuals/ref_20260710_003.jpg",
+      "thumbnail_url": "https://scontent-iad6-1.cdninstagram.com/v/t51.71878-15/741046949_1549385676541350_4773048331974970794_n.jpg",
+      "caption": "💡 \"어? 내 손톱 모양이랑 똑같은데?\" 하고 의심되는 증상이 있다면, \n그냥 넘기지 마시고 건강 상태를 꼭 체크해 보세요!\n\n#건강정보 #손톱건강 #손톱모양 #건강신호 #손톱무좀",
+      "hashtags": ["건강정보", "손톱건강", "손톱모양", "건강신호", "손톱무좀"],
+      "timestamp": "2026-07-09T12:18:00.000Z",
+      "engagement": {
+        "likes": 85,
+        "comments": 3
+      },
+      "style_notes": "Diagnostic health content focusing on nail health indicators. Conversational tone with direct question format. Korean text with lightbulb emoji for educational insight. Medical self-check theme. Visual comparison format for symptom identification."
+    }
+  ]
+}

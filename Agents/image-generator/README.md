@@ -2,7 +2,7 @@
 
 ## 개요
 
-**범용 이미지 생성 Agent**로, 텍스트 프롬프트(text2img) 또는 Reference 이미지 기반(img2img)으로 다양한 용도의 이미지를 생성합니다.
+**범용 이미지 생성 Agent**로, 텍스트 프롬프트(text2img), Reference 이미지 기반(img2img), 또는 기존 이미지 편집(image_edit)으로 다양한 용도의 이미지를 생성합니다.
 
 ---
 
@@ -14,6 +14,7 @@
 - ✅ **상품 이미지**
 - ✅ **광고 소재**
 - ✅ **블로그 헤더**
+- ✅ **이미지 편집** (텍스트/색상만 변경, 구조 보존) ✨ NEW
 - ✅ **기타 모든 이미지**
 
 ---
@@ -24,7 +25,8 @@
 
 | 모델 | ID | 비용 | 용도 | 기능 |
 |------|----|----|------|------|
-| **nanovana2** ⭐ | flux-pro/v1.1-ultra | $0.05 | 기본 (품질/비용 최적) | text2img, img2img |
+| **nanovana2** ⭐ | flux-pro/v1.1-ultra | $0.05 | 기본 (품질/비용 최적) | text2img, img2img, image_edit ✨ |
+| **flux-general** | flux-general | $0.04 | 범용 (inpainting/edit) | text2img, img2img, image_edit ✨ |
 | flux-schnell | flux/schnell | $0.003 | 빠른 생성 | text2img |
 | flux-dev | flux/dev | $0.025 | 고품질 | text2img, img2img |
 | flux-pro | flux-pro | $0.055 | 최고 품질 | text2img, img2img |
@@ -62,6 +64,30 @@ strength: 0.6  # 0.0 (원본) ~ 1.0 (완전 재생성)
 - `0.7-0.8`: 스타일 유지, 구도는 변경
 - `0.9-1.0`: Reference는 힌트만, 거의 새 이미지
 
+### **3. image_edit (이미지 편집)** ✨ NEW
+
+기존 이미지의 **캐릭터/레이아웃은 완전히 보존**하고 **텍스트/색상만 변경**. 카드뉴스 현지화에 이상적.
+
+```yaml
+mode: image_edit
+edit_prompt: "ONLY change text to '혈당 관리 팁', use warmer colors"
+reference_image: "Memory/trends/visuals/ref_001.jpg"
+preserve_structure: true  # 구조 보존 (기본값 true)
+strength: 0.25  # 0.2-0.3 권장 (최소 변경)
+edit_areas: ["text", "colors"]  # Optional
+mask: "auto"  # 자동 마스킹 또는 mask 이미지 경로
+```
+
+**img2img vs image_edit 비교:**
+
+| 기준 | img2img (strength 0.6) | image_edit (strength 0.25) |
+|------|------------------------|----------------------------|
+| 캐릭터 | 변경됨 | 보존 ✅ |
+| 레이아웃 | 유사 | 완전 동일 ✅ |
+| 텍스트 | 변경 | 변경 ✅ |
+| 색감 | 변경 | 미세 조정 ✅ |
+| 용도 | 스타일 복제 | 현지화/편집 |
+
 ---
 
 ## 입력 형식
@@ -70,19 +96,30 @@ strength: 0.6  # 0.0 (원본) ~ 1.0 (완전 재생성)
 
 ```yaml
 request:
-  mode: text2img | img2img
+  mode: text2img | img2img | image_edit  ✨ NEW
   prompt: string  # 생성 또는 변경 요청
   
   # img2img만 필수
   reference_image: string  # 파일 경로
+  
+  # image_edit 필수 ✨ NEW
+  reference_image: string  # 파일 경로
+  edit_prompt: string  # 편집 지시
 ```
 
 ### **Optional 입력**
 
 ```yaml
-  model: nanovana2 | flux-schnell | flux-dev | flux-pro
+  model: nanovana2 | flux-general | flux-schnell | flux-dev | flux-pro
   aspect_ratio: "16:9" | "9:16" | "1:1" | "4:5" | "21:9"
-  strength: 0.0~1.0  # img2img만
+  strength: 0.0~1.0  # img2img, image_edit
+  
+  # image_edit 전용 ✨ NEW
+  preserve_structure: true | false  # 구조 보존 (기본값 true)
+  mask: "auto" | string  # 자동 마스킹 또는 mask 이미지 경로
+  edit_areas: ["text", "colors", "background"]  # 편집 영역
+  guidance_scale: 3.5  # 낮은 값 = 원본 유지
+  
   style_modifiers:
     - "vibrant colors"
     - "modern design"
