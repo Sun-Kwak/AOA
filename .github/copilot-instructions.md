@@ -37,6 +37,17 @@ Root Agent (Chat)로 시작된 경우:
 - Registry 관리
 - 프레임워크 정책 업데이트 (`Core/`, `Policies/`)
 
+**⚠️ 작업 시작 전 필수: Wiki 조회**
+
+모든 작업 전에 해당 Wiki 문서를 **반드시 먼저 읽는다**:
+- 프로젝트 생성 → `Memory/Wiki/project_creation.md`
+- 에이전트 생성 → `Memory/Wiki/agent_creation.md`
+- 세션 생성 → `Memory/Wiki/session_management.md`
+- Registry 수정 → `Memory/Wiki/registry_management.md`
+
+Wiki에 기록된 실수 패턴과 회피 전략을 확인하고 적용한다.
+자세한 내용은 `Standards/Wiki_Protocol.md` 참조.
+
 **⚠️ 중요: Root Agent 책임 범위**
 
 Root Agent는 **프로젝트 생성까지만** 책임집니다:
@@ -51,38 +62,55 @@ Root Agent는 **프로젝트 생성까지만** 책임집니다:
 
 **새 프로젝트 생성 절차:**
 
-1. **프로젝트 위치 확인**
-   - ✅ AOA 외부에 생성: `~/project/<project-id>/`
-   - ❌ AOA 내부 생성 금지: `~/project/AOA/Projects/`
+0. **Wiki 조회 (필수!)**
+   - `Memory/Wiki/project_creation.md` 전체 읽기
+   - 과거 실수 패턴 확인
+   - 회피 전략 적용
+
+1. **프로젝트 위치 결정**
+   - ✅ **절대 규칙**: AOA 내부에만 생성: `AOA/Projects/<project-id>/`
+   - ❌ 외부 경로 절대 금지: `~/project/`, `/tmp/` 등
    
-   **이유:** 프로젝트가 많아지면 AOA 저장소가 너무 커짐
+   **이유:** 
+   - AOA/Projects/ 내부 프로젝트만 .github/copilot-instructions.md 자동 로드
+   - 외부 프로젝트는 dual session 문제 발생
+   - Wiki의 Pattern-001, Pattern-002 참조
 
 2. **프로젝트 구조 생성**
+   - `Bootstrap/Create_Project.md` Step 3 전체 구조 참조
+   - `Schemas/Project.md` manifest 스키마 참조
+   
    ```bash
-   ~/project/<project-id>/
-     ├── manifest.yaml       # framework.aoa_path 필수!
+   AOA/Projects/<project-id>/
+     ├── manifest.yaml       # 스키마 준수 필수
      ├── README.md
-     ├── workflow.md
      ├── .gitignore
+     ├── Agents/             # 프로젝트 전용 에이전트
+     ├── Workflows/          # 프로젝트 전용 워크플로우
      ├── Memory/
-     │   ├── trends/visuals/
-     │   └── generated_images/
+     │   ├── project.md
+     │   ├── execution_state.md
+     │   └── decision_log.md
      └── Outputs/
    ```
 
 3. **manifest.yaml 필수 항목**
-   ```yaml
-   framework:
-     aoa_path: /Users/sun/project/AOA  # ← 필수!
-     aoa_version: 1.0.0
-   
-   agents:
-     - id: <agent-id>
-       source: Agents/<agent-id>  # AOA 상대 경로
-       config: { ... }
+   - `Schemas/Project.md` 전체 스키마 참조
+   - id, name, version, status, description
+   - paths (root, agents, workflows, memory, outputs)
+   - dependencies (사용할 공용 에이전트 선언)
+   - memory (3개 파일 경로)
+   - aoa_path 불필요 (내부 프로젝트이므로)
+
+4. **Git Commit (필수)**
+   ```bash
+   git add Projects/<project-id>/
+   git commit -m "Add <project-name> project"
    ```
 
-4. **프로젝트 세션 생성**
+5. **프로젝트 세션 생성**
+   - ❌ **절대 금지**: `create_project()` 호출
+   - ✅ **올바른 방법**: `create_session()만` 호출
    ```javascript
    create_session({
      name: "<project-name>",
