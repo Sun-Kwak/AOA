@@ -1,39 +1,63 @@
-# AOA Project Manifest
+# Health Fitness Cards Project Manifest
 
-project:
-  id: health-fitness-cards
-  name: "Health & Fitness Cards"
-  version: 1.0.0
-  description: "건강/여성운동 트렌드 기반 카드뉴스 자동 생성 테스트 프로젝트"
-  created: 2026-07-10
-  type: automation
-  category: content-creation
-  platforms: [instagram, youtube-shorts]
+# ── 기본 정보 ──────────────────────────────────────────
+id: health-fitness-cards
+name: Health Fitness Cards
+version: 1.0.0
+status: active
 
-# 사용 Agent
-agents:
-  - id: trend-research-agent
-    source: Agents/trend-research-agent
-    config:
-      platforms: [youtube, instagram]
-      search_keywords: ["건강 운동", "여성 운동", "홈트"]
-      max_results: 3
-      
-  - id: image-generator
-    source: Agents/image-generator
-    config:
-      default_model: nanovana2
-      default_aspect_ratio: "9:16"
-      default_strength: 0.6
+description: >
+  건강 및 여성 운동 트렌드를 수집하여 Instagram Reels/YouTube Shorts용 
+  카드 뉴스 이미지를 자동 생성하는 테스트 프로젝트.
+  트렌드 → 이미지 생성 → 결과 저장 워크플로우 검증용.
 
-# 출력 설정
-output:
-  format: [jpg]
-  path: Outputs/
-  naming: "card_{index}.jpg"
+created_at: 2026-07-10T15:54:00+09:00
+updated_at: 2026-07-10T15:54:00+09:00
 
-# 실행 모드
-execution:
-  mode: sequential
-  auto_cleanup: false
-  save_intermediates: true
+# ── 디렉터리 구조 ──────────────────────────────────────
+paths:
+  root: Projects/health-fitness-cards/
+  agents: Projects/health-fitness-cards/Agents/
+  workflows: Projects/health-fitness-cards/Workflows/
+  memory: Projects/health-fitness-cards/Memory/
+  outputs: Projects/health-fitness-cards/Outputs/
+
+# ── 의존성 선언 ────────────────────────────────────────
+dependencies:
+  agents:
+    - id: trend-research-agent
+      path: Agents/trend-research-agent/
+      role: 건강 및 여성 운동 트렌드 수집 (YouTube Shorts, Instagram Reels)
+      override: null
+
+    - id: image-generator
+      path: Agents/image-generator/
+      role: 트렌드 기반 카드 뉴스 이미지 생성 (img2img)
+      override: null
+
+  tools: []
+
+  project_agents: []
+
+# ── 워크플로우 ────────────────────────────────────────
+workflows:
+  default: Projects/health-fitness-cards/Workflows/main.md
+  available:
+    - id: trend-to-cards
+      path: Projects/health-fitness-cards/Workflows/main.md
+      description: 트렌드 수집 → 이미지 생성 → 결과 저장
+
+# ── 메모리 설정 ───────────────────────────────────────
+memory:
+  project_memory: Projects/health-fitness-cards/Memory/project.md
+  execution_state: Projects/health-fitness-cards/Memory/execution_state.md
+  decision_log: Projects/health-fitness-cards/Memory/decision_log.md
+
+# ── 출력 설정 ─────────────────────────────────────────
+outputs:
+  default_path: Projects/health-fitness-cards/Outputs/
+  format: mixed  # 이미지 + JSON 메타데이터
+
+# ── 태그 및 분류 ──────────────────────────────────────
+tags: [health, fitness, women-workout, card-news, automation, test]
+category: automation

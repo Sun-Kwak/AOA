@@ -1,3 +1,15 @@
-Memory/
-*.log
+# Outputs
+Outputs/*.jpg
+Outputs/*.png
+Outputs/*.json
+
+# Memory temp files
+Memory/**/*.tmp
+Memory/**/*.log
+
+# macOS
 .DS_Store
+
+# IDE
+.vscode/
+.idea/
