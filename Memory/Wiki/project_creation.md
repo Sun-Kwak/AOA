@@ -149,8 +149,11 @@ create_session({
 
 manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
 
-에이전트 실행 패턴:
-<create_session 규칙만 기술>
+## 하위 에이전트 실행 규칙
+- 에이전트 호출 전 list_agents()로 기존 세션 확인
+- 존재하면 재사용, 없으면 생성
+- Memory/execution_state.md 기반 Phase 진행 판단
+- FAILED 세션만 재생성, IDLE/RUNNING은 상호작용
 
 사용자 지시를 기다립니다.`
   }
@@ -211,7 +214,22 @@ create_session({
   coordinate_with_creator: false,
   kickoff: {
     mode: "autopilot",
-    prompt: "AOA 규칙 + 작업 지시"
+    prompt: `
+당신은 <project> Project Agent입니다.
+
+manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
+
+## 하위 에이전트 실행 규칙
+- 에이전트 호출 전 list_agents()로 기존 세션 확인
+- 존재하면 재사용, 없으면 생성
+- Memory/execution_state.md 기반 Phase 진행 판단
+- FAILED 세션만 재생성, IDLE/RUNNING은 상호작용
+
+## 작업 지시
+<사용자 요구사항 + 워크플로우 설명>
+
+준비되면 시작하세요!
+    `
   }
 })
 ```
@@ -222,3 +240,4 @@ create_session({
 
 - 2026-07-10: 초기 작성 (Pattern-001 ~ 004 기록)
 - 2026-07-10: Pattern-005 추가 (불필요한 자동 실행)
+- 2026-07-10: Kickoff prompt 템플릿에 "하위 에이전트 중복 생성 방지" 규칙 추가

@@ -1,79 +1,104 @@
-[
-  {
-    "platform": "youtube",
-    "source_url": "https://youtube.com/shorts/LyB82RrPGIk",
-    "thumbnail_url": "https://i.ytimg.com/vi/LyB82RrPGIk/maxresdefault.jpg",
-    "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_001.jpg",
-    "engagement": {
-      "views": 102979,
-      "likes": 1955
+{
+  "collected_at": "2026-07-10T16:15:50.046129",
+  "total_references": 7,
+  "references": [
+    {
+      "platform": "instagram",
+      "source_url": "https://www.instagram.com/p/DajfkltGTrH/",
+      "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_001.jpg",
+      "thumbnail_url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/741745518_17976302301111574_5475071242790023614_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ig_cache_key=MzkzNzEyOTM0MDIxMTk0NjI2MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=aSl3nClPw8MQ7kNvwG8qGF8&_nc_oc=AdqTfVQ3yLBjKE0lyHC03YqZ_D4b1z6FaWUE2bwmqdiZSxtxcG6oP8-9fMsQWAaqiaI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent-vie1-1.cdninstagram.com&_nc_gid=MDDmwFKHB02x5DVwdPx-Cg&_nc_ss=7a3ba&oh=00_AQCk7pkwBQKqWPr_QV40AuOu-S5sfc6XhyhYoqUF2XkTlQ&oe=6A566967",
+      "engagement": {
+        "likes": 9,
+        "comments": 0,
+        "total": 9
+      },
+      "style_notes": "Step-by-step guide format",
+      "caption_preview": "💜 찾아가는 건강운동지원사업 '청춘핏' 역량강화교육 💜\\n\\n찾아가는 건강운동지원사업 '청춘핏' 참여 학생들을 대상으로 역량강화교육을 진행했습니다.💪\\n\\n노인에 대한 이해부터 보행능력(TUG)·관절가동범위(ROM) 평가, 질환별 중재방법, 방문 시 유의사항까지 현장에...",
+      "owner": "gongreung_"
     },
-    "style_notes": "YouTube Shorts thumbnail - bold text overlay, bright colors"
-  },
-  {
-    "platform": "youtube",
-    "source_url": "https://youtube.com/shorts/HZkaABZY49E",
-    "thumbnail_url": "https://i.ytimg.com/vi/HZkaABZY49E/maxresdefault.jpg",
-    "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_002.jpg",
-    "engagement": {
-      "views": 26767,
-      "likes": 502
+    {
+      "platform": "instagram",
+      "source_url": "https://www.instagram.com/p/DamUn8SzWsG/",
+      "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_002.jpg",
+      "thumbnail_url": "https://scontent-cph2-1.cdninstagram.com/v/t51.82787-15/741340938_18601513909061574_7592042150760121593_n.heic?stp=dst-jpg_e35_p1080x1080_sh2.08_tt6&_nc_cat=101&ig_cache_key=MzkzNzkyNTYyOTkxMTg1MzgzMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=2R3SNYTkOkAQ7kNvwFiaYWR&_nc_oc=AdrcyeKeZuLkG02kE20Q209A3u54-kg2MBzbQBFut9Ta6k2ZM5dRbUQ8b9-F5U9FcIg&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-cph2-1.cdninstagram.com&_nc_gid=FycwqsQ4BQm8294CgCJ-pA&_nc_ss=7a3ba&oh=00_AQAcc-mRJJfKpxg337_u_lywQpt8UqyJmVR-6tl0wjUESA&oe=6A565724",
+      "engagement": {
+        "likes": 4,
+        "comments": 2,
+        "total": 8
+      },
+      "style_notes": "Daily routine card format",
+      "caption_preview": "오늘 땀 좀 뺄 사람? 불가리안백 상급자용 16분 루틴 (스핀·스내치·스윙스쿼트)",
+      "owner": "supleskorea"
     },
-    "style_notes": "YouTube Shorts thumbnail - bold text overlay, bright colors"
-  },
-  {
-    "platform": "youtube",
-    "source_url": "https://youtube.com/shorts/HZkaABZY49E",
-    "thumbnail_url": "https://i.ytimg.com/vi/HZkaABZY49E/maxresdefault.jpg",
-    "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_003.jpg",
-    "engagement": {
-      "views": 26767,
-      "likes": 502
+    {
+      "platform": "instagram",
+      "source_url": "https://www.instagram.com/p/DamKSuTSRho/",
+      "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_003.jpg",
+      "thumbnail_url": "https://scontent-cph2-1.cdninstagram.com/v/t51.82787-15/744489352_18078328805671445_5596074750189818051_n.webp?stp=dst-webp_s1080x1080_sh2.08&_nc_cat=105&ig_cache_key=MzkzNzg4MDE5MTMxMzQ1MTExMg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=5vAOq1NP1FcQ7kNvwGCOWjL&_nc_oc=Ado0626gIhBXbXoa4IwpasjXGiL1r0rCcebe4kUldx4BdUGNDNZOgHJY6R_BHNsv884&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-cph2-1.cdninstagram.com&_nc_gid=FycwqsQ4BQm8294CgCJ-pA&_nc_ss=7a3ba&oh=00_AQCYRpLDeKXe3_dRqx_XXWUBoIF_XW2WhbsmW0sa64W98w&oe=6A56650B",
+      "engagement": {
+        "likes": 8,
+        "comments": 0,
+        "total": 8
+      },
+      "style_notes": "Daily routine card format",
+      "caption_preview": "감사합니다 🙏\\n\\n바디스트림 에어스텝퍼\\n준비된 1차 재고 전량 품절되었습니다.\\n\\n처음 시작하는 브랜드임에도\\n믿고 선택해주신 분들 덕분에\\n예상보다 빠르게 소진되었습니다.\\n\\n단순히 판매하는 운동기구가 아니라\\n집에서도 꾸준히 운동할 수 있도록\\n운동 루틴까지...",
+      "owner": "bbangcoach7"
     },
-    "style_notes": "YouTube Shorts thumbnail - bold text overlay, bright colors"
-  },
-  {
-    "platform": "youtube",
-    "source_url": "https://youtube.com/shorts/Dd7YCTLvONQ",
-    "thumbnail_url": "https://i.ytimg.com/vi/Dd7YCTLvONQ/maxresdefault.jpg",
-    "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_004.jpg",
-    "engagement": {
-      "views": 20041,
-      "likes": 241
+    {
+      "platform": "instagram",
+      "source_url": "https://www.instagram.com/p/DamSBJ3j1IO/",
+      "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_004.jpg",
+      "thumbnail_url": "https://scontent-cph2-1.cdninstagram.com/v/t51.82787-15/742437008_17902443246459887_5106907660746747788_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzkzNzkxNDA4NzA2ODc3OTM2OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=qPiFoBjjrJ0Q7kNvwEePb_o&_nc_oc=Adovp8YzmvVSM-V4GZ9WayMM4wzbhX7xJ3ntihO9i82LkN7XO-YV169gZjJgV__7e9c&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent-cph2-1.cdninstagram.com&_nc_gid=FycwqsQ4BQm8294CgCJ-pA&_nc_ss=7a3ba&oh=00_AQCiguDhtX5u28TsA7xmJLgpUjEri7zW49OEJtyuhafiCw&oe=6A567588",
+      "engagement": {
+        "likes": 3,
+        "comments": 2,
+        "total": 7
+      },
+      "style_notes": "Educational infographic style",
+      "caption_preview": "근육통이 없다고 운동을 실패한 걸까요?\\n\\n꼭 그렇지는 않습니다.\\n\\n근육통은 운동 효과를 판단하는 기준이 아니라, 몸이 보내는 여러 신호 중 하나일 뿐입니다.\\n\\n운동의 성과는 통증보다 꾸준한 기록과 점진적인 성장으로 확인하는 것이 더 중요합니다.\\n\\n이번 카...",
+      "owner": "di_no_kim"
     },
-    "style_notes": "YouTube Shorts thumbnail - bold text overlay, bright colors"
-  },
-  {
-    "platform": "instagram",
-    "source_url": "https://instagram.com/reel/C8cRhXHOPWZ",
-    "thumbnail_url": "https://scontent-bru2-1.cdninstagram.com/v/t39.30808-6/436467566_90027825689476_8588983539992242110_n.jpg?stp=dst-jpg_s168x128_tt6&_nc_cat=1&ccb=7-5&_nc_sid=2f2557&_nc_ohc=kHCeWC6XXTYQ7kNvwGJeJkN&_nc_oc=AdoewKSA8GJlo7izWFMqyX9vLrQA05vcvSbVrU4rSI0PrXGjGxl0xia_UkMogIA8_Yc&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-bru2-1.cdninstagram.com&_nc_gid=y_rXFX2PY4SXV4eAL-p9Gg&_nc_ss=7839b&oh=00_AQAYc9DYXuXvHk8UYYM-9mB0mpKkRn4phVMxUnm6S3KE6Q&oe=6A567C18",
-    "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_005.jpg",
-    "engagement": {
-      "likes": 49816,
-      "comments": 155
+    {
+      "platform": "instagram",
+      "source_url": "https://www.instagram.com/p/DaY1L3nE-CV/",
+      "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_005.jpg",
+      "thumbnail_url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/733802228_17985504681134183_853553161056780488_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=MzkzNDEyODAxNTQ1NDQ4ODUwNQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=fg9WCmM-ugIQ7kNvwHfJ-4f&_nc_oc=AdrCSAqO5HNuAHFFHp78uWGWy8ZYH6eXWxlQoxbiC_QywYteCG4iynKsbWBBJXF8aRA&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent-vie1-1.cdninstagram.com&_nc_gid=MDDmwFKHB02x5DVwdPx-Cg&_nc_ss=7a3ba&oh=00_AQBQY1SgEEPLRMcpfciOXqO7uFnInsm9tNvPKzk3InnFhA&oe=6A5663D2",
+      "engagement": {
+        "likes": 2,
+        "comments": 1,
+        "total": 4
+      },
+      "style_notes": "Informational card design",
+      "caption_preview": "[파크골프] 서울 첫 36홀부터 대학 첫 공인 구장까지…전국 파크골프장 한 달 새 잇따라 개장\\n\\n📌 전국 지자체·대학·농협이 공원, 대학 유휴부지, 폐교 운동장 등을 활용해 파크골프장을 잇따라 조성하고 있어요. 최근 한 달 새 수원·이천·보령·청송·영등포·경북전문대...",
+      "owner": "gci.seniorvillage"
     },
-    "style_notes": "Instagram Reel cover - aesthetic composition, soft tones"
-  },
-  {
-    "platform": "instagram",
-    "source_url": "https://instagram.com/reel/DOWCvOtj63_",
-    "thumbnail_url": "https://scontent-bru2-1.cdninstagram.com/v/t39.30808-6/475790539_90029584645227_1976045587025231153_n.jpg?stp=dst-jpg_s168x128_tt6&_nc_cat=1&ccb=7-5&_nc_sid=2f2557&_nc_ohc=mRGZ5GbraUQQ7kNvwHDzAqG&_nc_oc=Adpudhirj9jmpMHUQ0uhhGvxoSi0RyAzwsVFwr1cWYLfbiN8iAtrg-wNancYrjWmxSM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-bru2-1.cdninstagram.com&_nc_gid=y_rXFX2PY4SXV4eAL-p9Gg&_nc_ss=7839b&oh=00_AQBxQ7uwaCTSw1L1NXP8EQ8uTP6SP4OuAByLKGmIyk6I1g&oe=6A567C7E",
-    "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_006.jpg",
-    "engagement": {
-      "likes": 29841,
-      "comments": 151
+    {
+      "platform": "instagram",
+      "source_url": "https://www.instagram.com/p/DaWRY3FE9ra/",
+      "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_006.jpg",
+      "thumbnail_url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/732544770_17984971872134183_4478732616376861373_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=MzkzMzQwNzY3NTI5MjAyMDY4Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=VMAvMi-vpncQ7kNvwES2Qti&_nc_oc=AdoNMaBUyxM6DeFDj1NmusNMi6eDtt9ttXHi9p7z7KQYLb8zY8v0reuAnOiiKb4YjUQ&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent-vie1-1.cdninstagram.com&_nc_gid=MDDmwFKHB02x5DVwdPx-Cg&_nc_ss=7a3ba&oh=00_AQDSEhkriS45X1wu5U_v_lCepO0QoA7wAq120Cg76lZi8w&oe=6A5673FF",
+      "engagement": {
+        "likes": 2,
+        "comments": 1,
+        "total": 4
+      },
+      "style_notes": "Informational card design",
+      "caption_preview": "[파크골프] 김제농협, 조합원 70명 함께한 첫 파크골프대회 성황리 개최\\n\\n📌 김제농협은 6월 29일 죽산파크골프장에서 조합원 70명이 함께한 첫 조합장배 파크골프대회를 열었어요. 대회는 남녀 개인전으로 진행됐고, 입상자에게는 중앙회장배 대회 출전 자격과 다양한 시...",
+      "owner": "gci.seniorvillage"
     },
-    "style_notes": "Instagram Reel cover - aesthetic composition, soft tones"
-  },
-  {
-    "platform": "instagram",
-    "source_url": "https://instagram.com/reel/C7q662iytUU",
-    "thumbnail_url": "https://scontent-cph2-1.cdninstagram.com/v/t39.30808-6/442409549_90028133108858_5681589815794120189_n.jpg?stp=dst-jpg_s168x128_tt6&_nc_cat=1&ccb=7-5&_nc_sid=2f2557&_nc_ohc=cVmnRF5pJLMQ7kNvwEBOKvV&_nc_oc=AdoFUUWC-BfQqbtq7x1PHkbg46im0mxlypK1YafavkxoYwiWP2L4N3OQTNg_9pgty8o&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-cph2-1.cdninstagram.com&_nc_gid=1hRfX-vlTljNf3OwDtFYwA&_nc_ss=7839b&oh=00_AQBkXVrcVyY9wBf7RfWwsMx7Sd2KlIeqGCW4m8iSe5RSrQ&oe=6A56861E",
-    "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_007.jpg",
-    "engagement": {
-      "likes": 29815,
-      "comments": 113
-    },
-    "style_notes": "Instagram Reel cover - aesthetic composition, soft tones"
-  }
-]
+    {
+      "platform": "instagram",
+      "source_url": "https://www.instagram.com/p/DaTr-Odk02v/",
+      "image_path": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260710_007.jpg",
+      "thumbnail_url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/730332198_17984597904134183_7477645039118923030_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=MzkzMjY4MDIxMDA4MDgwMjI5Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Lb2JiYY-EN0Q7kNvwHuQpWq&_nc_oc=Ado87oBA9dIUSIEn4VSS3YuH04RRglbaQrbozXDC28UtnW0l0YS_FNkIb1uUCdjsJK4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent-vie1-1.cdninstagram.com&_nc_gid=MDDmwFKHB02x5DVwdPx-Cg&_nc_ss=7a3ba&oh=00_AQD5Cvzel6cFjBAhTcxbVKqQPlBW_kpCSrgy4FYXMe0GAQ&oe=6A567031",
+      "engagement": {
+        "likes": 2,
+        "comments": 1,
+        "total": 4
+      },
+      "style_notes": "Informational card design",
+      "caption_preview": "[파크골프] 아이비 니어리, 카든 파크 챔피언십 마지막 경기서 1번 홀 첫 샷\\n\\n📌 아이비 니어리가 2026년 7월 1일 카든 파크에서 열린 여자 프로골프 및 지도자 챔피언십 최종 라운드 1번 홀에서 첫 샷을 날렸어요. 대회 마지막 경기의 시작점인 만큼, 선수들의 ...",
+      "owner": "gci.seniorvillage"
+    }
+  ]
+}

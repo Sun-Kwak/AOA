@@ -7,8 +7,9 @@ version: 1.0.0
 status: active
 
 description: >
-  건강 및 여성 운동 트렌드를 수집하여 Instagram Reels/YouTube Shorts용 
-  카드 뉴스 이미지를 자동 생성하는 테스트 프로젝트.
+  건강 및 여성 운동 트렌드를 Instagram Reels에서 수집하여
+  정보성 카드뉴스 이미지를 자동 생성하는 테스트 프로젝트.
+  일러스트/다이어그램 스타일, 실사 이미지 제외.
   트렌드 → 이미지 생성 → 결과 저장 워크플로우 검증용.
 
 created_at: 2026-07-10T15:54:00+09:00
@@ -27,13 +28,21 @@ dependencies:
   agents:
     - id: trend-research-agent
       path: Agents/trend-research-agent/
-      role: 건강 및 여성 운동 트렌드 수집 (YouTube Shorts, Instagram Reels)
+      role: 건강 및 여성 운동 트렌드 수집 (Instagram Reels only)
       override: null
+      # 파라미터로 제어:
+      # - platforms: ["instagram"] (YouTube 제외)
+      # - 정보성 카드뉴스만 수집 (실사 제외)
+      # - 중복 이미지 제거
 
     - id: image-generator
       path: Agents/image-generator/
-      role: 트렌드 기반 카드 뉴스 이미지 생성 (img2img)
+      role: 트렌드 기반 카드 뉴스 이미지 생성 (img2img, 9:16 세로형)
       override: null
+      # 파라미터로 제어:
+      # - aspect_ratio: "9:16"
+      # - mode: img2img
+      # - strength: 0.65
 
   tools: []
 
