@@ -131,15 +131,18 @@ strength: 0.5-0.7  # 레이아웃 유사, 내용 재생성
 **image_edit 프롬프트 전략:** ✨ NEW
 
 ```yaml
-# 구조 완전 보존, 텍스트/색상만 변경
+# ✅ nano-banana-2/edit 모델 사용 (텍스트 보존 가능)
 reference: trends/visual_001.jpg
-edit_prompt: "ONLY change text to '혈당 관리 팁',
-              use warmer colors,
-              KEEP exact same character, illustration style, layout"
-preserve_structure: true
-strength: 0.2-0.3  # 최소 변경
-edit_areas: ["text", "colors"]
-mask: "auto"  # 텍스트 영역 자동 감지
+edit_prompt: "이미지의 모든 콘텐츠 텍스트(번호 리스트, 팁, 설명)는 절대 유지
+              타이틀만 다르게 표현 가능 (같은 의미)
+              배경, 폰트, 색상, 디자인 요소만 변경
+              캐릭터, 레이아웃, 구도는 완전 동일하게"
+
+# ⚠️ 프롬프트 작성 팁:
+# - 간단하고 명확한 한국어 프롬프트 권장
+# - 무엇을 유지할지, 무엇을 변경할지 명확히 구분
+# - 영어로 길게 작성하면 오히려 결과가 나쁨
+# - strength, mask, edit_areas는 nano-banana-2/edit에서 사용 안 함
 ```
 
 ---
@@ -189,31 +192,26 @@ result = fal_client.subscribe(
 #### **image_edit:** ✨ NEW
 
 ```python
-# fal.ai inpainting 또는 edit 전용 모델 사용
+# ✅ CORRECT: nano-banana-2/edit 모델 사용 (텍스트 보존 가능)
 result = fal_client.subscribe(
-    "fal-ai/flux-general",  # 또는 "fal-ai/flux-pro/v1.1-ultra/redux"
+    "fal-ai/nano-banana-2/edit",
     arguments={
-        "prompt": edit_prompt,  # "ONLY change text to X, KEEP style"
-        "image_url": upload_reference_image(),
-        "strength": 0.25,  # 낮은 값 = 최소 변경
-        "mask": "auto",  # 자동 마스킹 또는 mask 이미지 URL
-        "preserve_original": True,  # 구조 보존
-        "guidance_scale": 3.5,  # 낮은 값 = 원본 유지
-        "num_images": 1
+        "prompt": edit_prompt,  # 간단하고 명확한 한국어 프롬프트 권장
+        "image_urls": [upload_reference_image()],  # ⚠️ 배열 형태!
+        "logs": True  # Optional: 로그 출력
     }
 )
 
-# 대안: img2img + 극도로 낮은 strength
-result = fal_client.subscribe(
-    "fal-ai/flux-pro/v1.1-ultra",
-    arguments={
-        "prompt": edit_prompt + " KEEP EXACT SAME STYLE, LAYOUT, AND CHARACTER",
-        "image_url": upload_reference_image(),
-        "strength": 0.20,  # img2img보다 낮게 (0.2-0.3)
-        "num_images": 1
-    }
-)
+# 응답 구조가 다름!
+if result and 'images' in result and len(result['images']) > 0:
+    image_url = result['images'][0]['url']  # images 배열
+    # 다운로드 및 저장
 ```
+
+**⚠️ 중요: 다른 모델들은 텍스트 보존 불가!**
+- ❌ `flux-pro/v1.1-ultra` (img2img) → 텍스트 재생성됨
+- ❌ `flux-general`, `flux-redux` → 텍스트 보존 안 됨
+- ✅ `nano-banana-2/edit` → 텍스트 보존하며 색상/배경만 변경
 
 **Aspect Ratio 변환:**
 
@@ -424,7 +422,11 @@ def validate_image(image_path):
 2. **비용:** 매 생성마다 API 비용 발생
 3. **안전 필터:** 민감한 콘텐츠 거부됨
 4. **생성 시간:** 5-15초 (모델별 상이)
-5. **한국어 텍스트:** 이미지 내 한국어는 10-15% 오류 가능
+5. **한국어 텍스트 (text2img/img2img):** 이미지 내 한국어는 10-15% 오류 가능
+6. **image_edit 모드:**
+   - ✅ nano-banana-2/edit만 텍스트 보존 가능
+   - ❌ flux-pro, flux-general 등은 텍스트 재생성됨
+   - ⚠️ 텍스트가 많은 인포그래픽/카드에 적합
 
 ---
 
@@ -497,6 +499,27 @@ status: success
 output:
   image_path: "Memory/generated_images/img_20260710_144612_img2img_card.jpg"
   similarity_to_reference: 0.75
+```
+
+### **예시 3: 이미지 편집 (image_edit)** ✨ NEW
+
+```yaml
+# Input
+mode: image_edit
+reference_image: "Memory/trends/visuals/ref_20260710_001.jpg"
+edit_prompt: "이미지의 모든 콘텐츠 텍스트(번호 리스트, 팁, 설명)는 절대 유지
+              타이틀만 다르게 표현 가능 (같은 의미)
+              배경, 폰트, 색상, 디자인 요소만 변경
+              캐릭터, 레이아웃, 구도는 완전 동일하게"
+preserve_structure: true
+
+# Output
+status: success
+output:
+  image_path: "Memory/generated_images/img_20260710_172000_image_edit_card.jpg"
+  model: "nano-banana-2/edit"
+  text_preserved: true  # ✅ 모든 텍스트 보존됨
+  color_changed: true   # ✅ 배경색 변경됨
 ```
 
 ---
