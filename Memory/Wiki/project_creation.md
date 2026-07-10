@@ -176,10 +176,12 @@ manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
 - [ ] 현재 경로가 `/Users/sun/project/AOA`인지 확인
 - [ ] Registry에서 필요한 에이전트 검색
 - [ ] 디렉터리 구조 전체 생성
-- [ ] manifest.yaml 필수 필드 모두 작성
+- [ ] manifest.yaml 필수 필드 모두 작성 + **🚨 필수 절차 주석**
 - [ ] Memory/ 하위 파일 3개 생성
+- [ ] **Memory/wiki/ 디렉터리 생성** (Wiki_Protocol.md 포함)
+- [ ] **pre_execution_check.sh 생성** (Wiki 자동 읽기)
 - [ ] git commit
-- [ ] create_session()만 호출 (create_project 금지)
+- [ ] create_session()만 호출 (create_project 금지) + **kickoff prompt에 Wiki 조회 규칙**
 
 모든 항목을 통과해야 프로젝트 생성 시작.
 
@@ -197,12 +199,13 @@ cd /Users/sun/project/AOA
 mkdir -p Projects/<id>/{Agents,Workflows,Memory,Outputs}
 
 # 3. 파일 생성
-# - manifest.yaml (스키마 준수)
+# - manifest.yaml (스키마 준수 + 🚨 필수 절차 주석)
 # - README.md
 # - .gitignore
 # - Memory/project.md
 # - Memory/execution_state.md
 # - Memory/decision_log.md
+# - pre_execution_check.sh (Wiki 자동 읽기)
 
 # 4. Git commit
 git add Projects/<id>/
@@ -218,6 +221,20 @@ create_session({
 당신은 <project> Project Agent입니다.
 
 manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
+
+## 🚨 작업 시작 전 필수 절차
+
+1. **Wiki 조회 (필수)**
+   ./pre_execution_check.sh
+
+2. **체크리스트 검증**
+   - [ ] Wiki 전체 읽음
+   - [ ] 과거 실수 패턴 확인
+   - [ ] 회피 전략 적용
+
+3. **작업 시작**
+
+❌ Wiki 조회 없이 작업 시작 금지!
 
 ## 하위 에이전트 실행 규칙
 - 에이전트 호출 전 list_agents()로 기존 세션 확인
@@ -236,8 +253,32 @@ manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
 
 ---
 
+## [Pattern-006] Wiki Protocol 무시 (에이전트와 동일)
+
+**발생일**: 2026-07-10 (health-fitness-cards 프로젝트 보고)  
+**상황**: 프로젝트 세션에서 하위 에이전트(image-generator) 호출 시  
+**실수**: 
+- 프로젝트 `Memory/wiki/` 존재함
+- 하위 에이전트 `memory/wiki/` 존재함
+- **양쪽 모두 Wiki 조회 없이 작업 시작**
+
+**결과**: Pattern-004와 동일 (에이전트 참조)
+
+**회피전략**:
+1. ✅ 프로젝트 생성 시 다음 파일 함께 생성:
+   ```
+   Projects/<id>/pre_execution_check.sh     # Wiki 자동 읽기 스크립트
+   Projects/<id>/.session_init               # 세션 시작 훅
+   ```
+2. ✅ `manifest.yaml`에 "🚨 작업 시작 전 필수 절차" 필드 추가
+3. ✅ Kickoff prompt에 "pre_execution_check.sh 실행 필수" 명시
+4. ✅ 기존 모든 프로젝트에 소급 적용
+
+---
+
 ## 업데이트 이력
 
 - 2026-07-10: 초기 작성 (Pattern-001 ~ 004 기록)
 - 2026-07-10: Pattern-005 추가 (불필요한 자동 실행)
 - 2026-07-10: Kickoff prompt 템플릿에 "하위 에이전트 중복 생성 방지" 규칙 추가
+- 2026-07-10: Pattern-006 추가 (Wiki Protocol 강제 메커니즘)

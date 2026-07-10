@@ -138,54 +138,72 @@ create_session({
 
 ---
 
-## Phase 2: 이미지 생성
+## Phase 2: 이미지 편집 (자유 디자인)
 
 **Agent:** image-generator (공용, 3개 병렬 세션)
+
+**모드:** `image_edit` ✨ (v1.1.0)
 
 **공통 Parameters:**
 
 ```yaml
-mode: img2img
+mode: image_edit
 aspect_ratio: "9:16"
-strength: 0.65
+strength: 0.25
+preserve_structure: true  # 기술적 파라미터 유지
 model: "flux-pro/v1.1-ultra"
 ```
 
 **Card 1: 주제별 비교/대조**
 ```yaml
-주제 예시: "아침 공복 운동 vs 식후 운동"
-reference_image: ref_YYYYMMDD_001.jpg (비교 레이아웃 스타일)
-style_modifiers:
-  - "comparison layout with two sections"
-  - "warm morning colors"
-  - "clear Korean typography"
+주제: "아침 공복 운동 vs 식후 운동"
+reference_image: ref_YYYYMMDD_001.jpg
+edit_prompt: "Create an informational health card about '아침 공복 운동 vs 식후 운동'.
+              Design freely with new illustration style, characters, layout, colors.
+              Fresh modern design with vibrant summer colors.
+              Korean text must be clear and readable.
+              9:16 vertical format."
+mask: "auto"
+edit_areas: ["text", "colors", "layout", "style"]
 ```
 
 **Card 2: 오해/팁 리스트**
 ```yaml
-주제 예시: "여성 근력운동 3가지 오해"
-reference_image: ref_YYYYMMDD_002.jpg (번호 리스트 스타일)
-style_modifiers:
-  - "numbered list format (1, 2, 3)"
-  - "empowering feminine colors"
-  - "bold Korean typography"
+주제: "여성 근력운동 3가지 오해"
+reference_image: ref_YYYYMMDD_002.jpg
+edit_prompt: "Create an informational health card about '여성 근력운동 3가지 오해'.
+              Design freely with new layout, characters, colors, illustrations.
+              Empowering modern design.
+              Korean text must be clear.
+              9:16 vertical format."
+mask: "auto"
+edit_areas: ["text", "colors", "layout", "style"]
 ```
 
 **Card 3: 실천 가이드**
 ```yaml
-주제 예시: "10분 홈트로 복근 만들기"
-reference_image: ref_YYYYMMDD_003.jpg (타임라인/스텝 스타일)
-style_modifiers:
-  - "step-by-step layout with timer"
-  - "energetic bright colors"
-  - "bold impactful typography"
+주제: "10분 홈트로 복근 만들기"
+reference_image: ref_YYYYMMDD_003.jpg
+edit_prompt: "Create an informational health card about '10분 홈트로 복근 만들기'.
+              Design freely with new layout, icons, colors, step format.
+              Energetic motivating design.
+              Korean text must be clear.
+              9:16 vertical format."
+mask: "auto"
+edit_areas: ["text", "colors", "layout", "style"]
 ```
 
 **Expected Output:**
-- `Outputs/card_001.jpg` (325-800KB, 1080x1920px)
-- `Outputs/card_002.jpg`
-- `Outputs/card_003.jpg`
+- `Outputs/card_001.jpg` (325-800KB, 1080x1920px) - 자유로운 새 디자인
+- `Outputs/card_002.jpg` - 자유로운 새 디자인
+- `Outputs/card_003.jpg` - 자유로운 새 디자인
 - `Outputs/metadata.json`
+
+**생성 원칙:**
+- ✅ 이미지 비율 (9:16) 유지
+- ✅ 정보성 카드 컨셉 유지
+- ✅ 일러스트, 캐릭터, 레이아웃, 색상 모두 자유롭게 변경
+- ⚠️ 프롬프트에 "KEEP", "preserve", "유지" 금지
 
 ---
 
@@ -211,15 +229,26 @@ style_modifiers:
 |------|------|
 | 플랫폼 | Instagram only (YouTube 제외) |
 | 콘텐츠 타입 | 정보성 카드뉴스 (일러스트/다이어그램) |
+| 수집 방법 | 계정 기반 (account-content-collector) |
 | Visual Reference | 실사 제외, 중복 제거 |
 | 이미지 포맷 | 9:16 세로형 |
-| 생성 모드 | img2img (트렌드 스타일 참조) |
+| 생성 모드 | **image_edit** (자유 디자인) |
+| strength | 0.25 |
+| preserve_structure | true (기술 파라미터) |
 | 병렬 처리 | 3개 동시 생성 |
+
+**생성 원칙:**
+- ✅ 이미지 비율 (9:16)만 유지
+- ✅ 정보성 카드 컨셉 유지
+- ✅ 일러스트, 캐릭터, 레이아웃, 색상 모두 자유롭게 변경
+- ⚠️ 프롬프트에 보존 지시 금지
 
 ---
 
 ## Notes
 
-- 공용 에이전트(trend-research-agent, image-generator)는 수정하지 않음
+- 공용 에이전트는 수정하지 않음
+- 프로젝트 전용 에이전트: `account-content-collector`
+- image-generator v1.1.0 `image_edit` 모드 활용
 - 프로젝트별 파라미터로 동작 제어
 - 추가 Instruction은 kickoff prompt에 명시적으로 전달
