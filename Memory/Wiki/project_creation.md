@@ -98,6 +98,71 @@
 
 ---
 
+## [Pattern-005] 불필요한 프로젝트 자동 실행
+
+**발생일**: 2026-07-10  
+**상황**: 프로젝트 세션 생성 시 kickoff.prompt에 "준비되면 시작하세요!" 포함  
+**실수**: 모든 프로젝트를 autopilot으로 즉시 실행  
+**결과**: 
+- 사용자가 프로젝트와 기획 조정할 기회 없음
+- 불필요한 리소스 소비
+- 테스트가 아닌 실제 프로젝트에 부적합
+
+**회피전략**:
+
+**테스트/검증 프로젝트 (자동 실행 O)**:
+```javascript
+create_session({
+  project_id: "52d540bd...",
+  name: "[AOA] Test Project",
+  coordinate_with_creator: false,
+  kickoff: {
+    mode: "autopilot",  // 즉시 실행
+    prompt: `...규칙 + 워크플로우...
+    
+준비되면 시작하세요!`
+  }
+})
+```
+
+**실제 프로젝트 (대기 상태 O)**:
+
+Option 1 - kickoff 없이 idle 생성:
+```javascript
+create_session({
+  project_id: "52d540bd...",
+  name: "[AOA] Real Project",
+  coordinate_with_creator: false
+  // kickoff 생략 → 사용자 지시 대기
+})
+```
+
+Option 2 - 규칙만 전달 후 대기:
+```javascript
+create_session({
+  project_id: "52d540bd...",
+  name: "[AOA] Real Project",
+  coordinate_with_creator: false,
+  kickoff: {
+    mode: "interactive",  // autopilot 아님!
+    prompt: `당신은 <project> Project Agent입니다.
+
+manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
+
+에이전트 실행 패턴:
+<create_session 규칙만 기술>
+
+사용자 지시를 기다립니다.`
+  }
+})
+```
+
+**판단 기준**:
+- ✅ 자동 실행: 테스트, 검증, 정기 실행 프로젝트
+- ✅ 대기 상태: 기획 조정 필요, 사용자 승인 필요, 실제 업무 프로젝트
+
+---
+
 ## 작업 시작 전 체크리스트
 
 프로젝트 생성 요청이 들어오면:
@@ -156,3 +221,4 @@ create_session({
 ## 업데이트 이력
 
 - 2026-07-10: 초기 작성 (Pattern-001 ~ 004 기록)
+- 2026-07-10: Pattern-005 추가 (불필요한 자동 실행)
