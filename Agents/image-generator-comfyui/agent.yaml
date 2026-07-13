@@ -1,0 +1,99 @@
+id: image-generator-comfyui
+name: Image Generator (ComfyUI)
+version: 1.0.0
+status: active
+
+role: >
+  ComfyUI Desktop을 통한 로컬 이미지 생성 Agent.
+  Workflow 기반 text2img, img2img, image_edit 지원.
+  M1 Max 최적화, 완전 무료, 대량 생성에 최적.
+
+category: image-generation
+
+tags:
+  - image-generation
+  - comfyui
+  - local
+  - free
+  - text2img
+  - img2img
+  - image-edit
+  - flux
+  - sdxl
+  - batch-processing
+
+inputs:
+  - name: mode
+    type: text
+    required: true
+    description: "생성 모드: text2img | img2img | image_edit"
+  
+  - name: prompt
+    type: text
+    required: true
+    description: "이미지 생성 프롬프트 (영어 권장)"
+  
+  - name: reference_image
+    type: file_path
+    required: false
+    description: "참조 이미지 경로 (img2img, image_edit 모드)"
+  
+  - name: edit_prompt
+    type: text
+    required: false
+    description: "편집 지시사항 (image_edit 모드)"
+  
+  - name: strength
+    type: number
+    required: false
+    description: "변형 강도 (0.0~1.0, 기본: 0.3 for edit, 0.65 for img2img)"
+  
+  - name: model
+    type: text
+    required: false
+    description: "사용할 모델 (flux-schnell, flux-dev, sdxl, 기본: flux-schnell)"
+  
+  - name: aspect_ratio
+    type: text
+    required: false
+    description: "비율 (1:1, 16:9, 9:16 등, 기본: 1:1)"
+  
+  - name: batch_size
+    type: number
+    required: false
+    description: "배치 생성 개수 (기본: 1)"
+  
+  - name: output_path
+    type: file_path
+    required: true
+    description: "결과 이미지 저장 경로"
+
+outputs:
+  - name: generated_image
+    type: file_path
+    path: "입력으로 받은 output_path"
+    description: "생성된 이미지 파일"
+  
+  - name: metadata
+    type: json
+    path: "output_path와 동일 디렉터리, .json 확장자"
+    description: "생성 메타데이터 (프롬프트, 설정, 소요 시간)"
+
+dependencies:
+  tools:
+    - comfyui-desktop
+    - curl
+    - python3
+  
+  external_apis:
+    - name: ComfyUI API
+      endpoint: "http://127.0.0.1:8188"
+      auth_required: false
+  
+  system_requirements:
+    - ComfyUI Desktop.app 설치 필수
+    - 모델 다운로드 필요 (FLUX Schnell 권장)
+    - 최소 16GB RAM (32GB 권장)
+
+created_at: 2026-07-13
+updated_at: 2026-07-13
