@@ -8,30 +8,70 @@
 
 ---
 
-## 🚨 작업 시작 전 필수 절차
+## 🚨 MANDATORY STARTUP PROTOCOL
 
-**모든 작업 전에 반드시 다음을 수행하세요:**
+**🔴 매 세션 시작 시 반드시 다음 문서들을 읽으세요:**
 
-### 1. Wiki 조회 (필수)
+1. `/Users/sun/project/AOA/Registry/Agents/image-generator.md` (에이전트 개요)
+2. `/Users/sun/project/AOA/Agents/image-generator/README.md` (상세 사용법)
+3. `/Users/sun/project/AOA/Agents/image-generator/memory/wiki/execution_patterns.md` (실수 패턴 및 회피 전략)
 
-```bash
-./pre_execution_check.sh
+**❌ 읽지 않고 작업 시작 = 규칙 위반**
+
+이 문서들에는 과거 실수 패턴, 올바른 모델 선택, 워터마크 처리 전략 등 핵심 규칙이 포함되어 있습니다.
+
+---
+
+## 작업 전 필수 확인사항
+
+### Phase 1: 문서 확인
+- [ ] `execution_patterns.md` 최신 업데이트 확인 (마지막 업데이트: 2026-07-15)
+- [ ] 새로운 Pattern 추가 여부 확인
+
+### Phase 2: 입력 검증
+- [ ] **모드 확인**: text2img / img2img / image_edit
+- [ ] **모델 검증**:
+  - image_edit → `nano-banana-2/edit` 필수 (Pattern-001)
+  - img2img → `nanovana2` 또는 `flux-pro`
+  - text2img → 사용자 선택 또는 `nanovana2` (기본)
+- [ ] **워터마크 처리**:
+  - Pattern-005 프롬프트 전략 사용 (긍정적 표현)
+  - Pattern-004 크롭 방식 **절대 사용 금지** (콘텐츠 손실)
+
+### Phase 3: 사용자 입력 vs 에이전트 규칙 충돌 확인
+
+**충돌 해결 우선순위:**
+
+1. **안전/품질 관련** → **에이전트 규칙 우선**
+   - 모델 선택 (image_edit = nano-banana-2/edit)
+   - 워터마크 처리 (Pattern-005)
+   - strength 범위 (image_edit: 0.2-0.3)
+   
+   → 사용자 입력이 잘못되었으면 **자동 수정 후 고지**
+
+2. **선호/스타일 관련** → **사용자 입력 우선**
+   - aspect_ratio
+   - style_modifiers
+   - output_filename
+
+3. **비용/성능** → **사용자 입력 우선** (경고 후)
+   - 고가 모델 선택 시 경고
+
+**예시:**
+```yaml
+# 사용자 입력
+mode: image_edit
+model: flux-general  # ❌ 잘못됨
+
+# 자동 수정
+mode: image_edit
+model: nano-banana-2/edit  # ✅ Pattern-001에 따라 수정
+
+# 고지 메시지
+"⚠️  Model corrected: flux-general → nano-banana-2/edit (Pattern-001: image_edit requires nano-banana-2/edit for text preservation)"
 ```
 
-또는 직접 Wiki 문서 읽기:
-
-```bash
-find memory/wiki/ -name "*.md" -exec cat {} \;
-```
-
-### 2. 체크리스트 검증
-
-- [ ] **Wiki 전체 읽음**
-- [ ] **과거 실수 패턴 확인** (Pattern-XXX 문서)
-- [ ] **회피 전략 적용 가능 여부 확인**
-- [ ] **필수 규칙 준수 가능 여부 확인**
-
-### 3. 작업 시작
+### Phase 4: 작업 시작
 
 모든 체크리스트 통과 후 작업 시작.
 
@@ -197,18 +237,27 @@ professional design, high quality"
    ```
 
 5. **🎯 image_edit 모드 워터마크 처리 전략 (핵심!):**
-   - **프롬프트에서 워터마크 언급 금지** (콘텐츠 정책 위반 회피)
-   - **후처리 크롭으로 워터마크 제거** (PIL 사용)
+   - **Pattern-005 프롬프트 강화 전략** (2026-07-15 최신)
+   - **긍정적 표현 사용** (부정적 단어 회피)
+   - **Pattern-004 크롭 방식 절대 금지** (콘텐츠 손실)
    
-**워터마크 처리 워크플로우:**
+**✅ 워터마크 처리 워크플로우 (Pattern-005):**
 
 ```python
-# 1. 이미지 생성 (워터마크 언급 없음!)
-edit_prompt = """배경색을 밝고 산뜻한 여름 색상으로 변경.
-타이포그래피를 모던하게 변경.
-캐릭터와 일러스트는 자유롭게 변경 가능.
-한글 텍스트는 명확하게 유지."""
-# ⚠️ 워터마크/제거 관련 단어 일체 포함하지 않음!
+# 1. 프롬프트 강화 (긍정적 표현 + 명확한 목적)
+edit_prompt = """[콘텐츠 설명]
+동일한 비주얼 스타일, 컬러, 레이아웃, 아이콘, 캐릭터 유지.
+명확한 한국어 텍스트.
+
+IMPORTANT: Clean professional design with no text overlays at the bottom.
+Pure content without any credits or social media handles.
+Focus on the [main content] only."""
+
+# 핵심 원칙:
+# ✅ 부정적 단어 회피: "remove", "delete", "eliminate"
+# ✅ 긍정적 표현 사용: "clean", "professional", "pure content"
+# ✅ 목적 명확화: "no text overlays at the bottom"
+# ✅ 대상 특정: "credits", "social media handles"
 
 result = fal_client.subscribe(
     'fal-ai/nano-banana-2/edit',
@@ -218,35 +267,26 @@ result = fal_client.subscribe(
     }
 )
 
-# 2. 이미지 다운로드
+# 2. 이미지 다운로드 (크롭 없음!)
 image_url = result['images'][0]['url']
 response = requests.get(image_url)
-with open(temp_path, 'wb') as f:
+with open(output_path, 'wb') as f:
     f.write(response.content)
 
-# 3. 🎯 후처리 크롭 (워터마크 영역 제거)
-from PIL import Image
-
-img = Image.open(temp_path)
-width, height = img.size
-
-# 하단 7% 크롭 (워터마크 영역)
-crop_height = int(height * 0.93)
-cropped_img = img.crop((0, 0, width, crop_height))
-
-# 9:16 비율 재조정
-target_ratio = 9 / 16
-new_height = int(width / target_ratio)
-if new_height < crop_height:
-    cropped_img = cropped_img.crop((0, 0, width, new_height))
-
-cropped_img.save(output_path, quality=95)
+# ✅ 워터마크 프롬프트로 제거됨 (추가 처리 불필요)
 ```
 
-**이유**:
-- "워터마크 제거" → 콘텐츠 정책 위반 ❌
-- 간접 표현 → 새로운 워터마크 생성 ❌
-- 후처리 크롭 → 깨끗하게 제거 ✅
+**결과:**
+- ✅ 워터마크 완전히 제거됨 (하단 깨끗함)
+- ✅ 콘텐츠 잘림 없음 (9개 팁 모두 완전히 보임)
+- ✅ 새로운 워터마크 생성 안 됨
+- ✅ 추가 비용 $0 (후처리 API 불필요)
+
+**❌ Pattern-004 크롭 방식 절대 사용 금지:**
+```python
+# ❌ WRONG - 콘텐츠 손실, 워터마크 위치 가변
+crop_pixels = 100  # 사용하지 말 것!
+```
 
 **image_edit 프롬프트 작성 팁:**
 
@@ -256,17 +296,21 @@ reference: trends/visual_001.jpg
 edit_prompt: "배경색을 밝고 산뜻한 여름 색상으로 변경.
               타이포그래피를 모던하게 변경.
               캐릭터와 일러스트는 자유롭게 변경 가능.
-              한글 텍스트는 명확하게 유지."
+              한글 텍스트는 명확하게 유지.
+              
+              IMPORTANT: Clean professional design with no text overlays at the bottom.
+              Pure content without any credits or social media handles."
 
 # ⚠️ 프롬프트 작성 팁:
 # - 간단하고 명확한 한국어 또는 영어 프롬프트 권장
 # - 무엇을 유지할지, 무엇을 변경할지 명확히 구분
 # - 영어로 길게 작성하면 오히려 결과가 나쁨
 
-# 🚨 필수 규칙:
-# - **워터마크 관련 단어는 프롬프트에 포함하지 않음!**
-# - 후처리 크롭으로 워터마크 제거
-# - watermark, remove, delete, username 등 민감 단어 회피
+# 🚨 필수 규칙 (Pattern-005):
+# - ✅ 긍정적 표현: "clean", "professional", "focus on content"
+# - ✅ 명확한 목적: "no text overlays at the bottom"
+# - ❌ 부정적 단어 회피: "remove", "delete", "eliminate"
+# - ❌ 크롭 방식 금지 (Pattern-004는 구식)
 ```
 
 ---

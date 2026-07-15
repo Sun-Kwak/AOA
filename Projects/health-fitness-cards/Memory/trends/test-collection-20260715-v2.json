@@ -1,0 +1,31 @@
+{
+  "collection_date": "2026-07-15",
+  "collection_mode": "test",
+  "total_accounts": 1,
+  "total_images": 1,
+  "accounts_collected": ["@health__happyvirus"],
+  "references": [
+    {
+      "ref_id": "ref_20260715_test001",
+      "platform": "instagram",
+      "account": "@health__happyvirus",
+      "source_url": "https://www.instagram.com/p/DazL5fDv07G/",
+      "image_path": "Memory/trends/visuals/ref_20260715_test001.jpg",
+      "thumbnail_url": "https://scontent-ord5-2.cdninstagram.com/v/t51.71878-15/747505309_1968466410528437_7310901756792845754_n.jpg",
+      "caption": "🛌 \"낮잠도 잘못 자면 독이다\"\n아무렇게나 자는 낮잠이 오히려 몸을 망친다고요? 😱\n9가지 위험한 낮잠 습관, 지금 바로 확인해보세요 👆",
+      "hashtags": ["낮잠", "건강정보", "건강꿀팁"],
+      "timestamp": "2026-07-15T04:17:51.000Z",
+      "content_type": "video_clip",
+      "product_type": "clips",
+      "dimensions": {
+        "width": 640,
+        "height": 1136
+      },
+      "engagement": {
+        "likes": 73,
+        "comments": 2
+      },
+      "style_notes": "**Content Type:** Health information card - Sleep/Nap safety guide\n**Layout:** Vertical video format (640x1136), numbered list presentation (9 items mentioned in caption)\n**Visual Style:** Video thumbnail showing illustrated health information content\n**Topic:** Dangerous nap habits - preventive health education\n**Text Style:** Korean text with emoji emphasis (🛌 😱 👆)\n**Educational Value:** Warning-based educational content about sleep health\n**Format:** Mobile-first vertical video (Reels/Clips)\n**Structure:** Numbered list format for easy consumption\n\n**Filter Assessment:**\n✅ COLLECT - Educational health content with structured information (9-point list)\n✅ Topic aligns with health knowledge dissemination  \n✅ Matches target style: Illustrated health cards with numbered information\n✅ Not commercial or exercise demonstration content\n\n**Style Analysis:**\n- **Hook Strategy:** Provocative statement + warning emoji\n- **Content Promise:** Clear value (9 specific tips)\n- **CTA:** Direct action prompt (\"지금 바로 확인해보세요 👆\")\n- **Hashtag Strategy:** Simple, relevant (#낮잠 #건강정보 #건강꿀팁)"
+    }
+  ]
+}

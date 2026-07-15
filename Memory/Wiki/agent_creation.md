@@ -27,150 +27,66 @@
 
 ---
 
-## [Pattern-002] 에이전트 prompt.md 불완전
+## [Pattern-DOC] Document Quality & Schema Compliance
 
-**발생일**: 다수  
+**통합**: Pattern-002 (prompt.md 불완전) + Pattern-003 (config.yaml 누락)  
+**범주**: 문서 품질 (Documentation Quality)  
+**발생일**: 다수
+
+### 문제
+
+#### 실수 A: 에이전트 prompt.md 불완전
 **상황**: 에이전트 프롬프트 작성 시 구조 누락  
 **실수**: 실행 예시, 에러 처리, 출력 형식 누락  
 **결과**: 에이전트가 실행 시 혼란스러워함
 
-**회피전략**:
-1. ✅ `Schemas/Agent.md` 스키마 참조 필수
-2. ✅ prompt.md 필수 섹션:
-   - Role & Responsibility
-   - Input Schema (YAML 예시)
-   - Execution Steps (구체적 단계)
-   - Output Format (예시 포함)
-   - Error Handling
-   - Best Practices
-   - Examples (성공 케이스)
-3. ✅ API 키가 필요한 경우 명시적 환경변수 설명
-4. ✅ 출력 파일 경로를 상대 경로로 명시
-
----
-
-## [Pattern-003] config.yaml 필수 필드 누락
-
-**발생일**: 다수  
+#### 실수 B: config.yaml 필수 필드 누락
 **상황**: config.yaml 작성 시  
 **실수**: version, tags, dependencies 누락  
 **결과**: 에이전트 메타데이터 불완전
 
-**회피전략**:
-1. ✅ `Schemas/Agent.md` config 스키마 참조
-2. ✅ 필수 필드:
-   ```yaml
-   id: <kebab-case>
-   name: <Human Readable>
-   version: 1.0.0
-   role: <한 줄 역할>
-   category: <적절한 카테고리>
-   tags: [tag1, tag2]
-   dependencies:
-     tools: [...]
-     external_apis: [...]
-   ```
+### 회피 전략
+
+#### 1. Schemas/Agent.md 스키마 참조 필수
+
+#### 2. prompt.md 필수 섹션
+- Role & Responsibility
+- Input Schema (YAML 예시)
+- Execution Steps (구체적 단계)
+- Output Format (예시 포함)
+- Error Handling
+- Best Practices
+- Examples (성공 케이스)
+- 🚨 필수 절차 섹션 (Wiki Protocol)
+- 🚨 Access Control 섹션
+- Reporting Protocol 섹션
+
+#### 3. config.yaml 필수 필드
+```yaml
+id: <kebab-case>
+name: <Human Readable>
+version: 1.0.0
+role: <한 줄 역할>
+category: <적절한 카테고리>
+tags: [tag1, tag2]
+dependencies:
+  tools: [...]
+  external_apis: [...]
+```
+
+#### 4. API 키가 필요한 경우 명시적 환경변수 설명
+
+#### 5. 출력 파일 경로를 상대 경로로 명시
 
 ---
 
-## 작업 시작 전 체크리스트
+## [Pattern-005] Reporting Protocol 누락
 
-에이전트 생성 요청이 들어오면:
-
-- [ ] `Schemas/Agent.md` 읽음
-- [ ] `Standards/Registry_Protocol.md` 읽음
-- [ ] 이 Wiki 문서 읽음
-- [ ] Registry에서 중복 에이전트 검색
-- [ ] 에이전트 디렉터리 생성
-- [ ] config.yaml 필수 필드 작성
-- [ ] prompt.md 전체 섹션 작성
-- [ ] README.md 작성
-- [ ] **동일 response에서** Registry/INDEX.md 업데이트
-- [ ] **동일 response에서** Registry/Agents/<id>.md 생성
-- [ ] git commit
-
-모든 항목을 통과해야 에이전트 생성 시작.
-
----
-
-## [Pattern-004] Wiki Protocol 무시 (Wiki 조회 누락)
-
-**발생일**: 2026-07-10 (health-fitness-cards 프로젝트 보고)  
-**상황**: image-generator 에이전트 재사용 시  
-**실수**: 
-- Agent `memory/wiki/` 디렉터리 존재함
-- Pattern-003: "워터마크 제거 필수" 규칙 명시됨
-- Wiki_Protocol.md에 "작업 전 Wiki 조회 필수" 명시됨
-- **그럼에도 Wiki 조회 없이 작업 시작** → 워터마크 제거 누락
-
-**결과**:
-- 같은 실수 반복
-- Wiki Protocol 무용지물
-- 프로젝트가 수동으로 지적해야 했음
-
-**근본 원인**:
-- Wiki 파일은 생성되지만 **Wiki 조회를 강제하는 메커니즘 없음**
-- 새 세션이 Wiki 존재를 모르거나 무시 가능
-- prompt.md에 "체크리스트"만 있고 강제 수단 없음
-
-**회피전략**:
-1. ✅ **강제 메커니즘 추가**: Wiki 조회를 자동화
-2. ✅ 에이전트 생성 시 다음 파일 함께 생성:
-   ```
-   Agents/<id>/pre_execution_check.sh     # Wiki 자동 읽기 스크립트
-   Agents/<id>/.session_init               # 세션 시작 훅
-   ```
-3. ✅ `prompt.md`에 "🚨 작업 시작 전 필수 절차" 섹션 추가:
-   ```markdown
-   ## 🚨 작업 시작 전 필수 절차
-   
-   1. **Wiki 조회 (필수)**
-      ```bash
-      ./pre_execution_check.sh
-      ```
-   
-   2. **체크리스트 검증**
-      - [ ] Wiki 전체 읽음
-      - [ ] 과거 실수 패턴 확인
-      - [ ] 회피 전략 적용
-   
-   3. **작업 시작**
-   ```
-4. ✅ `pre_execution_check.sh` 역할:
-   - `memory/wiki/` 전체 문서 자동 읽기
-   - 필수 패턴 자동 출력
-   - 체크리스트 강제 표시
-5. ✅ 기존 모든 에이전트에 소급 적용
-
----
-
-## 작업 시작 전 체크리스트
-
-에이전트 생성 요청이 들어오면:
-
-- [ ] `Schemas/Agent.md` 읽음
-- [ ] `Standards/Registry_Protocol.md` 읽음
-- [ ] 이 Wiki 문서 읽음
-- [ ] Registry에서 중복 에이전트 검색
-- [ ] 에이전트 디렉터리 생성
-- [ ] config.yaml 필수 필드 작성
-- [ ] prompt.md 전체 섹션 작성 + **🚨 필수 절차 섹션** + **Reporting Protocol 섹션**
-- [ ] README.md 작성
-- [ ] **memory/wiki/ 디렉터리 생성** (Wiki_Protocol.md 포함)
-- [ ] **pre_execution_check.sh 생성** (Wiki 자동 읽기)
-- [ ] **동일 response에서** Registry/INDEX.md 업데이트
-- [ ] **동일 response에서** Registry/Agents/<id>.md 생성
-- [ ] git commit
-
-모든 항목을 통과해야 에이전트 생성 시작.
-
----
-
-## Pattern-005: Reporting Protocol 누락 (2026-07-15)
+**발생일**: 2026-07-15  
+**상황**: account-content-collector 에이전트 실행 중 발견
 
 ### 문제
 
-account-content-collector 에이전트 실행 중 발견:
 - 작업 완료 후 보고 지시를 무시
 - prompt.md에 **HOW to report** 명시 없음
 - 파일 생성 = 보고로 착각
@@ -178,360 +94,70 @@ account-content-collector 에이전트 실행 중 발견:
 **근본 원인:**
 "작업 완료 후 보고"는 **모든 에이전트 범용 규칙**인데, 개별 prompt.md에만 의존.
 
-### 영향
-
-- 상위 에이전트가 완료 여부 모름
-- 다음 작업 진행 불가
-- 수동 확인 필요
-
 ### 회피 전략
 
-**모든 에이전트 prompt.md에 Reporting Protocol 섹션 자동 주입:**
+**모든 에이전트 prompt.md에 Reporting Protocol 섹션 필수:**
 
 ```markdown
-## Reporting Protocol (All Agents Must Follow)
+## Reporting Protocol
 
 **Task completion is NOT complete without reporting back.**
 
-### How to Report
-
-Use `send_session_message` to report completion:
-
-```python
-from tools import send_session_message
-import os
-
-# Report to creator session
-send_session_message(
-    session_id=os.environ.get('CREATOR_SESSION_ID'),
-    message=f"""
-✅ Task Complete: {task_name}
-
-**Status:** Success/Failed
-**Generated Files:**
-- {file_path_1}
-- {file_path_2}
-
-**Key Metrics:**
-- Items processed: {count}
-- Errors: {error_count}
-
-**Critical Findings:**
-- {finding_1}
-- {finding_2}
-
-**Next Steps:**
-Ready for downstream processing.
-"""
-)
-```
-
-**Required Report Content:**
+Use send_session_message to report completion with:
 - ✅ Status (완료/실패)
 - 📊 Key metrics/results
 - 📁 Generated files/paths
 - 🔍 Critical findings
 - ⚠️ Errors/warnings
-
-**Without this report, upstream agents cannot proceed.**
-```
-
-**적용 위치:**
-- 모든 공용 에이전트
-- 모든 프로젝트 에이전트
-- 모든 서브 에이전트
-
-**기존 에이전트 소급 적용:**
-1. ✅ Reporting Protocol 섹션 추가
-2. ✅ send_session_message 사용 예시 추가
-3. ✅ 필수 보고 내용 명시
-
----
-
-## [Pattern-008] Access Control & Authority Protocol 위반
-
-**발생일**: 2026-07-15  
-**상황**: health-fitness-cards 프로젝트 실행 중  
-**실수**: 
-1. 프로젝트 에이전트가 공용 에이전트 생성을 직접 시도
-2. 공용 에이전트가 프로젝트 파일(manifest.yaml) 직접 수정 시도
-
-**결과**:
-- 권한 경계 위반
-- 잘못된 디렉터리 접근
-- 협업 프로토콜 미준수
-
-**근본 원인**:
-각 에이전트 타입의 **접근 권한과 책임 범위**가 명확하지 않음.
-
----
-
-### 회피 전략: 에이전트 타입별 권한 정의
-
-#### 1️⃣ Root Agent (General Chat)
-
-**접근 권한:**
-- ✅ 전체 AOA 디렉터리 (읽기/쓰기)
-- ✅ 모든 프로젝트 디렉터리 (읽기/쓰기)
-- ✅ Registry 수정
-- ✅ 공용 에이전트 생성/수정/삭제
-- ✅ 프로젝트 생성
-
-**책임:**
-- 공용 에이전트 생성 요청 처리
-- 프로젝트 생성
-- 프레임워크 레벨 규칙 수정
-- Cross-agent 협업 중재
-
-**절대 규칙:**
-- 공용 에이전트는 오직 Root만 생성
-- Registry 수정은 오직 Root만 수행
-
----
-
-#### 2️⃣ 공용 에이전트 (Agents/*)
-
-**접근 권한:**
-- ✅ 자신의 디렉터리 (Agents/agent-name/*)
-- ✅ 자신의 memory/wiki/ (읽기/쓰기)
-- ✅ Registry/ (읽기 전용)
-- ✅ 입력으로 받은 파일 (읽기)
-- ✅ 출력 파일 생성 (지정된 경로만)
-- ❌ 다른 에이전트 디렉터리
-- ❌ Projects/ 내부 파일
-
-**금지 행동:**
-- ❌ Projects/*/manifest.yaml 수정
-- ❌ Projects/*/Workflows/ 수정
-- ❌ Projects/*/Agents/ 생성
-- ❌ Registry/ 수정 (자신의 Registry 엔트리 제외)
-- ❌ 다른 공용 에이전트 파일 수정
-
-**권한 밖 작업 발견 시 필수 절차:**
-```
-발견: "프로젝트 manifest.yaml에 dependencies 추가 필요"
-  ↓
-판단: "프로젝트 파일 수정은 내 권한 밖"
-  ↓
-send_session_message(
-  session_id=<project_agent_id>,
-  message="manifest.yaml 수정 필요: dependencies.agents에 'my-agent' 추가"
-)
-  ↓
-종료: 프로젝트 에이전트가 처리
-```
-
-**절대 규칙:**
-- 프로젝트 디렉터리는 절대 직접 수정하지 말 것
-- 변경 필요 시 프로젝트 에이전트에 메시지 전달
-
----
-
-#### 3️⃣ 프로젝트 에이전트 (Projects/*/session)
-
-**접근 권한:**
-- ✅ 자신의 프로젝트 디렉터리 (Projects/project-name/*)
-- ✅ 자신의 프로젝트 Wiki (Projects/project-name/Memory/wiki/*)
-- ✅ Registry/ (읽기 전용)
-- ✅ Agents/ (읽기 전용, 호출 목적)
-- ❌ 다른 프로젝트 디렉터리
-- ❌ Registry/ 수정
-- ❌ Agents/ 수정/생성
-
-**금지 행동:**
-- ❌ Registry/Agents/ 직접 생성
-- ❌ Agents/*/prompt.md 수정
-- ❌ Core/ 수정
-- ❌ Policies/ 수정
-- ❌ Standards/ 수정
-
-**권한 밖 작업 발견 시 필수 절차:**
-```
-발견: "content-transformer 같은 공용 에이전트 필요"
-  ↓
-판단: "공용 에이전트 생성은 내 권한 밖"
-  ↓
-send_session_message(
-  session_id=<root_chat_id>,
-  message="## 🚨 공용 에이전트 생성 요청\n\n..."
-)
-  ↓
-대기: Root 작업 완료 알림
-```
-
-**절대 규칙:**
-- 공용 에이전트는 절대 직접 생성하지 말 것
-- 필요 시 Root에 요청 메시지 전달
-
----
-
-#### 4️⃣ 프로젝트 전용 에이전트 (Projects/*/Agents/*)
-
-**접근 권한:**
-- ✅ 자신의 디렉터리 (Projects/project-name/Agents/agent-name/)
-- ✅ 프로젝트 디렉터리 (Projects/project-name/*, 읽기만)
-- ✅ Registry/ (읽기 전용)
-- ✅ 공용 Agents/ (읽기 전용, 호출 목적)
-- ❌ 프로젝트 설정 파일 (manifest.yaml, Workflows/*.md) 수정
-
-**금지 행동:**
-- ❌ Projects/project-name/manifest.yaml 수정
-- ❌ Projects/project-name/Workflows/ 수정
-- ❌ 다른 프로젝트 접근
-
-**권한 밖 작업 발견 시:**
-→ 프로젝트 에이전트(세션)에 메시지 전송
-
----
-
-### 권한 위반 감지 자가 점검
-
-**모든 에이전트는 파일 수정 전 반드시 확인:**
-
-**공용 에이전트 체크리스트:**
-- [ ] Projects/ 디렉터리 수정하려고 하는가?
-  → ❌ 중단, 프로젝트 에이전트에 메시지
-- [ ] Registry/INDEX.md 수정하려고 하는가?
-  → ❌ Root 작업, 요청 메시지 전달
-- [ ] 다른 에이전트 디렉터리 접근하려고 하는가?
-  → ❌ 중단
-
-**프로젝트 에이전트 체크리스트:**
-- [ ] Registry/Agents/ 생성하려고 하는가?
-  → ❌ 중단, Root에 요청 메시지
-- [ ] Agents/*/prompt.md 수정하려고 하는가?
-  → ❌ 중단, Root에 요청 메시지
-- [ ] Core/, Policies/, Standards/ 수정하려고 하는가?
-  → ❌ 중단, Root에 요청 메시지
-
----
-
-### 올바른 Cross-Agent 협업 패턴
-
-#### Pattern A: 공용 에이전트 → 프로젝트 설정 변경
-```yaml
-발견: "manifest.yaml에 dependencies 추가 필요"
-action: send_session_message
-to: <project_session_id>
-message: |
-  ## 📝 프로젝트 설정 변경 필요
-  
-  **파일:** manifest.yaml
-  **변경 내용:**
-  dependencies.agents에 'content-transformer' 추가
-  
-  **이유:** Phase 1.5에서 사용
-do_not: Projects/*/manifest.yaml 직접 수정
-```
-
-#### Pattern B: 프로젝트 에이전트 → 공용 에이전트 생성 요청
-```yaml
-발견: "맥락 보존 변형 전문 에이전트 필요"
-action: send_session_message
-to: <root_chat_id>
-message: |
-  ## 🚨 공용 에이전트 생성 요청
-  
-  **요청 배경:** ...
-  **제안 에이전트:** content-transformer
-  **역할:** ...
-  **입력/출력:** ...
-do_not: Registry/Agents/ 직접 생성
-```
-
-#### Pattern C: 프로젝트 전용 에이전트 → 프로젝트 워크플로우 수정 요청
-```yaml
-발견: "Workflows/main.md에 Phase 1.5 추가 필요"
-action: send_session_message
-to: <project_session_id>
-message: |
-  ## 📝 워크플로우 업데이트 필요
-  
-  **파일:** Workflows/main.md
-  **변경:** Phase 1.5 섹션 추가
-  **이유:** content-transformer 사용
-do_not: Workflows/main.md 직접 수정
 ```
 
 ---
 
-### Prompt 템플릿 적용
+## 범용 Pattern (공통 적용)
 
-**모든 공용 에이전트 prompt.md에 추가:**
-```markdown
-## 🚨 Access Control (필수 준수)
+### Pattern-WIKI: Wiki Protocol Enforcement
+→ `Memory/Wiki/universal_patterns.md` 참조
 
-당신은 **공용 에이전트**입니다.
+**요약:**
+- 작업 시작 전 pre_execution_check.sh 실행 필수
+- memory/wiki/ 전체 읽기
+- 과거 실수 패턴 확인
 
-**접근 가능:**
-- ✅ 자신의 디렉터리 (Agents/<agent-name>/*)
-- ✅ 입력 파일 (읽기)
-- ✅ 출력 파일 (지정 경로만)
-- ✅ Registry/ (읽기 전용)
+### Pattern-AUTH: Access Control & Authority Protocol
+→ `Memory/Wiki/universal_patterns.md` 참조
 
-**접근 불가:**
-- ❌ Projects/ 내부 파일 수정
-- ❌ 다른 에이전트 디렉터리
-- ❌ Registry 수정 (자신 제외)
-
-**프로젝트 파일 변경 필요 시:**
-→ send_session_message로 프로젝트 에이전트에 전달
-→ **절대 직접 수정하지 말 것**
-
-예시:
-send_session_message(
-  session_id=os.environ.get('PROJECT_SESSION_ID'),
-  message="manifest.yaml 수정 필요: ..."
-)
-```
-
-**모든 프로젝트 세션 kickoff prompt에 추가:**
-```markdown
-## 🚨 Access Control (필수 준수)
-
-당신은 **프로젝트 에이전트**입니다.
-
-**접근 가능:**
-- ✅ 자신의 프로젝트 디렉터리 (Projects/<project-name>/*)
-- ✅ Registry/ (읽기 전용)
-- ✅ 공용 Agents/ (읽기 전용, 호출만)
-
-**접근 불가:**
-- ❌ Registry/Agents/ 생성/수정
-- ❌ Core/, Policies/, Standards/ 수정
-- ❌ 다른 프로젝트 디렉터리
-
-**공용 에이전트 생성 필요 시:**
-→ send_session_message로 Root에 요청
-→ **절대 직접 생성하지 말 것**
-
-예시:
-send_session_message(
-  session_id=<root_chat_id>,
-  message="## 공용 에이전트 생성 요청\n\n..."
-)
-```
+**요약:**
+- 공용 에이전트는 Projects/ 수정 금지
+- 프로젝트 파일 변경 필요 시 프로젝트 에이전트에 메시지
+- 권한 밖 작업 = send_session_message
 
 ---
 
-### 적용 범위
+## 작업 시작 전 체크리스트
 
-**즉시 적용:**
-1. ✅ 모든 공용 에이전트 prompt.md에 Access Control 섹션 추가
-2. ✅ 프로젝트 생성 시 kickoff prompt에 Access Control 규칙 포함
-3. ✅ Templates/Agent/prompt.md 템플릿 업데이트
-4. ✅ 기존 에이전트 소급 적용
+에이전트 생성 요청이 들어오면:
 
-**영향 범위:**
-- 모든 공용 에이전트 (5개)
-- 모든 프로젝트 세션
-- 모든 프로젝트 전용 에이전트
+- [ ] `Schemas/Agent.md` 읽음
+- [ ] `Standards/Registry_Protocol.md` 읽음
+- [ ] `Memory/Wiki/universal_patterns.md` 읽음
+- [ ] 이 Wiki 문서 읽음
+- [ ] Registry에서 중복 에이전트 검색
+- [ ] 에이전트 디렉터리 생성
+- [ ] config.yaml 필수 필드 작성
+- [ ] prompt.md 전체 섹션 작성 (필수 절차 + Access Control + Reporting)
+- [ ] README.md 작성
+- [ ] memory/wiki/ 디렉터리 생성
+- [ ] pre_execution_check.sh 생성
+- [ ] **동일 response에서** Registry/INDEX.md 업데이트
+- [ ] **동일 response에서** Registry/Agents/<id>.md 생성
+- [ ] git commit
 
 ---
 
 ## 업데이트 이력
 
-- 2026-07-10: 초기 작성 (Pattern-001 ~ 003 기록)
-- 2026-07-10: Pattern-004 추가 (Wiki Protocol 강제 메커니즘)
-- 2026-07-15: Pattern-005 추가 (Reporting Protocol 누락)
-- 2026-07-15: Pattern-008 추가 (Access Control & Authority Protocol)
+- 2026-07-10: 초기 작성
+- 2026-07-15: **v2.0 통합** - 6개 → 3개 + 2개 범용 분리
+  - Pattern-002 + 003 → Pattern-DOC
+  - Pattern-004 → Pattern-WIKI (universal로 이동)
+  - Pattern-008 → Pattern-AUTH (universal로 이동)

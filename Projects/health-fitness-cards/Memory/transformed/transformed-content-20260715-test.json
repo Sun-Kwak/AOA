@@ -1,0 +1,99 @@
+{
+  "original_context": {
+    "theme": "낮잠 건강 - 9가지 위험한 습관",
+    "format": "numbered_list",
+    "item_count": 9,
+    "style": "Health information card with character illustration, emoji emphasis, vertical video format",
+    "color_scheme": "Red gradient backgrounds for numbered items, neutral background, black text",
+    "aspect_ratio": "9:16",
+    "layout_structure": "Title at top with warning emoji, central character illustration, 9 numbered items in two columns (left: 01-05, right: 06-09), each with icon and description",
+    "text_style": "Bold Korean text, two-line format per item (title — detail)"
+  },
+  "transformed_content": {
+    "title": "낮잠도 잘못자면 독! 피해야 할 실수",
+    "item_count": 9,
+    "summary": "Same nap health theme with 9 numbered dangerous habits, only specific details changed while preserving the overall message structure",
+    "new_items": [
+      {
+        "number": "01",
+        "title": "책상에 엎드려자기",
+        "detail": "목과 허리 통증"
+      },
+      {
+        "number": "02",
+        "title": "식후 즉시",
+        "detail": "소화 방해"
+      },
+      {
+        "number": "03",
+        "title": "시끄러운 곳에서 자기",
+        "detail": "수면의 질 저하"
+      },
+      {
+        "number": "04",
+        "title": "밝은 곳에서 자기",
+        "detail": "멜라토닌 억제"
+      },
+      {
+        "number": "05",
+        "title": "추운 곳에서 자기",
+        "detail": "근육 긴장"
+      },
+      {
+        "number": "06",
+        "title": "1시간 넘게 자기",
+        "detail": "깊은 수면 진입"
+      },
+      {
+        "number": "07",
+        "title": "소파에서 자기",
+        "detail": "자세 불량"
+      },
+      {
+        "number": "08",
+        "title": "기상 직후 낮잠",
+        "detail": "수면 리듬 혼란"
+      },
+      {
+        "number": "09",
+        "title": "오후 4시 이후",
+        "detail": "야간 수면 방해"
+      }
+    ]
+  },
+  "image_edit_prompt": "Keep the exact nap health (낮잠 건강) theme with 9 numbered dangerous habits (위험한 습관/피해야 할 실수). Same vertical 9:16 format with central character illustration, numbered list layout (01-09 in two columns), red gradient backgrounds for items, emoji emphasis, and health information card style. Change title to '낮잠도 잘못자면 독! 피해야 할 실수' and update the 9 specific habit details:\n\n01. 책상에 엎드려자기 — 목과 허리 통증\n02. 식후 즉시 — 소화 방해\n03. 시끄러운 곳에서 자기 — 수면의 질 저하\n04. 밝은 곳에서 자기 — 멜라토닌 억제\n05. 추운 곳에서 자기 — 근육 긴장\n06. 1시간 넘게 자기 — 깊은 수면 진입\n07. 소파에서 자기 — 자세 불량\n08. 기상 직후 낮잠 — 수면 리듬 혼란\n09. 오후 4시 이후 — 야간 수면 방해\n\nMaintain the same visual style, color scheme, layout structure, icons, and character illustration. Only change the text content of the numbered items. Clear Korean text, same emoji usage pattern.",
+  "metadata": {
+    "transformation_applied": true,
+    "variation_level": "low",
+    "context_preserved": true,
+    "analysis_method": "vision_analysis",
+    "source_reference": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260715_test001.jpg",
+    "transformation_mode": "context_preserving",
+    "timestamp": "2026-07-15T16:20:54+09:00",
+    "validation": {
+      "theme_preserved": true,
+      "format_preserved": true,
+      "item_count_preserved": true,
+      "style_preserved": true,
+      "jaccard_similarity_estimate": 0.75
+    }
+  },
+  "quality_checks": {
+    "context_preservation": {
+      "theme_match": "✅ 낮잠 건강 주제 유지",
+      "format_match": "✅ 9가지 번호 리스트 형식 유지",
+      "style_match": "✅ 건강 정보 카드 스타일 유지",
+      "item_count_match": "✅ 9개 항목 유지"
+    },
+    "transformation_quality": {
+      "detail_change": "✅ 세부 습관 내용 변경됨",
+      "semantic_similarity": "✅ 비슷한 의미 유지 (위험한 습관 → 피해야 할 실수)",
+      "variation_appropriate": "✅ Low variation level 준수"
+    }
+  },
+  "usage_instructions": {
+    "next_step": "Pass 'image_edit_prompt' to image-generator agent with mode='image_edit'",
+    "reference_image": "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_20260715_test001.jpg",
+    "expected_output": "Same visual style nap health card with new specific habit details"
+  }
+}
