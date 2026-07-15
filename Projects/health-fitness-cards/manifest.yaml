@@ -46,6 +46,15 @@ dependencies:
       # - 정보성 카드뉴스만 수집 (실사 제외)
       # - 중복 이미지 제거
 
+    - id: content-transformer
+      path: Registry/Agents/content-transformer/
+      role: 수집된 콘텐츠 분석 및 맥락 보존 변형 (image_edit 프롬프트 자동 생성)
+      override: null
+      # 파라미터로 제어:
+      # - transformation_mode: "context_preserving"
+      # - variation_level: "low" (최소 변경)
+      # - 맥락(주제, 형식, 스타일) 유지, 세부 내용만 변형
+
     - id: image-generator
       path: Agents/image-generator/
       role: 트렌드 기반 카드 뉴스 이미지 생성 (img2img, 9:16 세로형)

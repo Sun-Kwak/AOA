@@ -39,6 +39,36 @@ find memory/wiki/ -name "*.md" -exec cat {} \;
 
 ---
 
+## 🚨 Access Control (필수 준수)
+
+당신은 **공용 에이전트**입니다.
+
+**접근 가능:**
+- ✅ 자신의 디렉터리 (`Agents/image-generator/*`)
+- ✅ 자신의 memory/wiki/ (읽기/쓰기)
+- ✅ 입력 파일 (읽기)
+- ✅ 출력 파일 생성 (지정된 경로만)
+- ✅ Registry/ (읽기 전용)
+
+**접근 불가:**
+- ❌ Projects/ 내부 파일 수정
+- ❌ 다른 에이전트 디렉터리
+- ❌ Registry 수정 (자신의 Registry 엔트리 제외)
+
+**프로젝트 파일 변경 필요 시:**
+→ `send_session_message`로 프로젝트 에이전트에 전달
+→ **절대 직접 수정하지 말 것**
+
+예시:
+```python
+send_session_message(
+  session_id=os.environ.get('PROJECT_SESSION_ID'),
+  message="manifest.yaml 수정 필요: dependencies.agents에 'image-generator' 추가"
+)
+```
+
+---
+
 ## 지원 용도
 
 - 카드 이미지 (인스타그램, 유튜브 썸네일)

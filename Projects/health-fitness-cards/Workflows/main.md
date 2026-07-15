@@ -9,11 +9,13 @@
 ## Workflow Overview
 
 ```
-Phase 1: 트렌드 수집 (Instagram only)
+Phase 1: 계정 콘텐츠 수집 (Instagram)
    ↓
-Phase 2: 이미지 생성 (3개 병렬, img2img)
+Phase 1.5: 콘텐츠 변형 ✨ (NEW - Content Transformer)
    ↓
-Phase 3: 결과 검증 및 저장
+Phase 2: 이미지 편집 (자유 디자인)
+   ↓
+Phase 3: 결과 검증
 ```
 
 ---
@@ -138,11 +140,99 @@ create_session({
 
 ---
 
+## Phase 1.5: 콘텐츠 변형 ✨ (NEW)
+
+**Agent:** content-transformer (공용)
+
+**목적:** 수집된 트렌드 콘텐츠를 분석하고, **맥락(주제, 형식, 스타일)은 유지하되 세부 내용만 변형**하여 image_edit용 프롬프트 자동 생성
+
+**Why This Phase?**
+- 문제: 수동 프롬프트 작성 시 주제를 완전히 바꾸는 실수 발생
+- 예시: "유전자 체크리스트" → "아침 공복 운동" ❌ (맥락 완전 변경)
+- 해결: content-transformer가 자동으로 맥락 보존 + 내용 변형
+
+**Parameters:**
+
+```yaml
+reference_image: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/trends/visuals/ref_YYYYMMDD_001.jpg"
+reference_metadata:
+  caption: "수집된 원본 캡션"
+  hashtags: ["#건강정보", "#꿀팁"]
+  topic: "건강 체크리스트"
+transformation_mode: "context_preserving"  # 맥락 완전 보존
+variation_level: "low"  # 최소 변경 (세부 항목만)
+target_language: "ko"
+output_path: "/Users/sun/project/AOA/Projects/health-fitness-cards/Memory/transformed/"
+```
+
+**실행 방법:**
+```javascript
+create_session({
+  project_id: "52d540bd-4461-4c27-81ed-c460533357ac",
+  name: "[AOA] health-fitness-cards — content transformation",
+  coordinate_with_creator: false,
+  kickoff: {
+    mode: "autopilot",
+    prompt: `당신은 content-transformer 에이전트입니다.
+
+/Users/sun/project/AOA/Registry/Agents/content-transformer/prompt.md 규칙을 따라 작업하세요.
+
+입력:
+- reference_image: "/Users/sun/.../ref_20260715_002.jpg"
+- reference_metadata: {...}
+- transformation_mode: "context_preserving"
+- variation_level: "low"
+
+작업 완료 후:
+- Memory/transformed/transformed-content-YYYYMMDD.json 생성
+- image_edit 프롬프트 포함
+- 맥락 보존 확인`
+  }
+})
+```
+
+**Expected Output:**
+
+```json
+{
+  "original_context": {
+    "theme": "축복받은 유전자 체크리스트",
+    "format": "numbered_list",
+    "item_count": 25,
+    "style": "cute_illustration",
+    "color_scheme": "pastel",
+    "aspect_ratio": "9:16"
+  },
+  "transformed_content": {
+    "title": "축복받은 유전자 테스트",
+    "subtitle": "이 중에서 5개 이하면 유전자 축복",
+    "items_changed": ["비염 → 천식", "아토피 → 알레르기", ...]
+  },
+  "image_edit_prompt": "Keep the exact genetic health checklist theme with 25 numbered items. Same cute kawaii illustration style with pastel blue background. Only change specific health conditions in the list (e.g., replace '비염' with '천식'). Maintain the same layout, character style, and format. 9:16 vertical format. Clear Korean text with numbered red circles.",
+  "metadata": {
+    "transformation_applied": true,
+    "variation_level": "low",
+    "context_preserved": true,
+    "generated_at": "2026-07-15T16:00:00Z"
+  }
+}
+```
+
+**주요 특징:**
+- ✅ 맥락(주제, 형식, 스타일) 완전 보존
+- ✅ 세부 항목만 변경 ("비염 → 천식", "아토피 → 알레르기")
+- ✅ image_edit용 구조화된 프롬프트 자동 생성
+- ✅ 사람 실수 방지 (주제 변경 불가능)
+
+---
+
 ## Phase 2: 이미지 편집 (자유 디자인)
 
 **Agent:** image-generator (공용, 3개 병렬 세션)
 
 **모드:** `image_edit` ✨ (v1.1.0)
+
+**입력:** Phase 1.5의 `image_edit_prompt` 사용 ✨
 
 ### 🎯 image_edit 프롬프트 전략
 
@@ -277,15 +367,23 @@ edit_areas: ["text", "colors", "layout", "style"]
 | 콘텐츠 타입 | 정보성 카드뉴스 (일러스트/다이어그램) |
 | 수집 방법 | 계정 기반 (account-content-collector) |
 | Visual Reference | 실사 제외, 중복 제거 |
+| **콘텐츠 변형** | **content-transformer (맥락 보존)** ✨ |
 | 이미지 포맷 | 9:16 세로형 |
 | 생성 모드 | **image_edit** (자유 디자인) |
 | strength | 0.25 |
 | preserve_structure | true (기술 파라미터) |
 | 병렬 처리 | 3개 동시 생성 |
 
+**워크플로우 개선 (2026-07-15):**
+- ✅ Phase 1.5 추가: content-transformer
+- ✅ 맥락 보존 자동화
+- ✅ 사람 실수(주제 변경) 방지
+- ✅ 프롬프트 품질 일관성
+
 **생성 원칙:**
 - ✅ 이미지 비율 (9:16)만 유지
 - ✅ 정보성 카드 컨셉 유지
+- ✅ **맥락(주제, 형식, 스타일) 완전 보존** ✨
 - ✅ 일러스트, 캐릭터, 레이아웃, 색상 모두 자유롭게 변경
 - ⚠️ 프롬프트에 보존 지시 금지
 

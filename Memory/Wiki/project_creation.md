@@ -374,10 +374,130 @@ dependencies:
 
 ---
 
+## [Pattern-008] Access Control & Authority Protocol 위반
+
+**발생일**: 2026-07-15  
+**상황**: health-fitness-cards 프로젝트 실행 중  
+**실수**: 
+1. 프로젝트 에이전트가 공용 에이전트 생성을 직접 시도
+2. 공용 에이전트가 프로젝트 파일(manifest.yaml) 직접 수정 시도
+
+**결과**:
+- 권한 경계 위반
+- 잘못된 디렉터리 접근
+- 협업 프로토콜 미준수
+
+**근본 원인**:
+프로젝트 에이전트의 **접근 권한과 책임 범위**가 kickoff prompt에 명시되지 않음.
+
+---
+
+### 회피 전략: Kickoff Prompt에 Access Control 추가
+
+**프로젝트 세션 생성 시 kickoff prompt에 필수 포함:**
+
+```markdown
+## 🚨 Access Control (필수 준수)
+
+당신은 **프로젝트 에이전트**입니다.
+
+**접근 가능:**
+- ✅ 자신의 프로젝트 디렉터리 (Projects/<project-name>/*)
+- ✅ Registry/ (읽기 전용)
+- ✅ 공용 Agents/ (읽기 전용, 호출만)
+
+**접근 불가:**
+- ❌ Registry/Agents/ 생성/수정
+- ❌ Agents/ 디렉터리 수정
+- ❌ Core/, Policies/, Standards/ 수정
+- ❌ 다른 프로젝트 디렉터리
+
+**공용 에이전트 생성 필요 시:**
+→ send_session_message로 Root(General Chat)에 요청
+→ **절대 직접 생성하지 말 것**
+
+예시:
+send_session_message(
+  session_id="<root_chat_id>",
+  message="## 🚨 공용 에이전트 생성 요청\n\n..."
+)
+
+**프로젝트 전용 에이전트 생성 시:**
+→ Projects/<project-name>/Agents/ 내부에만 생성
+→ manifest.yaml의 project_agents에 등록
+```
+
+---
+
+### 올바른 Cross-Agent 협업 패턴
+
+#### Pattern: 프로젝트 에이전트 → 공용 에이전트 생성 요청
+```yaml
+발견: "맥락 보존 변형 전문 에이전트 필요"
+action: send_session_message
+to: <root_chat_id>
+message: |
+  ## 🚨 공용 에이전트 생성 요청
+  
+  **From**: <project-name> 프로젝트 에이전트
+  **To**: Root (General Chat)
+  
+  **요청 배경:** ...
+  **제안 에이전트 ID:** content-transformer
+  **역할:** ...
+  **입력 스키마:** ...
+  **출력 스키마:** ...
+  
+  공용 에이전트 생성 부탁드립니다!
+do_not: Registry/Agents/ 직접 생성
+```
+
+---
+
+### Kickoff Prompt 템플릿 업데이트
+
+**기존 템플릿 (Line 212-234)에 Access Control 섹션 추가:**
+
+```markdown
+You are the <project-name> project agent.
+
+## 🚨 Access Control (필수 준수)
+
+**접근 가능:**
+- ✅ Projects/<project-name>/*
+- ✅ Registry/ (읽기 전용)
+- ✅ Agents/ (읽기 전용, 호출만)
+
+**접근 불가:**
+- ❌ Registry/Agents/ 생성/수정
+- ❌ Core/, Policies/, Standards/ 수정
+- ❌ 다른 프로젝트
+
+**공용 에이전트 필요 시:**
+→ Root에 요청 (session_id 제공 예정)
+→ 직접 생성 금지
+
+...
+```
+
+---
+
+### 적용 범위
+
+**즉시 적용:**
+1. ✅ 신규 프로젝트 세션 생성 시 kickoff prompt에 포함
+2. ✅ 기존 프로젝트 재시작 시 적용
+3. ✅ Memory/Wiki/project_creation.md 업데이트
+
+---
+
 ## 업데이트 이력
 
 - 2026-07-10: 초기 작성 (Pattern-001 ~ 004 기록)
 - 2026-07-10: Pattern-005 추가 (불필요한 자동 실행)
+- 2026-07-10: Pattern-006 추가 (Wiki Protocol 적용)
+- 2026-07-15: Pattern-007 추가 (Registry INDEX 전체 로딩 방지)
+- 2026-07-15: Pattern-008 추가 (Access Control & Authority Protocol)
 - 2026-07-10: Kickoff prompt 템플릿에 "하위 에이전트 중복 생성 방지" 규칙 추가
 - 2026-07-10: Pattern-006 추가 (Wiki Protocol 강제 메커니즘)
 - 2026-07-15: Pattern-007 추가 (Registry INDEX 전체 로딩 방지)
