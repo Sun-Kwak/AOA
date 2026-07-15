@@ -9,12 +9,18 @@
 
 **모든 작업 전에 다음을 읽으세요:**
 
-1. **범용 패턴 (모든 역할 필수)**
+1. **경로 검증 (최우선)**
+   - ✅ 현재 작업 경로가 AOA 저장소 내부인지 확인
+   - ✅ `git rev-parse --show-toplevel` 실행
+   - ✅ 결과가 `/Users/sun/project/AOA` 또는 워크트리 경로인지 확인
+   - ❌ 잘못된 경로(중복 클론)에서 작업 금지
+
+2. **범용 패턴 (모든 역할 필수)**
    - `Memory/Wiki/universal_patterns.md`
      - Pattern-WIKI: Wiki Protocol
      - Pattern-AUTH: Access Control & Agent Invocation
 
-2. **역할별 Wiki**
+3. **역할별 Wiki**
    - **Root Agent** (프로젝트/에이전트 생성):
      - `Memory/Wiki/project_creation.md`
      - `Memory/Wiki/agent_creation.md`

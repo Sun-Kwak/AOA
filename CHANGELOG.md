@@ -4,6 +4,44 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v2.0.3 - Path Validation & Duplicate Prevention (2026-07-15)
+
+### Fixed
+- **중복 저장소 문제 해결**
+  - `/Users/sun/StudioProjects/AOA` 삭제 (중복 클론)
+  - `/Users/sun/project/AOA`를 유일한 AOA 저장소로 확정
+  - GitHub Copilot 프로젝트 재등록 (새 ID: 43ff3e31-91c9-4bac-aa40-a175e5fcd24a)
+
+### Added
+- **Pattern-WIKI 경로 검증 규칙** (v2.0.3)
+  - 작업 시작 전 `git rev-parse --show-toplevel` 필수 확인
+  - 중복 클론에서 작업 금지
+  - 위치: `Memory/Wiki/universal_patterns.md`
+
+- **.github/copilot-instructions.md 경로 검증 섹션**
+  - "필수 시작 절차" 1번으로 경로 검증 추가
+  - 모든 세션 시작 전 경로 확인 강제
+
+### Why
+- health-fitness-cards 테스트 중 경로 불일치 발견
+- AI가 `/Users/sun/project/AOA`의 manifest.yaml 참조
+- 하지만 세션은 `/Users/sun/StudioProjects/AOA` 워크트리에서 실행
+- 결과: 프로젝트 파일 접근 불가, 워크플로우 실행 불가
+- **근본 원인**: 중복 저장소로 인한 경로 혼선
+- **해결**: 중복 제거 + 경로 검증 메커니즘 추가
+
+### Migration
+- ❌ 기존 project_id `27822128-49c5-406f-b39d-d592ff88ff75` 삭제
+- ✅ 새 project_id `43ff3e31-91c9-4bac-aa40-a175e5fcd24a` 사용
+- ✅ 경로: `/Users/sun/project/AOA`
+
+### Files
+- Modified: `.github/copilot-instructions.md` (경로 검증 추가)
+- Modified: `Memory/Wiki/universal_patterns.md` (Pattern-WIKI 확장)
+- Modified: `CHANGELOG.md` (이 문서)
+
+---
+
 ## v2.0.2 - GitHub Copilot Instructions & Workflow Enforcement (2026-07-15)
 
 ### Added
