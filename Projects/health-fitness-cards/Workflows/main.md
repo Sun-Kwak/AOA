@@ -144,24 +144,65 @@ create_session({
 
 **모드:** `image_edit` ✨ (v1.1.0)
 
-**공통 Parameters:**
+### 🎯 image_edit 프롬프트 전략
+
+**맥락만 유지, 내용/디자인은 자유롭게**:
+```yaml
+edit_prompt: "Keep the [주제] theme but feel free to create new [내용].
+              Fresh modern design with [색상/스타일].
+              [캐릭터/일러스트] with different style.
+              New layout and color scheme.
+              Clear Korean text.
+              9:16 vertical format."
+```
+
+**중요**: 
+- ✅ "Keep the [주제] theme" = 맥락만 유지
+- ✅ "feel free to create new [내용]" = 내용 자유롭게 변경
+- ✅ "Fresh modern design" = 디자인 완전히 새롭게
+- ❌ "KEEP exact same", "preserve", "동일하게 유지" 금지
+
+### 🚨 워터마크 처리 규칙 (필수!)
+
+**프롬프트 규칙**:
+- ❌ "remove watermark", "워터마크 제거" → 콘텐츠 정책 위반
+- ❌ "without watermark" → 새로운 워터마크 생성
+- ✅ 프롬프트에 워터마크 언급 없음
+
+**후처리 크롭 (필수 적용)**:
+```python
+# 이미지 생성 후 자동 크롭
+from PIL import Image
+img = Image.open(downloaded_path)
+width, height = img.size
+crop_height = height - 100  # 하단 100px 제거
+cropped_img = img.crop((0, 0, width, crop_height))
+cropped_img.save(output_path, quality=95)
+```
+
+### 공통 Parameters
 
 ```yaml
 mode: image_edit
 aspect_ratio: "9:16"
 strength: 0.25
-preserve_structure: true  # 기술적 파라미터 유지
-model: "flux-pro/v1.1-ultra"
+preserve_structure: true  # 기술적 파라미터
+model: "nano-banana-2/edit"  # ~₩26-52/장, 15-17초
+apply_watermark_crop: true  # 후처리 크롭 적용
+crop_pixels: 100  # 하단 크롭 영역
 ```
+
+### 카드 생성 예시
 
 **Card 1: 주제별 비교/대조**
 ```yaml
 주제: "아침 공복 운동 vs 식후 운동"
 reference_image: ref_YYYYMMDD_001.jpg
-edit_prompt: "Create an informational health card about '아침 공복 운동 vs 식후 운동'.
-              Design freely with new illustration style, characters, layout, colors.
-              Fresh modern design with vibrant summer colors.
-              Korean text must be clear and readable.
+edit_prompt: "Keep the health tips theme but create new content about '아침 공복 운동 vs 식후 운동'.
+              Fresh modern design with bright pastel colors.
+              Cute kawaii-style illustrations with different characters.
+              New layout and color scheme.
+              Clear Korean text.
               9:16 vertical format."
 mask: "auto"
 edit_areas: ["text", "colors", "layout", "style"]
@@ -171,10 +212,11 @@ edit_areas: ["text", "colors", "layout", "style"]
 ```yaml
 주제: "여성 근력운동 3가지 오해"
 reference_image: ref_YYYYMMDD_002.jpg
-edit_prompt: "Create an informational health card about '여성 근력운동 3가지 오해'.
-              Design freely with new layout, characters, colors, illustrations.
-              Empowering modern design.
-              Korean text must be clear.
+edit_prompt: "Keep the health information theme but create new content about '여성 근력운동 3가지 오해'.
+              Fresh empowering design with vibrant feminine colors.
+              Modern illustrations with different style.
+              New numbered list layout.
+              Clear Korean text.
               9:16 vertical format."
 mask: "auto"
 edit_areas: ["text", "colors", "layout", "style"]
@@ -184,26 +226,30 @@ edit_areas: ["text", "colors", "layout", "style"]
 ```yaml
 주제: "10분 홈트로 복근 만들기"
 reference_image: ref_YYYYMMDD_003.jpg
-edit_prompt: "Create an informational health card about '10분 홈트로 복근 만들기'.
-              Design freely with new layout, icons, colors, step format.
-              Energetic motivating design.
-              Korean text must be clear.
+edit_prompt: "Keep the workout guide theme but create new content about '10분 홈트로 복근 만들기'.
+              Fresh energetic design with bright motivating colors.
+              New step-by-step layout with different icons.
+              Clear Korean text.
               9:16 vertical format."
 mask: "auto"
 edit_areas: ["text", "colors", "layout", "style"]
 ```
 
-**Expected Output:**
-- `Outputs/card_001.jpg` (325-800KB, 1080x1920px) - 자유로운 새 디자인
-- `Outputs/card_002.jpg` - 자유로운 새 디자인
-- `Outputs/card_003.jpg` - 자유로운 새 디자인
+### Expected Output
+
+- `Outputs/card_001.jpg` (325-800KB, 1080x1920px) - 자유로운 새 디자인, 워터마크 크롭 적용
+- `Outputs/card_002.jpg` - 자유로운 새 디자인, 워터마크 크롭 적용
+- `Outputs/card_003.jpg` - 자유로운 새 디자인, 워터마크 크롭 적용
 - `Outputs/metadata.json`
 
-**생성 원칙:**
+### 생성 원칙
+
 - ✅ 이미지 비율 (9:16) 유지
-- ✅ 정보성 카드 컨셉 유지
+- ✅ 정보성 카드 주제/맥락만 유지
 - ✅ 일러스트, 캐릭터, 레이아웃, 색상 모두 자유롭게 변경
-- ⚠️ 프롬프트에 "KEEP", "preserve", "유지" 금지
+- ✅ 워터마크 후처리 크롭 필수 적용
+- ⚠️ 프롬프트에 "KEEP exact", "preserve", "동일 유지" 금지
+- ⚠️ 프롬프트에 워터마크 관련 단어 금지
 
 ---
 
