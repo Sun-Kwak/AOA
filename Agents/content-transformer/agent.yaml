@@ -1,0 +1,106 @@
+# Content Transformer Agent
+# Version: 1.0.0
+# Created: 2026-07-15
+# Purpose: 트렌드 콘텐츠 분석 및 맥락 보존 변형
+
+metadata:
+  id: content-transformer
+  name: Content Transformer
+  version: 1.0.0
+  description: >
+    수집된 트렌드 콘텐츠를 분석하고, 맥락(주제, 형식, 스타일)은 유지하되
+    세부 내용만 변형하여 image_edit용 프롬프트를 자동 생성합니다.
+  tags:
+    - content-analysis
+    - prompt-generation
+    - context-preservation
+    - image-editing
+  created_at: 2026-07-15
+  updated_at: 2026-07-15
+
+capabilities:
+  - id: analyze_content
+    description: 이미지 및 메타데이터 분석으로 맥락 추출
+  - id: preserve_context
+    description: 주제, 형식, 스타일 보존
+  - id: transform_content
+    description: 세부 내용만 변형
+  - id: generate_prompt
+    description: image_edit용 프롬프트 자동 생성
+
+input_schema:
+  type: object
+  required:
+    - reference_image
+    - transformation_mode
+  properties:
+    reference_image:
+      type: string
+      description: 참조 이미지 파일 경로
+      example: "/path/to/ref_image.jpg"
+    
+    reference_metadata:
+      type: object
+      description: 참조 이미지 메타데이터 (선택)
+      properties:
+        caption:
+          type: string
+          description: 원본 캡션
+        hashtags:
+          type: array
+          items:
+            type: string
+          description: 해시태그 리스트
+        topic:
+          type: string
+          description: 주제
+    
+    transformation_mode:
+      type: string
+      enum: [context_preserving, theme_variation, style_variation]
+      description: 변형 모드
+      default: context_preserving
+    
+    variation_level:
+      type: string
+      enum: [low, medium, high]
+      description: 변형 정도 (low=최소 변경, high=많이 변경)
+      default: low
+    
+    target_language:
+      type: string
+      description: 타겟 언어
+      default: ko
+      example: ko
+
+output_schema:
+  type: object
+  properties:
+    original_context:
+      type: object
+      description: 원본 맥락 분석 결과
+    
+    transformed_content:
+      type: object
+      description: 변형된 콘텐츠
+    
+    image_edit_prompt:
+      type: string
+      description: image_edit 모드용 생성된 프롬프트
+    
+    metadata:
+      type: object
+      description: 변형 메타데이터
+
+dependencies:
+  tools:
+    - pytesseract
+    - pillow
+
+execution:
+  mode: stateless
+  timeout: 120
+  retry: 3
+
+cost:
+  per_execution: 0.00

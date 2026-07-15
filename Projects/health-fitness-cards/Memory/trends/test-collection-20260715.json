@@ -1,0 +1,67 @@
+{
+  "collection_date": "2026-07-15",
+  "test_mode": true,
+  "total_accounts": 1,
+  "total_posts_collected": 1,
+  "accounts_collected": ["@health__happyvirus"],
+  "references": [
+    {
+      "ref_id": "ref_20260715_001",
+      "platform": "instagram",
+      "account": "@health__happyvirus",
+      "source_url": "https://www.instagram.com/p/DazL5fDv07G",
+      "post_id": "3941546427749977798",
+      "short_code": "DazL5fDv07G",
+      "image_path": "Memory/trends/visuals/ref_20260715_001.jpg",
+      "image_download_status": "failed",
+      "image_download_error": "Instagram CDN connection timeout - requires authentication or rate limiting",
+      "display_url": "https://instagram.fcgh39-1.fna.fbcdn.net/v/t51.71878-15/747505309_1968466410528437_7310901756792845754_n.jpg",
+      "caption": "🛌 \"낮잠도 잘못 자면 독이다\"\n아무렇게나 자는 낮잠이 오히려 몸을 망친다고요? 😱\n9가지 위험한 낮잠 습관, 지금 바로 확인해보세요 👆\n\n#낮잠 #건강정보 #건강꿀팁",
+      "hashtags": ["#낮잠", "#건강정보", "#건강꿀팁"],
+      "media_type": "GraphVideo",
+      "product_type": "clips",
+      "timestamp": "2026-07-15T06:40:00Z",
+      "likes_count": null,
+      "comments_count": 2,
+      "dimensions": {
+        "width": 640,
+        "height": 1136
+      },
+      "content_type": "health_information",
+      "topic": "sleep_health",
+      "format": "video_clips",
+      "style_notes": "Video content about dangerous nap habits - 9-item checklist format. Topic: Sleep health, nap mistakes. Keywords: '낮잠', '9가지', '위험한'. Matches target keywords: body signals, checklists, doctor advice.",
+      "filtering_notes": {
+        "matches_criteria": "partial",
+        "reason": "Video format (clips) but content matches health information criteria - '9가지 위험한 낮잠 습관' is a structured checklist format. May contain illustrated frames but requires visual verification.",
+        "recommended_action": "Manual review needed to confirm if video contains illustrated health cards or is live-action footage"
+      }
+    }
+  ],
+  "collection_notes": {
+    "scraper_used": "coderx/instagram-profile-scraper-bio-posts",
+    "scraper_success": true,
+    "image_download_method": "direct_curl",
+    "image_download_success": false,
+    "cdn_access_issue": "Instagram CDN (fbcdn.net) blocked direct curl requests with connection timeout",
+    "alternative_methods_attempted": [
+      "curl with User-Agent headers",
+      "apify/rag-web-browser for HTML scraping"
+    ],
+    "recommendations": [
+      "Use Instagram official API with authentication",
+      "Use browser automation (Playwright/Puppeteer) with session cookies",
+      "Consider alternative scraping methods with proper authentication"
+    ]
+  },
+  "account_metadata": {
+    "@health__happyvirus": {
+      "username": "health__happyvirus",
+      "full_name": "헬스 해피바이러스",
+      "biography": "매일 10초, 일상이 업그레이드되는 마법 ✨\n💊 건강: 내 몸을 살리는 신호 & 질환 예방\n🍳 요리: 실패 없는 레시피 & 식재료 꿀팁\n💡 생활: 알아두면 평생 써먹는 살림 노하우\n⚠️ 이 콘텐츠는 참고용입니다",
+      "content_style": "illustrated health cards, cooking tips, life hacks",
+      "verified_date": "2026-07-15",
+      "total_posts_available": 12
+    }
+  }
+}

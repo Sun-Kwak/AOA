@@ -21,7 +21,7 @@
 
 | Type | Registered | Path |
 |------|-----------|------|
-| Agents | 4 | Registry/Agents/ |
+| Agents | 5 | Registry/Agents/ |
 | Capabilities | 0 | Registry/Capabilities/ |
 | Workflows | 0 | Registry/Workflows/ |
 | Tools | 1 | Registry/Tools/ |
@@ -40,6 +40,7 @@
 | image-generator | Image Generator | 1.1.0 | image-generation, fal-ai, text2img, img2img, image-edit, card-news, nanovana2 | 범용 이미지 생성 Agent (text2img, img2img, image_edit). Reference 기반 트렌드 스타일 복제 + 정밀 편집 지원. | Agents/image-generator/ |
 | image-generator-comfyui | Image Generator (ComfyUI) | 1.0.0 | image-generation, comfyui, local, free, text2img, img2img, image-edit, flux, sdxl, batch-processing | ComfyUI Desktop 기반 로컬 이미지 생성. M1 Max 최적화, 완전 무료, 대량 생성 최적. Workflow 기반 text2img/img2img/image_edit. | Agents/image-generator-comfyui/ |
 | browser-controller | Browser Controller | 1.0.0 | browser-automation, web-automation, canvas, sns-deployment, instagram, youtube, tiktok | Canvas Browser 통제. 자연어 명령을 Canvas action으로 변환. Instagram/YouTube/TikTok 배포 플로우 실행. | Agents/browser-controller/ |
+| content-transformer | Content Transformer | 1.0.0 | content-analysis, prompt-generation, context-preservation, image-editing | 트렌드 콘텐츠 분석 및 맥락 보존 변형. OCR/Vision API로 이미지 분석, 주제/형식/스타일 보존, image_edit 프롬프트 자동 생성. | Agents/content-transformer/ |
 
 ---
 

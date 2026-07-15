@@ -1,9 +1,29 @@
 {
-  "collection_date": "2026-07-10",
+  "collection_date": "2026-07-15",
+  "test_mode": true,
   "total_accounts": 1,
-  "total_images": 3,
+  "total_images": 1,
   "accounts_collected": ["@health__happyvirus"],
   "references": [
+    {
+      "ref_id": "ref_20260715_001_test",
+      "platform": "instagram",
+      "account": "@health__happyvirus",
+      "source_url": "https://www.instagram.com/p/DazL5fDv07G",
+      "image_path": "Memory/trends/visuals/ref_20260715_001.jpg",
+      "thumbnail_url": "https://scontent-cph2-1.cdninstagram.com/v/t51.71878-15/747505309_1968466410528437_7310901756792845754_n.jpg",
+      "caption": "🛌 \"낮잠도 잘못 자면 독이다\"\n아무렇게나 자는 낮잠이 오히려 몸을 망친다고요? 😱\n9가지 위험한 낮잠 습관, 지금 바로 확인해보세요 👆\n\n#낮잠 #건강정보 #건강꿀팁",
+      "hashtags": ["#낮잠", "#건강정보", "#건강꿀팁"],
+      "timestamp": "2026-07-15T06:40:00Z",
+      "media_type": "GraphVideo",
+      "product_type": "clips",
+      "style_notes": "Video clips format (9:16 ratio) with thumbnail showing checklist layout. Topic: Sleep health - 9 dangerous nap habits. Thumbnail features Korean text overlay with emoji markers. Health information card style optimized for Reels format.",
+      "filtering_notes": {
+        "matches_criteria": "partial",
+        "reason": "Video format (clips) but thumbnail matches health information card aesthetic - '9가지 위험한 낮잠 습관' is a structured checklist format. Thumbnail successfully downloaded.",
+        "recommended_action": "For production: Filter to GraphImage only, or verify video thumbnails contain illustrated health cards"
+      }
+    },
     {
       "ref_id": "ref_20260710_001",
       "platform": "instagram",
