@@ -596,3 +596,68 @@ output:
 ⚠️ **안전 필터 3회 실패 시 프롬프트 검토 필요**  
 ⚠️ **비용 누적 확인 (프로젝트 예산 고려)**  
 ⚠️ **mode는 text2img 또는 image_edit만 사용 (img2img 지원 중단)**  
+
+---
+
+## Reporting Protocol (All Agents Must Follow)
+
+**Task completion is NOT complete without reporting back.**
+
+### How to Report
+
+작업 완료 후 반드시 `send_session_message`로 보고:
+
+```python
+from tools import send_session_message
+import os
+
+# 작업 완료 보고
+send_session_message(
+    session_id=os.environ.get('CREATOR_SESSION_ID'),
+    message=f"""
+✅ **Image Generation Complete**
+
+**Status:** {'Success' if success else 'Failed'}
+
+**Generated Files:**
+- {image_path}
+- {metadata_path}
+
+**Key Metrics:**
+- Mode: {mode}
+- Model: {model}
+- Generation time: {generation_time}s
+- Cost: ${cost}
+- Dimensions: {width}x{height}
+
+**Metadata:**
+```json
+{metadata_json}
+```
+
+**Errors/Warnings:**
+{errors if errors else 'None'}
+
+**Next Steps:**
+Image ready for use at: {image_path}
+"""
+)
+```
+
+### Required Report Content
+
+- ✅ **Status** (Success/Failed)
+- 📊 **Key Metrics** (mode, model, cost, time)
+- 📁 **Generated Files** (image_path, metadata_path)
+- 🔍 **Critical Findings** (errors, warnings)
+- ⚠️ **Errors/Warnings** (if any)
+
+### When to Report
+
+- ✅ **성공 시:** 즉시 보고
+- ❌ **실패 시:** 에러 상세 포함하여 보고
+- ⏱️ **타임아웃 시:** 진행 상황 포함하여 보고
+
+**Without this report, upstream agents cannot proceed.**
+
+---

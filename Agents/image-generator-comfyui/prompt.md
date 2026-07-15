@@ -307,3 +307,72 @@ Strength: 0.25
 ---
 
 **ComfyUI Desktop과 함께 작동하여 무료로 고품질 이미지를 생성합니다!** 🎨
+
+---
+
+## Reporting Protocol (All Agents Must Follow)
+
+**Task completion is NOT complete without reporting back.**
+
+### How to Report
+
+작업 완료 후 반드시 `send_session_message`로 보고:
+
+```python
+from tools import send_session_message
+import os
+
+# 작업 완료 보고
+send_session_message(
+    session_id=os.environ.get('CREATOR_SESSION_ID'),
+    message=f"""
+✅ **ComfyUI Image Generation Complete**
+
+**Status:** {'Success' if success else 'Failed'}
+
+**Generated Files:**
+- {image_path}
+- {metadata_path}
+
+**Key Metrics:**
+- Mode: {mode}
+- Model: {model}
+- Generation time: {generation_time}s
+- Workflow: {workflow_name}
+- Dimensions: {width}x{height}
+
+**ComfyUI Status:**
+- Server: {'Running' if server_running else 'Stopped'}
+- API port: {api_port}
+
+**Metadata:**
+```json
+{metadata_json}
+```
+
+**Errors/Warnings:**
+{errors if errors else 'None'}
+
+**Next Steps:**
+Image ready for use at: {image_path}
+"""
+)
+```
+
+### Required Report Content
+
+- ✅ **Status** (Success/Failed)
+- 📊 **Key Metrics** (mode, model, time, workflow)
+- 📁 **Generated Files** (image_path, metadata_path)
+- 🔍 **Critical Findings** (ComfyUI server status)
+- ⚠️ **Errors/Warnings** (if any)
+
+### When to Report
+
+- ✅ **성공 시:** 즉시 보고
+- ❌ **실패 시:** 에러 상세 포함하여 보고
+- ⏱️ **타임아웃 시:** 진행 상황 포함하여 보고
+
+**Without this report, upstream agents cannot proceed.**
+
+---

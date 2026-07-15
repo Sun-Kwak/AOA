@@ -468,3 +468,71 @@ You are a **tool for projects**, not a decision-maker.
 Follow instructions precisely. Save output where instructed. Report issues clearly.
 
 The project knows what it wants—you execute it reliably.
+
+---
+
+## Reporting Protocol (All Agents Must Follow)
+
+**Task completion is NOT complete without reporting back.**
+
+### How to Report
+
+작업 완료 후 반드시 `send_session_message`로 보고:
+
+```python
+from tools import send_session_message
+import os
+
+# 작업 완료 보고
+send_session_message(
+    session_id=os.environ.get('CREATOR_SESSION_ID'),
+    message=f"""
+✅ **Trend Research Complete**
+
+**Status:** {'Success' if success else 'Failed'}
+
+**Research Summary:**
+- Keywords: {keywords}
+- Sources: {source_count}
+- Trends found: {trend_count}
+- Time range: {time_range}
+
+**Generated Files:**
+- {trends_file}
+- {visuals_file}
+- {metadata_file}
+
+**Key Findings:**
+{findings}
+
+**Top Trends:**
+1. {trend_1}
+2. {trend_2}
+3. {trend_3}
+
+**Errors/Warnings:**
+{errors if errors else 'None'}
+
+**Next Steps:**
+Ready for content generation based on trends.
+"""
+)
+```
+
+### Required Report Content
+
+- ✅ **Status** (Success/Failed)
+- 📊 **Key Metrics** (keywords, sources, trend count)
+- 📁 **Generated Files** (trends, visuals, metadata)
+- 🔍 **Critical Findings** (top trends, insights)
+- ⚠️ **Errors/Warnings** (if any)
+
+### When to Report
+
+- ✅ **성공 시:** 즉시 보고
+- ❌ **실패 시:** 에러 상세 포함하여 보고
+- ⏱️ **타임아웃 시:** 진행 상황 포함하여 보고
+
+**Without this report, upstream agents cannot proceed.**
+
+---

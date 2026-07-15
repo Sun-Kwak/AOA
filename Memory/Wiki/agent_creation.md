@@ -154,7 +154,7 @@
 - [ ] Registry에서 중복 에이전트 검색
 - [ ] 에이전트 디렉터리 생성
 - [ ] config.yaml 필수 필드 작성
-- [ ] prompt.md 전체 섹션 작성 + **🚨 필수 절차 섹션**
+- [ ] prompt.md 전체 섹션 작성 + **🚨 필수 절차 섹션** + **Reporting Protocol 섹션**
 - [ ] README.md 작성
 - [ ] **memory/wiki/ 디렉터리 생성** (Wiki_Protocol.md 포함)
 - [ ] **pre_execution_check.sh 생성** (Wiki 자동 읽기)
@@ -166,7 +166,90 @@
 
 ---
 
+## Pattern-005: Reporting Protocol 누락 (2026-07-15)
+
+### 문제
+
+account-content-collector 에이전트 실행 중 발견:
+- 작업 완료 후 보고 지시를 무시
+- prompt.md에 **HOW to report** 명시 없음
+- 파일 생성 = 보고로 착각
+
+**근본 원인:**
+"작업 완료 후 보고"는 **모든 에이전트 범용 규칙**인데, 개별 prompt.md에만 의존.
+
+### 영향
+
+- 상위 에이전트가 완료 여부 모름
+- 다음 작업 진행 불가
+- 수동 확인 필요
+
+### 회피 전략
+
+**모든 에이전트 prompt.md에 Reporting Protocol 섹션 자동 주입:**
+
+```markdown
+## Reporting Protocol (All Agents Must Follow)
+
+**Task completion is NOT complete without reporting back.**
+
+### How to Report
+
+Use `send_session_message` to report completion:
+
+```python
+from tools import send_session_message
+import os
+
+# Report to creator session
+send_session_message(
+    session_id=os.environ.get('CREATOR_SESSION_ID'),
+    message=f"""
+✅ Task Complete: {task_name}
+
+**Status:** Success/Failed
+**Generated Files:**
+- {file_path_1}
+- {file_path_2}
+
+**Key Metrics:**
+- Items processed: {count}
+- Errors: {error_count}
+
+**Critical Findings:**
+- {finding_1}
+- {finding_2}
+
+**Next Steps:**
+Ready for downstream processing.
+"""
+)
+```
+
+**Required Report Content:**
+- ✅ Status (완료/실패)
+- 📊 Key metrics/results
+- 📁 Generated files/paths
+- 🔍 Critical findings
+- ⚠️ Errors/warnings
+
+**Without this report, upstream agents cannot proceed.**
+```
+
+**적용 위치:**
+- 모든 공용 에이전트
+- 모든 프로젝트 에이전트
+- 모든 서브 에이전트
+
+**기존 에이전트 소급 적용:**
+1. ✅ Reporting Protocol 섹션 추가
+2. ✅ send_session_message 사용 예시 추가
+3. ✅ 필수 보고 내용 명시
+
+---
+
 ## 업데이트 이력
 
 - 2026-07-10: 초기 작성 (Pattern-001 ~ 003 기록)
 - 2026-07-10: Pattern-004 추가 (Wiki Protocol 강제 메커니즘)
+- 2026-07-15: Pattern-005 추가 (Reporting Protocol 누락)

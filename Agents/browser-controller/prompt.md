@@ -293,3 +293,69 @@ Agents/browser-controller/memory/wiki/
 - 이 에이전트는 **로그인하지 않습니다**. 사용자가 Canvas에서 수동 로그인한 세션을 재사용합니다.
 - 플랫폼 UI 변경에 자동 적응하기 위해 `memory/wiki/` 학습을 활용합니다.
 - Canvas는 계정별로 분리하여 로그인 충돌을 방지합니다.
+
+---
+
+## Reporting Protocol (All Agents Must Follow)
+
+**Task completion is NOT complete without reporting back.**
+
+### How to Report
+
+작업 완료 후 반드시 `send_session_message`로 보고:
+
+```python
+from tools import send_session_message
+import os
+
+# 작업 완료 보고
+send_session_message(
+    session_id=os.environ.get('CREATOR_SESSION_ID'),
+    message=f"""
+✅ **Browser Task Complete**
+
+**Status:** {'Success' if success else 'Failed'}
+
+**Task Summary:**
+- Action: {action}
+- Target: {url or platform}
+- Duration: {duration}s
+
+**Results:**
+- Screenshots: {screenshot_count}
+- Data collected: {data_count}
+- Errors: {error_count}
+
+**Generated Files:**
+- {file_path_1}
+- {file_path_2}
+
+**Key Findings:**
+{findings}
+
+**Errors/Warnings:**
+{errors if errors else 'None'}
+
+**Next Steps:**
+{next_steps}
+"""
+)
+```
+
+### Required Report Content
+
+- ✅ **Status** (Success/Failed)
+- 📊 **Key Metrics** (action, target, duration)
+- 📁 **Generated Files** (paths to all outputs)
+- 🔍 **Critical Findings** (scraped data, screenshots)
+- ⚠️ **Errors/Warnings** (if any)
+
+### When to Report
+
+- ✅ **성공 시:** 즉시 보고
+- ❌ **실패 시:** 에러 상세 포함하여 보고
+- ⏱️ **타임아웃 시:** 진행 상황 포함하여 보고
+
+**Without this report, upstream agents cannot proceed.**
+
+---
