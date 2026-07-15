@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v2.0.2 - GitHub Copilot Instructions & Workflow Enforcement (2026-07-15)
+
+### Added
+- **Pattern-WORKFLOW**: Workflow Enforcement (프로젝트 실행 규칙)
+  - Workflows/*.md Phase 순서 필수 준수
+  - 각 Phase의 Agent 건너뛰기 금지
+  - 사용자 "직접 실행" 요청에도 워크플로우 우선
+  - 위치: `Memory/Wiki/project_creation.md`
+
+### Changed
+- **.github/copilot-instructions.md 대폭 간소화**
+  - 281줄 → 107줄 (-62%)
+  - v1.0.0 낡은 규칙 제거 (Registry/INDEX.md 전체 읽기 등)
+  - v2.0.1 규칙 반영 (Pattern-AUTH Agent Invocation)
+  - 상세 규칙은 Memory/Wiki/로 위임
+  - 역할: GitHub Copilot "입구"로 간소화
+
+### Why
+- health-fitness-cards 테스트 중 워크플로우 무시 실수 발견
+- Markdown 파일만으로 통제 한계 → GitHub 공식 설정 활용
+- .github/copilot-instructions.md = 자동 로드, 강제 적용
+- Memory/Wiki/ = 상세 패턴, 실수 사례
+
+### Files
+- Modified: `Memory/Wiki/project_creation.md` (+90줄, Pattern-WORKFLOW 추가)
+- Modified: `.github/copilot-instructions.md` (-174줄, v2.0.1 간소화)
+- Backup: `.github/copilot-instructions.md.v1.backup` (v1.0.0 보존)
+
+---
+
 ## v2.0.1 - Agent Invocation Rules (2026-07-15)
 
 ### Added
