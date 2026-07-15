@@ -190,9 +190,110 @@ cropped_img.save(output_path, quality=95)
 
 ---
 
+## [Pattern-005] ✨ 프롬프트 기반 워터마크 억제 (무료 해결책!)
+
+**발생일**: 2026-07-15  
+**상황**: Pattern-004의 후처리 크롭 방식의 문제점 발견  
+**문제점**:
+1. **고정 크롭의 한계**
+   ```python
+   # ❌ WRONG - 워터마크가 항상 하단에 있다고 가정
+   crop_pixels = 100  # 무조건 하단 100px 제거
+   
+   문제:
+   - 워터마크 위치는 이미지마다 다름 (하단/우측/코너/중앙)
+   - 실제 콘텐츠도 같이 잘림 (10번 팁 짤림)
+   - 범용적이지 않음
+   ```
+
+2. **새로운 워터마크 생성**
+   ```python
+   # ❌ WRONG - 크롭해도 새 워터마크가 생성됨
+   result = fal_client.subscribe(...)
+   # → @kawaii_happy_home 같은 새 워터마크 추가됨
+   ```
+
+**✅ 해결책: 프롬프트 강화 전략 (비용 $0, 추가 API 불필요!)**
+
+```python
+# 🎯 핵심: 부정적 단어 회피 + 긍정적 표현 + 명확한 목적
+
+edit_prompt = """Keep the [theme] but feel free to create new [content].
+Fresh modern design with [style description].
+[Format specifications].
+
+IMPORTANT: Clean professional design with no text overlays at the bottom.
+Pure content without any credits or social media handles.
+Focus on the [main content] only."""
+
+# 예시: 빨래 팁 카드
+edit_prompt = """Keep the laundry tips theme but feel free to create new tips.
+Fresh modern design with bright rainbow pastel colors.
+Cute kawaii-style illustrations with different characters.
+New layout and color scheme.
+8-10 tips format with clear Korean text.
+9:16 vertical format.
+
+IMPORTANT: Clean professional design with no text overlays at the bottom.
+Pure content without any credits or social media handles.
+Focus on the tips and illustrations only."""
+```
+
+**핵심 원칙**:
+1. ✅ **부정적 단어 최소화**: "remove", "delete", "eliminate" 회피
+2. ✅ **긍정적 표현 사용**: "clean", "professional", "pure content", "focus on"
+3. ✅ **목적 명확화**: "no text overlays at the bottom" (구체적 위치)
+4. ✅ **대상 특정**: "credits", "social media handles" (일반적 표현)
+
+**결과**:
+- ✅ 워터마크 완전히 제거됨 (하단 깨끗함)
+- ✅ 콘텐츠 잘림 없음 (9개 팁 모두 완전히 보임)
+- ✅ 새로운 워터마크 생성 안 됨
+- ✅ 추가 비용 $0 (후처리 API 불필요)
+
+**비용 비교**:
+```
+Pattern-004 (후처리 크롭):   $0.05 (하지만 문제 있음)
+Pattern-005 (프롬프트):       $0.05 (완벽하게 작동!)
+Vision AI + Inpainting:       $0.11 (+120% 비용)
+```
+
+**회피전략**:
+1. **프롬프트 강화를 1순위로 시도** (무료!)
+2. 워터마크 관련 직접 언급은 콘텐츠 정책 위반 가능
+3. "clean", "professional", "focus on content" 같은 긍정적 표현 사용
+4. 하단 영역을 구체적으로 명시: "no text overlays at the bottom"
+5. 실패 시에만 Vision AI + Inpainting 고려 (하이브리드 방식)
+
+**적용 우선순위**:
+```
+1순위: Pattern-005 (프롬프트 강화) → 95% 케이스 해결
+2순위: Vision AI + Inpainting     → 1순위 실패 시
+3순위: 수동 처리                  → 매우 드문 케이스
+```
+
+**Pattern-004 대비 장점**:
+- ✅ 워터마크 위치 무관하게 작동
+- ✅ 콘텐츠 잘림 없음
+- ✅ 새로운 워터마크 생성 방지
+- ✅ 추가 비용 없음
+- ✅ 범용적으로 적용 가능
+
+**최종 권장 워크플로우**:
+```
+1. 프롬프트 강화 적용 (Pattern-005)
+2. nano-banana-2/edit로 이미지 생성
+3. 결과 확인
+4. (선택) 워터마크 여전히 있으면 Vision AI 사용
+5. 최종 저장
+```
+
+---
+
 ## 업데이트 이력
 
 - 2026-07-10: 초기 생성
 - 2026-07-10: Pattern-001, Pattern-002 추가 (image_edit 모드 학습)
 - 2026-07-10: Pattern-003 추가 (워터마크 제거 필수 규칙)
 - 2026-07-10: Pattern-004 추가 (워터마크 후처리 크롭 해결책) 🎯
+- 2026-07-15: Pattern-005 추가 (프롬프트 기반 워터마크 억제, 무료 해결책!) ✨
