@@ -364,7 +364,88 @@ send_session_message(
 
 ---
 
+### Agent Invocation Method by Type
+
+**발생일**: 2026-07-15  
+**발견**: health-fitness-cards 프로젝트 테스트 중
+
+#### 규칙
+
+**공용 에이전트 호출 (Registry/Agents/)**
+- ✅ **반드시 `create_session`으로 하위 세션 생성**
+- ❌ `task` tool 사용 금지
+- 이유:
+  - 세션 추적 가능성
+  - 재사용성 (동일 세션에 여러 요청)
+  - 지속적 상호작용 지원
+  - 프로젝트 구조에 맞는 계층적 세션
+
+**프로젝트 전용 에이전트 호출 (Projects/*/Agents/)**
+- ✅ `task` tool 사용 가능 (단순 작업)
+- ✅ `create_session` 사용 가능 (복잡한 작업)
+- 선택 기준: 작업 복잡도, 상호작용 필요성
+
+#### 예시
+
+**✅ 올바른 방식 (공용 에이전트):**
+```javascript
+// content-transformer (공용 에이전트) 호출
+create_session({
+  project_id: "...",
+  name: "[AOA] project-name — content transformation",
+  coordinate_with_creator: false,
+  kickoff: {
+    mode: "autopilot",
+    prompt: "content-transformer 에이전트로 다음 작업 수행..."
+  }
+})
+```
+
+**❌ 잘못된 방식 (공용 에이전트):**
+```javascript
+// ❌ 공용 에이전트를 task로 호출
+task({
+  agent_type: "general-purpose",
+  name: "content-transformer-test",
+  prompt: "..."
+})
+```
+
+**✅ 올바른 방식 (프로젝트 전용 에이전트):**
+```javascript
+// 옵션 1: task tool (단순 작업)
+task({
+  agent_type: "general-purpose",
+  name: "account-collector",
+  prompt: "..."
+})
+
+// 옵션 2: create_session (복잡한 작업)
+create_session({
+  project_id: "...",
+  name: "[AOA] project-name — content collection",
+  kickoff: { mode: "autopilot", prompt: "..." }
+})
+```
+
+#### 적용
+
+**프로젝트 kickoff prompt에 명시:**
+```markdown
+## 에이전트 호출 규칙
+
+**공용 에이전트 (Registry/Agents/):**
+- create_session으로만 호출
+- task tool 사용 금지
+
+**프로젝트 전용 에이전트:**
+- task 또는 create_session 선택 가능
+```
+
+---
+
 ## 업데이트 이력
 
 - 2026-07-15: 초기 작성 (Pattern-WIKI, Pattern-AUTH)
 - 2026-07-15: Pattern 통합 (agent_creation + project_creation에서 분리)
+- 2026-07-15: Pattern-AUTH에 Agent Invocation Method 추가

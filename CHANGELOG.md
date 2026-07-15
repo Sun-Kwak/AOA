@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v2.0.1 - Agent Invocation Rules (2026-07-15)
+
+### Added
+- **Pattern-AUTH 확장**: Agent Invocation Method by Type
+  - 공용 에이전트: `create_session`으로만 호출 (task 금지)
+  - 프로젝트 전용 에이전트: `task` 또는 `create_session` 선택 가능
+  - 이유: 세션 추적, 재사용성, 지속적 상호작용
+
+### Why
+- health-fitness-cards 프로젝트 테스트 중 발견
+- 공용 에이전트를 `task`로 호출하는 실수 발생
+- 규칙이 명시되지 않아 반복 가능성 있음
+
+### Files
+- Modified: `Memory/Wiki/universal_patterns.md` (Pattern-AUTH 섹션 확장)
+
+---
+
 ## v2.0.0 - Pattern Consolidation (2026-07-15)
 
 ### Breaking Changes
