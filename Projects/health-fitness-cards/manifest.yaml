@@ -13,7 +13,7 @@ description: >
   트렌드 → 이미지 생성 → 결과 저장 워크플로우 검증용.
 
 created_at: 2026-07-10T15:54:00+09:00
-updated_at: 2026-07-10T18:06:00+09:00
+updated_at: 2026-07-15T17:02:00+09:00
 
 # ── 🚨 작업 시작 전 필수 절차 ────────────────────────────
 # 모든 프로젝트 세션 시작 시 다음을 수행하세요:
@@ -37,13 +37,15 @@ paths:
 # ── 의존성 선언 ────────────────────────────────────────
 dependencies:
   agents:
-    - id: trend-research-agent
-      path: Agents/trend-research-agent/
-      role: 건강 및 여성 운동 트렌드 수집 (Instagram Reels only)
+    - id: account-content-collector
+      path: Agents/account-content-collector/
+      role: 검증된 Instagram 계정의 최신 포스트 직접 수집 (정보성 카드뉴스 일러스트만)
       override: null
       # 파라미터로 제어:
-      # - platforms: ["instagram"] (YouTube 제외)
-      # - 정보성 카드뉴스만 수집 (실사 제외)
+      # - target_accounts: ["@health__happyvirus", ...] (verified_accounts.json 사용)
+      # - posts_per_account: 10
+      # - date_range_days: 7
+      # - 일러스트 기반 의학/건강 정보 카드만 수집 (실사 제외)
       # - 중복 이미지 제거
 
     - id: content-transformer
@@ -56,13 +58,15 @@ dependencies:
       # - 맥락(주제, 형식, 스타일) 유지, 세부 내용만 변형
 
     - id: image-generator
-      path: Agents/image-generator/
-      role: 트렌드 기반 카드 뉴스 이미지 생성 (img2img, 9:16 세로형)
+      path: Registry/Agents/image-generator/
+      role: 변형된 콘텐츠 기반 카드 뉴스 이미지 생성 (image_edit, 9:16 세로형)
       override: null
       # 파라미터로 제어:
+      # - mode: "image_edit"
       # - aspect_ratio: "9:16"
-      # - mode: img2img
-      # - strength: 0.65
+      # - strength: 0.25
+      # - model: "nano-banana-2/edit"
+      # - apply_watermark_crop: true
 
   tools: []
 
