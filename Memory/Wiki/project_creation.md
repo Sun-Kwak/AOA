@@ -236,6 +236,23 @@ manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
 
 ❌ Wiki 조회 없이 작업 시작 금지!
 
+## Registry 및 공용 에이전트 사용 규칙
+
+**초기화 시:**
+- ✅ manifest.yaml의 dependencies.agents만 확인
+- ❌ Registry/INDEX.md 전체 읽기 금지
+- ❌ 모든 공용 에이전트 정보 사전 로딩 금지
+
+**에이전트 호출 시:**
+- ✅ 필요한 시점에 Registry/Agents/<id>.md 개별 조회
+- ✅ 파라미터 스키마 확인 필요 시에만 조회
+- ✅ on-demand 방식 사용
+
+**명확한 원칙:**
+- manifest.yaml이 단일 진실 공급원
+- dependencies.agents에 명시된 것만 사용
+- Registry는 on-demand 조회
+
 ## 하위 에이전트 실행 규칙
 - 에이전트 호출 전 list_agents()로 기존 세션 확인
 - 존재하면 재사용, 없으면 생성
@@ -276,9 +293,91 @@ manifest.yaml: /Users/sun/project/AOA/Projects/<id>/manifest.yaml
 
 ---
 
+## [Pattern-007] Registry INDEX 전체 로딩 (불필요한 컨텍스트 소비)
+
+**발생일**: 2026-07-15 (health-fitness-cards 프로젝트 보고)  
+**상황**: 프로젝트 세션 초기화 시  
+**실수**:
+- Registry/INDEX.md 전체 읽기
+- 모든 공용 에이전트 정보 로딩 (4개)
+- `manifest.yaml`의 `dependencies.agents`에 없는 에이전트까지 메모리에 로딩
+
+**예시**:
+```yaml
+# manifest.yaml
+dependencies:
+  agents:
+    - trend-research-agent  # ✅ 사용
+    - image-generator       # ✅ 사용
+# image-generator-comfyui  ❌ 미사용
+# browser-controller       ❌ 미사용
+```
+
+**실제 발생**:
+1. Registry/INDEX.md 전체 읽음
+2. 4개 에이전트 모두 정보 로딩
+3. 사용하지 않을 에이전트 정보도 컨텍스트 소비
+
+**문제점**:
+- 불필요한 Registry 데이터 로딩
+- 컨텍스트 낭비
+- 프로젝트는 `dependencies.agents`만 보면 충분함
+
+**회피 전략**:
+
+### 올바른 프로젝트 세션 초기화 절차
+
+```markdown
+✅ 1. manifest.yaml 읽기
+✅ 2. dependencies.agents 리스트만 확인
+      예: ["trend-research-agent", "image-generator"]
+✅ 3. on-demand Registry 조회 (필요 시점에만)
+      - 에이전트 호출 직전
+      - 파라미터 스키마 확인 필요 시
+      - Registry/Agents/<id>.md 개별 조회
+
+❌ Registry/INDEX.md 전체 읽기 금지
+❌ 모든 공용 에이전트 정보 사전 로딩 금지
+```
+
+### Kickoff Prompt 템플릿 개선
+
+**기존 (잘못됨):**
+```
+3. **공용 에이전트 확인**
+   - Registry에서 사용 가능한 공용 에이전트 확인
+```
+
+**개선 (올바름):**
+```
+3. **공용 에이전트 확인**
+   - manifest.yaml의 dependencies.agents 리스트만 확인
+   - Registry INDEX 전체 읽기 금지
+   - 필요한 에이전트는 호출 시점에 개별 조회
+```
+
+### 프로젝트 세션 초기화 규칙
+
+**명확한 원칙:**
+```
+1. ✅ manifest.yaml이 단일 진실 공급원
+2. ✅ dependencies.agents에 명시된 것만 사용
+3. ✅ Registry는 on-demand 조회
+4. ❌ Registry INDEX 전체 읽기 금지
+5. ❌ 사용하지 않을 에이전트 정보 로딩 금지
+```
+
+**적용:**
+1. ✅ Kickoff prompt 템플릿 업데이트 (Line 212-234)
+2. ✅ 모든 신규 프로젝트 세션에 자동 적용
+3. ✅ 기존 프로젝트 재시작 시 적용
+
+---
+
 ## 업데이트 이력
 
 - 2026-07-10: 초기 작성 (Pattern-001 ~ 004 기록)
 - 2026-07-10: Pattern-005 추가 (불필요한 자동 실행)
 - 2026-07-10: Kickoff prompt 템플릿에 "하위 에이전트 중복 생성 방지" 규칙 추가
 - 2026-07-10: Pattern-006 추가 (Wiki Protocol 강제 메커니즘)
+- 2026-07-15: Pattern-007 추가 (Registry INDEX 전체 로딩 방지)
