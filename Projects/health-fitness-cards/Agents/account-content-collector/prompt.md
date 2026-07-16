@@ -73,7 +73,21 @@ For each account in target_accounts:
 
 4. Retrieve results:
    - Use apify-get-dataset-items with returned datasetId
-   - Fields needed: displayUrl, caption, url, likesCount, timestamp, hashtags
+   - Fields needed: type, displayUrl, caption, url, likesCount, timestamp, hashtags
+   
+   **중요 — 비디오 콘텐츠 처리:**
+   - Instagram 비디오 포스트(type: "Video" 또는 "Sidecar")도 `displayUrl` 필드에 **썸네일 이미지 URL**이 있음
+   - ✅ `displayUrl` 필드 사용 (항상 이미지 URL, 비디오/이미지 구분 불필요)
+   - ❌ `videoUrl` 필드 무시 (실제 비디오 파일, 불필요)
+   - 예시:
+     ```json
+     {
+       "type": "Video",
+       "displayUrl": "https://.../588663151_863520779563260_n.jpg",  ← 썸네일 (이것 사용!)
+       "videoUrl": "https://.../AQNVRbii5z98..."  ← 비디오 파일 (무시)
+     }
+     ```
+   - **비디오든 이미지든 동일하게 처리**: `displayUrl`에서 참조 이미지 가져오기
 
 5. Download images and save metadata
 ```
@@ -90,8 +104,8 @@ If `date_range_days` is specified:
 For each collected post:
 
 ```bash
-# Download image
-curl -L "{thumbnail_url}" -o "{output_path}/visuals/ref_{YYYYMMDD}_{XXX}.jpg"
+# 비디오든 이미지든 displayUrl에서 썸네일 다운로드
+curl -L "{displayUrl}" -o "{output_path}/visuals/ref_{YYYYMMDD}_{XXX}.jpg"
 
 # Record metadata
 {
@@ -99,14 +113,19 @@ curl -L "{thumbnail_url}" -o "{output_path}/visuals/ref_{YYYYMMDD}_{XXX}.jpg"
   "platform": "instagram",
   "account": "@health__happyvirus",
   "source_url": "https://instagram.com/p/...",
+  "post_type": "Video",  # or "Image", "Sidecar"
   "image_path": "Memory/trends/visuals/ref_20260710_001.jpg",
-  "thumbnail_url": "https://...",
+  "thumbnail_url": "https://...",  # displayUrl 값
   "caption": "몸의 신호 8가지...",
   "hashtags": ["#건강정보", "#의학상식"],
   "timestamp": "2026-07-08T10:30:00Z",
   "style_notes": "Illustrated body diagram with 8 labeled symptoms"
 }
 ```
+
+**참고:**
+- `post_type`이 "Video"여도 `displayUrl`에서 썸네일을 가져올 수 있음
+- 비디오의 썸네일은 보통 첫 프레임 또는 Instagram이 자동 생성한 대표 이미지
 
 ### 5. Generate Style Notes
 
