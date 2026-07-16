@@ -77,8 +77,6 @@ model: "nano-banana-2/edit"           # 필수
 strength: 0.0-1.0                     # 필수 (0.25-0.75 권장)
 prompt: "..."                         # 필수
 aspect_ratio: "9:16"                  # 선택 (예: "16:9", "1:1")
-apply_watermark_crop: true            # 선택 (기본: false)
-crop_pixels: 100                      # 선택 (apply_watermark_crop=true 시)
 output_path: "/path/to/output/"       # 필수
 ```
 
@@ -104,24 +102,11 @@ output_path: "/path/to/output/"       # 필수
 - "remove watermark" → 콘텐츠 정책 위반
 - "without watermark" → 새로운 워터마크 생성될 수 있음
 
-### 후처리 크롭 (apply_watermark_crop=true 시)
-```python
-from PIL import Image
-
-def apply_crop(image_path: str, crop_pixels: int, output_path: str):
-    """
-    이미지 하단 크롭 적용
-    
-    Args:
-        image_path: 원본 이미지 경로
-        crop_pixels: 하단에서 제거할 픽셀 수 (예: 100)
-        output_path: 크롭된 이미지 저장 경로
-    """
-    img = Image.open(image_path)
-    width, height = img.size
-    crop_height = height - crop_pixels
-    cropped_img = img.crop((0, 0, width, crop_height))
-    cropped_img.save(output_path, quality=95)
+### 후처리 크롭 (사용 권장 안 함)
+⚠️ **주의**: 워터마크 위치는 이미지마다 다르므로 고정 크롭은 효과적이지 않습니다.
+- 일부 이미지는 상단/중앙에 워터마크
+- 크롭으로 인한 콘텐츠 손실 가능
+- **권장**: 프롬프트 규칙만 준수
 ```
 
 ---
@@ -209,8 +194,6 @@ input_params = {
     "strength": 0.75,
     "prompt": "Keep the exact layout. Only change text items to: 손톱 물어뜯기, 눈 비비기...",
     "aspect_ratio": "9:16",
-    "apply_watermark_crop": True,
-    "crop_pixels": 100,
     "output_path": "/path/to/output/"
 }
 ```

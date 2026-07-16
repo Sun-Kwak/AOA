@@ -259,16 +259,10 @@ edit_prompt: "Keep the [주제] theme but feel free to create new [내용].
 - ❌ "without watermark" → 새로운 워터마크 생성
 - ✅ 프롬프트에 워터마크 언급 없음
 
-**후처리 크롭 (필수 적용)**:
-```python
-# 이미지 생성 후 자동 크롭
-from PIL import Image
-img = Image.open(downloaded_path)
-width, height = img.size
-crop_height = height - 100  # 하단 100px 제거
-cropped_img = img.crop((0, 0, width, crop_height))
-cropped_img.save(output_path, quality=95)
-```
+⚠️ **주의**: 크롭은 권장하지 않음
+- 워터마크 위치는 이미지마다 다름 (상단/하단/중앙)
+- 고정 크롭은 효과적이지 않음
+- 콘텐츠 손실 가능
 
 ### 공통 Parameters
 
@@ -278,8 +272,6 @@ aspect_ratio: "9:16"
 strength: 0.25
 preserve_structure: true  # 기술적 파라미터
 model: "nano-banana-2/edit"  # ~₩26-52/장, 15-17초
-apply_watermark_crop: true  # 후처리 크롭 적용
-crop_pixels: 100  # 하단 크롭 영역
 ```
 
 ### 카드 생성 예시
